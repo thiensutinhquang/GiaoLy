@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hướng Dẫn Tu Tập | Pháp Đốn Ngộ - Phá Chấp Phá Mê</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <!-- Font cho nội dung chính -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
     <!-- Font cho thanh điều hướng -->
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&amp;display=swap" rel="stylesheet">
     
     <style>
         /* --- CÀI ĐẶT CHUNG --- */
@@ -188,232 +189,10 @@
             margin-bottom: 2rem;
         }
     </style>
+
 </head>
-<body class="text-body">
-    
-    <!-- THANH ĐIỀU HƯỚNG CỐ ĐỊNH -->
-    <header class="w-full p-4 sticky top-0 z-50 transition-all duration-300" style="background-color: rgba(253, 251, 247, 0.85); backdrop-filter: blur(10px);">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" title="Trang Chủ">
-                <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Thiên Sứ Tịnh Quang" class="h-16 w-auto" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));" onerror="this.onerror=null; this.src='https://placehold.co/120x64/fdfbf7/8C5B00?text=Logo';">
-            </a>
-            
-            <!-- Các nút điều hướng (Desktop) -->
-            <div class="top-nav-bar hidden md:flex">
-                <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
-                    <span class="button-text-wrapper">TRANG CHỦ</span>
-                </a>
-                <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button">
-                    <span class="button-text-wrapper">Play Nhạc</span>
-                </a>
-                <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
-                    <span class="button-text-wrapper">Kho Thơ</span>
-                </a>
-                <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
-                    <span class="button-text-wrapper">Play Video</span>
-                </a>
-                <div class="dropdown" id="platforms-dropdown">
-                    <button class="nav-button-base footer-action-button" id="platforms-btn">
-                        <span class="button-text-wrapper">NỀN TẢNG</span>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="https://www.youtube.com/@Thi%C3%AAnS%E1%BB%A9TinhQuang" target="_blank" rel="noopener noreferrer" title="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube"></a>
-                        <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener noreferrer" title="TikTok"><img src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" alt="TikTok"></a>
-                        <a href="https://www.facebook.com/phatphapnhiemmauTinhQuang" target="_blank" rel="noopener noreferrer" title="Facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
-                        <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener noreferrer" title="Telegram"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
-                        <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener noreferrer" title="Zalo"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo"></a>
-                    </div>
-                </div>
-            </div>
-             <!-- Nút menu cho di động -->
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-title p-2 rounded-md">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-            </div>
-        </div>
-        <!-- Menu di động (ẩn mặc định) -->
-        <div id="mobile-menu" class="hidden md:hidden p-4 space-y-2">
-             <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">TRANG CHỦ</a>
-             <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button w-full">PLAY NHẠC</a>
-             <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">KHO THƠ</a>
-             <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">PLAY VIDEO</a>
-             <a href="#" id="platforms-mobile-link" class="nav-button-base footer-action-button w-full">NỀN TẢNG</a>
-        </div>
-    </header>
-
-    <!-- NỘI DUNG CHÍNH -->
-    <div class="min-h-screen p-4">
-        <div class="card max-w-4xl w-full rounded-2xl shadow-xl p-8 md:p-12 space-y-8 mt-24 sm:mt-16 mx-auto">
-            
-            <!-- PHẦN 1: LỜI PHÁP ĐỐN NGỘ -->
-            <section id="loi-phap">
-                <header class="text-center">
-                    <div class="inline-block mb-4">
-                        <svg class="w-16 h-16 text-title opacity-80" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75a9 9 0 0 1 7.236 14.257l-1.42 1.42A7.5 7.5 0 0 0 12 5.25a7.5 7.5 0 0 0-5.816 12.177l-1.42-1.42A9 9 0 0 1 12 3.75Zm0 0c-1.28 0-2.5.2-3.636.572M12 3.75c1.28 0 2.5.2 3.636.572M12 20.25a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-7.5-3.75a7.5 7.5 0 0 1 15 0c0 .66-.083 1.3-.24 1.908" /></svg>
-                    </div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-title">Pháp Đốn Ngộ - Phá Chấp Phá Mê</h1>
-                    <p class="mt-2 text-lg text-gray-500">Con đường trở về ngôi nhà chân thật</p>
-                </header>
-
-                <main class="mt-8 space-y-6 text-lg leading-relaxed">
-                    <section>
-                        <h2 class="text-2xl font-semibold text-title mb-3">1. Gánh Nặng Trần Gian & Quả Bóng Bay</h2>
-                        <p>Quý vị muốn tu hành để trở Về Nhà, nhưng lại ôm theo tất cả những điều giả tạm của nhân gian thì làm sao có thể về được? Nó cũng giống như một quả bóng bay bị buộc vào một cục đá, làm sao có thể bay lên cao?</p>
-                        <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg">
-                            Người tu hành cần xác định rõ: <strong>buông hết mọi việc trong tâm, chính là giải thoát</strong>. Ngay tức khắc, quý vị sẽ khai ngộ, sống an vui từng phút giây, không còn phiền não nào có thể làm khổ được nữa.
-                        </blockquote>
-                    </section>
-                    <section>
-                        <h2 class="text-2xl font-semibold text-title mb-3">2. Cái Bẫy Của "Bản Ngã"</h2>
-                        <p>Ngồi thiền là để khám phá miền đất tâm linh, đi sâu vào Con Người Chân Thật bên trong. Nếu chưa buông bỏ được cái "bản ngã" hư dối, quý vị chỉ mãi đứng ngoài cổng nhà mình, không bao giờ tìm thấy phúc lạc và bình an vĩnh hằng.</p>
-                        <p class="mt-2">Cứ khư khư ôm lấy bản ngã thì tu đến muôn kiếp cũng chỉ như "nấu cát muốn thành cơm" hay "mài ngói muốn thành gương". Muốn giải thoát mà lại ôm tất cả, thì giải thoát ở nơi nào?</p>
-                    </section>
-                    <section>
-                        <h2 class="text-2xl font-semibold text-title mb-3">3. Hành Trang Nhẹ Nhàng</h2>
-                        <p>Trên con đường trở Về Nguồn Cội, hành lý duy nhất cần bỏ lại chính là: <strong>tình, tiền, và danh vọng</strong>. Người tu hành không nên bám víu bất cứ thứ gì ở nhân gian, vì tất cả chỉ là phương tiện tạm thời, không có thật.</p>
-                         <p class="mt-2">Khi bên trong còn hừng hực tham vọng, luyến ái, tiền tài, làm sao có thể vô ngã để hoà vào đại dương tình thương bao la?</p>
-                    </section>
-                    <section>
-                        <h2 class="text-2xl font-semibold text-title mb-3">4. Tu Cho Mình Trước Khi Dạy Người</h2>
-                        <p>Quý vị phải tự mình buông xả thì mới có thể khuyên người khác buông xả. Phải tự mình tạo công đức thì mới có phúc đức để ban phát cho người khác.</p>
-                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-600">
-                            <li>Lòng còn đầy tham lam, đố kỵ, làm sao dạy người khác buông xả?</li>
-                            <li>Ham muốn còn ngút trời, làm sao bảo người khác đừng ham muốn?</li>
-                        </ul>
-                        <p class="mt-3 italic text-gray-500">Đức Phật từng dạy, thời mạt pháp, tà đạo thuyết pháp nhiều như cát sông Hằng. Nhiều người tu không tới đâu nhưng lại nói pháp rất nhiều. Đó là dấu hiệu của bản ngã vi tế, tưởng mình đang đi lên nhưng thực chất là đi xuống.</p>
-                    </section>
-                    <section>
-                        <h2 class="text-2xl font-semibold text-title mb-3">5. Đập Vỡ Cái Tôi</h2>
-                        <p>Tu mà còn thấy "tôi", còn chấp đúng sai, còn hơn thua được mất, thì càng tu sẽ càng khổ, càng phiền não. Khi ai đó làm trái ý, cái "tôi" sẽ trỗi dậy, sinh ra sân hận, oán trách, nói xấu. Đó là ma chướng, không phải là ta.</p>
-                        <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg">
-                            Phải đập cho bản ngã vỡ vụn ra thì mới có thể thăng hoa. Khi để cái tôi thống trị, sự sáng suốt và bình an tự tại vốn có bên trong sẽ bị che lấp.
-                        </blockquote>
-                    </section>
-                    <section>
-                        <h2 class="text-2xl font-semibold text-title mb-3">6. Con Đường Thăng Hoa Chân Thật</h2>
-                        <p>Khi quý vị khiêm nhường, vô ngã, tích cực bố thí, làm lành tránh dữ, và gieo duyên Chánh Pháp, công đức sẽ không thể nghĩ bàn. Cho đi điều gì, sẽ nhận lại điều đó gấp ngàn lần. Chia sẻ Phật Pháp sẽ nhận lại sự sáng suốt.</p>
-                        <p class="mt-2 font-semibold">Điều kiện tiên quyết: phải làm với tâm vô ngã, làm mà không thấy mình làm, và luôn biết rằng Thượng Đế, Phật, Bồ Tát đang làm xuyên qua mình. Đó mới là sự thăng hoa thật sự.</p>
-                    </section>
-                </main>
-            </section>
-            
-            <hr class="section-divider">
-
-            <!-- PHẦN 2: VỀ THIỀN SƯ TỊNH QUANG -->
-            <section id="thien-su" class="py-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-semibold text-title mb-4">Về Thiền Sư Tịnh Quang</h2>
-                    <p class="max-w-3xl mx-auto text-lg leading-relaxed text-body">
-                        Thiền Sư Tịnh Quang, một người con đất Nam Định, Việt Nam, hiện đang hoằng pháp tại Cộng hòa Séc. Sau nhiều năm tu tập với các bậc thầy, khi duyên lành hội đủ, Ngài đã giác ngộ và chứng nghiệm những cảnh giới diệu kỳ. Với lòng từ bi, Ngài đã giúp nhiều học trò khai mở thiên nhãn, kết nối với vị Phật bên trong mình để có được những trải nghiệm tâm linh sâu sắc.
-                    </p>
-                    <div class="my-6 max-w-2xl mx-auto p-6 bg-accent-light rounded-xl border border-accent/50 shadow-sm">
-                        <p class="font-semibold text-title mb-3">Sứ mệnh của Ngài là giúp những người hữu duyên tìm ra câu trả lời cho các câu hỏi lớn của cuộc đời:</p>
-                        <ul class="space-y-2 text-quote italic text-lg">
-                            <li>Mình Là Ai?</li>
-                            <li>Mình Từ Đâu Đến?</li>
-                            <li>Mình Đến Thế Giới này để làm gì?</li>
-                            <li>Chết rồi Mình Sẽ Đi Về Đâu?</li>
-                        </ul>
-                    </div>
-                    <p class="max-w-3xl mx-auto text-lg leading-relaxed text-body">
-                        Chính vì vậy, Ngài đã khai sinh pháp môn <strong>Đốn Ngộ Kiến Tánh</strong>, mở ra con đường tu tập để nhiều người hơn nữa có thể đạt được cuộc sống an lạc, hạnh phúc và tự tại.
-                    </p>
-                </div>
-            </section>
-
-            <hr class="section-divider">
-
-            <!-- PHẦN 3: VỀ PHÁP MÔN ĐỐN NGỘ KIẾN TÁNH -->
-            <section id="phap-mon" class="py-8">
-                <div class="text-center mb-6">
-                    <img src="https://raw.githubusercontent.com/thiensutinhquang/GiaoLy/main/logo%20Thien%20Su%20Tinh%20Quang.png" alt="Logo Pháp Môn Đốn Ngộ Kiến Tánh" class="mx-auto h-24 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/96x96/fdfbf7/8C5B00?text=Logo';">
-                </div>
-                <h2 class="text-3xl font-semibold text-title mb-4 text-center">Về Pháp Môn Đốn Ngộ Kiến Tánh</h2>
-                <div class="max-w-3xl mx-auto text-lg leading-relaxed text-body text-center">
-                    <p class="mb-4">Do Thiền Sư Tịnh Quang truyền dạy, pháp môn <strong>Đốn Ngộ Kiến Tánh</strong> là con đường tu tập phá mê, phá chấp, giúp hành giả thăng hoa, khai mở Thiên Nhãn và kết nối với Vị Phật bên trong mình.</p>
-                    <p><strong class="text-quote">Đốn Ngộ</strong> là giác ngộ tức thời, không cần trải qua tuần tự nhiều giai đoạn tu tập. Chỉ trong một khoảnh khắc, hành giả thấy rõ chân tánh, hiểu thấu thực tại. Nói cách khác: Đốn ngộ là phương pháp giác ngộ nhanh <strong class="text-quote">Kiến Tánh</strong> 👉 Thấy rõ chân tâm = Nhận ra Phật tánh là thấy được bản tánh chân thật của chính mình-tức là Phật tánh vốn sẵn có nơi mỗi người, hay còn gọi là "Hoát nhiên đại ngộ" là sự bừng tỉnh giác ngộ một cách đột ngột, hiểu rõ chân lý sâu xa ngay trong khoảnh khắc. Hoát nhiên đại ngộ là trạng thái bừng sáng giác ngộ xảy ra ngay lúc ấy. Nhấn mạnh trải nghiệm giác ngộ.</p>
-                </div>
-
-                <div class="mt-8 grid md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
-                    <div class="bg-accent-light rounded-xl p-6 border border-accent/50 shadow-sm h-full">
-                        <h4 class="font-semibold text-xl text-title mb-3">Biểu Tượng Pháp Môn</h4>
-                        <p class="text-body">Biểu tượng của pháp môn là hình ảnh <strong class="text-quote">con mắt trí tuệ tỏa sáng</strong> ôm trọn <strong class="text-quote">một người đang ngồi thiền</strong>. Điều này tượng trưng cho hai mục tiêu chính:</p>
-                         <ul class="list-disc list-inside mt-2 space-y-1 text-gray-600">
-                            <li>Khai mở Thiên Nhãn để nhìn thấu vạn vật.</li>
-                            <li>Câu thông với Vị Phật tĩnh tại bên trong mỗi chúng ta.</li>
-                        </ul>
-                    </div>
-                    <div class="bg-accent-light rounded-xl p-6 border border-accent/50 shadow-sm h-full">
-                         <h4 class="font-semibold text-xl text-title mb-3">Mục Đích Tu Tập</h4>
-                         <p class="text-body">Pháp môn hướng người tu đến một đời sống thiện lành, từ bỏ tham-sân-si, tôn trọng vạn vật và quy luật tự nhiên, từ đó có được trí tuệ để hành xử đúng đắn trong mọi hoàn cảnh.</p>
-                    </div>
-                </div>
-
-                <div class="mt-8 max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="font-semibold text-xl text-title mb-3">Lợi ích nhận được:</h4>
-                        <ul class="space-y-2">
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span>Trở thành người sống thiện lành, an nhàn.</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span>Thân tâm an lạc, khỏe mạnh.</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span>Trí tuệ sáng suốt, phân biệt rõ phải trái.</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span>Khai mở thiên nhãn và trải nghiệm tâm linh diệu kỳ.</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-xl text-title mb-3">Pháp môn này dành cho ai?</h4>
-                         <ul class="space-y-2">
-                            <li class="flex items-start"><span class="text-yellow-500 mr-2">❖</span>Những ai muốn hóa giải bất ổn, chuyển hóa nghiệp.</li>
-                            <li class="flex items-start"><span class="text-yellow-500 mr-2">❖</span>Người tu tập lâu năm nhưng chưa có kết quả.</li>
-                            <li class="flex items-start"><span class="text-yellow-500 mr-2">❖</span>Những ai khao khát được giác ngộ nhanh chóng.</li>
-                            <li class="flex items-start"><span class="text-yellow-500 mr-2">❖</span>Những ai muốn tìm thấy sự an yên và thấu hiểu bản thân.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PHẦN LIÊN HỆ -->
-            <footer class="pt-8 mt-8 border-t border-gray-200">
-                 <p class="text-center text-base mb-6">Đây là bài pháp quan trọng cho những ai đang thật sự tu hành để được Giác Ngộ Giải Thoát hiện đời.</p>
-                <div class="text-center mb-6">
-                    <p class="italic text-title">Om Phật Tổ Tối Cao</p>
-                    <p class="italic text-title">Om Đức Phật Tịnh Quang</p>
-                </div>
-                <div class="bg-gray-100 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold text-center text-gray-700 mb-4">Liên hệ để được hướng dẫn tu tập</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-4 gap-x-8 text-gray-600 text-center">
-                        <div class="flex flex-col items-center justify-center">
-                            <span class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z" /></svg>
-                                <span>BT Thúy</span>
-                            </span>
-                            <strong>+840916 781 969</strong>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                           <span class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z" /></svg>
-                                <span>BT Thu</span>
-                            </span>
-                             <strong>+840399 142 256</strong>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                            <span class="flex items-center gap-2">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z" /></svg>
-                                <span>BT Xiêm</span>
-                            </span>
-                            <strong>+840936 168 219</strong>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-center gap-2 mt-4 text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
-                        <span>Mail: <strong>thiensutinhquang@gmail.com</strong></span>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div>
-
+<body>
+    <p><a href="#" target="_blank"><img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Thiên Sứ Tịnh Quang"></a></p><p><a href="https://thiensutinhquang.github.io/home/" target="_blank">TRANG CHỦ</a><a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank">Play Nhạc</a><a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank">Kho Thơ</a><a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank">Play Video</a></p><p>NỀN TẢNG</p><p><a href="https://www.youtube.com/@Thi%C3%AAnS%E1%BB%A9TinhQuang" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube"></a><a href="https://www.tiktok.com/@minhsutinhquang" target="_blank"><img src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" alt="TikTok"></a><a href="https://www.facebook.com/phatphapnhiemmauTinhQuang" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a><a href="https://t.me/Giaoly_phap_don_ngo" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a><a href="https://zalo.me/g/dukrae245" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo"></a></p><p><br></p><p><a href="https://thiensutinhquang.github.io/home/" target="_blank">TRANG CHỦ</a><a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank">PLAY NHẠC</a><a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank">KHO THƠ</a><a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank">PLAY VIDEO</a><a href="#" target="_blank">NỀN TẢNG</a></p><p><br></p><h1>Pháp Đốn Ngộ - Phá Chấp Phá Mê</h1><p>Con đường trở về ngôi nhà chân thật</p><h2>1. Gánh Nặng Trần Gian &amp; Quả Bóng Bay</h2><p>Quý vị muốn tu hành để trở Về Nhà, nhưng lại ôm theo tất cả những điều giả tạm của nhân gian thì làm sao có thể về được? Nó cũng giống như một quả bóng bay bị buộc vào một cục đá, làm sao có thể bay lên cao?</p><blockquote>Người tu hành cần xác định rõ: <strong>buông hết mọi việc trong tâm, chính là giải thoát</strong>. Ngay tức khắc, quý vị sẽ khai ngộ, sống an vui từng phút giây, không còn phiền não nào có thể làm khổ được nữa.</blockquote><h2>2. Cái Bẫy Của "Bản Ngã"</h2><p>Ngồi thiền là để khám phá miền đất tâm linh, đi sâu vào Con Người Chân Thật bên trong. Nếu chưa buông bỏ được cái "bản ngã" hư dối, quý vị chỉ mãi đứng ngoài cổng nhà mình, không bao giờ tìm thấy phúc lạc và bình an vĩnh hằng.</p><p>Cứ khư khư ôm lấy bản ngã thì tu đến muôn kiếp cũng chỉ như "nấu cát muốn thành cơm" hay "mài ngói muốn thành gương". Muốn giải thoát mà lại ôm tất cả, thì giải thoát ở nơi nào?</p><h2>3. Hành Trang Nhẹ Nhàng</h2><p>Trên con đường trở Về Nguồn Cội, hành lý duy nhất cần bỏ lại chính là: <strong>tình, tiền, và danh vọng</strong>. Người tu hành không nên bám víu bất cứ thứ gì ở nhân gian, vì tất cả chỉ là phương tiện tạm thời, không có thật.</p><p>Khi bên trong còn hừng hực tham vọng, luyến ái, tiền tài, làm sao có thể vô ngã để hoà vào đại dương tình thương bao la?</p><h2>4. Tu Cho Mình Trước Khi Dạy Người</h2><p>Quý vị phải tự mình buông xả thì mới có thể khuyên người khác buông xả. Phải tự mình tạo công đức thì mới có phúc đức để ban phát cho người khác.</p><ul><li>Lòng còn đầy tham lam, đố kỵ, làm sao dạy người khác buông xả?</li><li>Ham muốn còn ngút trời, làm sao bảo người khác đừng ham muốn?</li></ul><p>Đức Phật từng dạy, thời mạt pháp, tà đạo thuyết pháp nhiều như cát sông Hằng. Nhiều người tu không tới đâu nhưng lại nói pháp rất nhiều. Đó là dấu hiệu của bản ngã vi tế, tưởng mình đang đi lên nhưng thực chất là đi xuống.</p><h2>5. Đập Vỡ Cái Tôi</h2><p>Tu mà còn thấy "tôi", còn chấp đúng sai, còn hơn thua được mất, thì càng tu sẽ càng khổ, càng phiền não. Khi ai đó làm trái ý, cái "tôi" sẽ trỗi dậy, sinh ra sân hận, oán trách, nói xấu. Đó là ma chướng, không phải là ta.</p><blockquote>Phải đập cho bản ngã vỡ vụn ra thì mới có thể thăng hoa. Khi để cái tôi thống trị, sự sáng suốt và bình an tự tại vốn có bên trong sẽ bị che lấp.</blockquote><h2>6. Con Đường Thăng Hoa Chân Thật</h2><p>Khi quý vị khiêm nhường, vô ngã, tích cực bố thí, làm lành tránh dữ, và gieo duyên Chánh Pháp, công đức sẽ không thể nghĩ bàn. Cho đi điều gì, sẽ nhận lại điều đó gấp ngàn lần. Chia sẻ Phật Pháp sẽ nhận lại sự sáng suốt.</p><p>Điều kiện tiên quyết: phải làm với tâm vô ngã, làm mà không thấy mình làm, và luôn biết rằng Thượng Đế, Phật, Bồ Tát đang làm xuyên qua mình. Đó mới là sự thăng hoa thật sự.</p><h2> Về Thiền Sư Tịnh Quang</h2><p>Thiền Sư Tịnh Quang, một người con đất Nam Định, Việt Nam, hiện đang hoằng pháp tại Cộng hòa Séc. Sau nhiều năm tu tập với các bậc thầy, khi duyên lành hội đủ, Ngài đã giác ngộ và chứng nghiệm những cảnh giới diệu kỳ. Với lòng từ bi, Ngài đã giúp nhiều học trò khai mở thiên nhãn, kết nối với vị Phật bên trong mình để có được những trải nghiệm tâm linh sâu sắc.</p><p>Sứ mệnh của Ngài là giúp những người hữu duyên tìm ra câu trả lời cho các câu hỏi lớn của cuộc đời:</p><ul><li>Mình Là Ai?</li><li>Mình Từ Đâu Đến?</li><li>Mình Đến Thế Giới này để làm gì?</li><li>Chết rồi Mình Sẽ Đi Về Đâu?</li></ul><p>Chính vì vậy, Ngài đã khai sinh pháp môn <strong>Đốn Ngộ Kiến Tánh</strong>, mở ra con đường tu tập để nhiều người hơn nữa có thể đạt được cuộc sống an lạc, hạnh phúc và tự tại.</p><p> <img src="https://raw.githubusercontent.com/thiensutinhquang/GiaoLy/main/logo%20Thien%20Su%20Tinh%20Quang.png" alt="Logo Pháp Môn Đốn Ngộ Kiến Tánh"></p><h2>Về Pháp Môn Đốn Ngộ Kiến Tánh</h2><p>Do Thiền Sư Tịnh Quang truyền dạy, pháp môn <strong>Đốn Ngộ Kiến Tánh</strong> là con đường tu tập phá mê, phá chấp, giúp hành giả thăng hoa, khai mở Thiên Nhãn và kết nối với Vị Phật bên trong mình.</p><p><strong>Đốn Ngộ</strong> là giác ngộ tức thời, không cần trải qua tuần tự nhiều giai đoạn tu tập. Chỉ trong một khoảnh khắc, hành giả thấy rõ chân tánh, hiểu thấu thực tại. Nói cách khác: Đốn ngộ là phương pháp giác ngộ nhanh <strong>Kiến Tánh</strong> 👉 Thấy rõ chân tâm = Nhận ra Phật tánh là thấy được bản tánh chân thật của chính mình-tức là Phật tánh vốn sẵn có nơi mỗi người, hay còn gọi là "Hoát nhiên đại ngộ" là sự bừng tỉnh giác ngộ một cách đột ngột, hiểu rõ chân lý sâu xa ngay trong khoảnh khắc. Hoát nhiên đại ngộ là trạng thái bừng sáng giác ngộ xảy ra ngay lúc ấy. Nhấn mạnh trải nghiệm giác ngộ.</p><h4>Biểu Tượng Pháp Môn</h4><p>Biểu tượng của pháp môn là hình ảnh <strong>con mắt trí tuệ tỏa sáng</strong> ôm trọn <strong>một người đang ngồi thiền</strong>. Điều này tượng trưng cho hai mục tiêu chính:</p><ul><li>Khai mở Thiên Nhãn để nhìn thấu vạn vật.</li><li>Câu thông với Vị Phật tĩnh tại bên trong mỗi chúng ta.</li></ul><h4>Mục Đích Tu Tập</h4><p>Pháp môn hướng người tu đến một đời sống thiện lành, từ bỏ tham-sân-si, tôn trọng vạn vật và quy luật tự nhiên, từ đó có được trí tuệ để hành xử đúng đắn trong mọi hoàn cảnh.</p><h4>Lợi ích nhận được:</h4><ul><li>✔</li><li>Trở thành người sống thiện lành, an nhàn.✔</li><li>Thân tâm an lạc, khỏe mạnh.✔</li><li>Trí tuệ sáng suốt, phân biệt rõ phải trái.✔</li><li>Khai mở thiên nhãn và trải nghiệm tâm linh diệu kỳ.</li></ul><h4>Pháp môn này dành cho ai?</h4><ul><li>❖</li><li>Những ai muốn hóa giải bất ổn, chuyển hóa nghiệp.❖</li><li>Người tu tập lâu năm nhưng chưa có kết quả.❖</li><li>Những ai khao khát được giác ngộ nhanh chóng.❖</li><li>Những ai muốn tìm thấy sự an yên và thấu hiểu bản thân.</li></ul><p>Đây là bài pháp quan trọng cho những ai đang thật sự tu hành để được Giác Ngộ Giải Thoát hiện đời.</p><p>Om Phật Tổ Tối Cao</p><p>Om Đức Phật Tịnh Quang</p><h3>Liên hệ để được hướng dẫn tu tập</h3><p><br></p><p>BT Thúy</p><p><strong>+840916 781 969</strong></p><p><br></p><p>BT Thu</p><p><strong>+840399 142 256</strong></p><p><br></p><p>BT Xiêm</p><p><strong>+840936 168 219</strong></p><p><br></p><p>Mail: <strong>thiensutinhquang@gmail.com</strong>Đang tải nội dung...</p>
     <script>
         // --- JavaScript cho Dropdown Menu (Desktop) ---
         const dropdown = document.getElementById('platforms-dropdown');

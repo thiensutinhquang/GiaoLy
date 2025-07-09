@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ Giới Luật Toàn Bích | Minh Sư Tịnh Quang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font cho nội dung chính -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font cho thanh điều hướng -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CÀI ĐẶT CHUNG --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: #3d4451;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-title { color: #8C5B00; }
+        .text-body { color: #3d4451; }
+        .text-quote { color: #a16207; }
+        .border-accent { border-color: #eab308; }
+        .bg-accent-light { background-color: #fefce8; }
+
+        /* --- THANH ĐIỀU HƯỚNG --- */
+        :root {
+            --glow-color-red: rgba(255, 31, 113, 0.8);
+            --glow-color-blue: rgba(0, 191, 255, 0.7);
+        }
+
+        .top-nav-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .nav-button-base {
+            background: #000;
+            color: #fff;
+            font-weight: 700;
+            height: 44px;
+            padding: 0 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-button-base:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+        .nav-button-base:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .main-action-button {
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px 8px rgba(172, 92, 232, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .main-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-red) 0%, #4a0e69 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 18px 8px rgba(255, 31, 113, 0.7); 
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .main-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat 1.2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat {
+            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+            70% { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 40px 18px rgba(255, 31, 113, 1); }
+            100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+        }
+        
+        .main-action-button:hover {
+            box-shadow: 0 0 45px 18px rgba(172, 92, 232, 0.8);
+        }
+
+        .footer-action-button {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px 7px rgba(172, 92, 232, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .footer-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-blue) 0%, #004d66 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .footer-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat-menu 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat-menu {
+            0% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+            70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px 12px rgba(0, 191, 255, 0.8); }
+            100% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+        }
+        
+        .footer-action-button:hover {
+            box-shadow: 0 0 30px 12px rgba(172, 92, 232, 0.6);
+        }
+
+        .button-text-wrapper {
+            font-size: 11px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .dropdown { position: relative; }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            transform: translateX(0);
+            display: flex; flex-direction: row;
+            align-items: center; gap: 6px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 4;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        
+        .dropdown.show .dropdown-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .dropdown-content a {
+            display: flex; justify-content: center; align-items: center;
+            width: 40px; height: 40px; border-radius: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .dropdown-content a img { width: 28px; height: 28px; }
+
+        .dropdown-content a:hover {
+            background-color: #374151;
+            transform: scale(1.1);
+        }
+        
+        .section-divider {
+            border-top: 1px solid;
+            border-image: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent) 1;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .gioi-luat-list {
+            list-style: none;
+            padding-left: 0;
+            counter-reset: gioi-luat-counter;
+        }
+        .gioi-luat-list > li {
+            counter-increment: gioi-luat-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        .gioi-luat-list > li::before {
+            content: counter(gioi-luat-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background-color: #fefce8;
+            border: 1px solid #eab308;
+            color: #a16207;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body class="text-body">
+    
+    <!-- THANH ĐIỀU HƯỚNG CỐ ĐỊNH -->
+    <header class="w-full p-4 sticky top-0 z-50 transition-all duration-300" style="background-color: rgba(253, 251, 247, 0.85); backdrop-filter: blur(10px);">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" title="Trang Chủ">
+                <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Thiên Sứ Tịnh Quang" class="h-16 w-auto" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));" onerror="this.onerror=null; this.src='https://placehold.co/120x64/fdfbf7/8C5B00?text=Logo';">
+            </a>
+            
+            <!-- Các nút điều hướng (Desktop) -->
+            <div class="top-nav-bar hidden md:flex">
+                <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">TRANG CHỦ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button">
+                    <span class="button-text-wrapper">Play Nhạc</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Kho Thơ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Play Video</span>
+                </a>
+                <div class="dropdown" id="platforms-dropdown">
+                    <button class="nav-button-base footer-action-button" id="platforms-btn">
+                        <span class="button-text-wrapper">NỀN TẢNG</span>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="https://www.youtube.com/@Thi%C3%AAnS%E1%BB%A9TinhQuang" target="_blank" rel="noopener noreferrer" title="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube"></a>
+                        <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener noreferrer" title="TikTok"><img src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" alt="TikTok"></a>
+                        <a href="https://www.facebook.com/phatphapnhiemmauTinhQuang" target="_blank" rel="noopener noreferrer" title="Facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+                        <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener noreferrer" title="Telegram"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
+                        <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener noreferrer" title="Zalo"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo"></a>
+                    </div>
+                </div>
+            </div>
+             <!-- Nút menu cho di động -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-title p-2 rounded-md">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu di động (ẩn mặc định) -->
+        <div id="mobile-menu" class="hidden md:hidden p-4 space-y-2">
+             <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">TRANG CHỦ</a>
+             <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button w-full">PLAY NHẠC</a>
+             <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">KHO THƠ</a>
+             <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">PLAY VIDEO</a>
+             <a href="#" id="platforms-mobile-link" class="nav-button-base footer-action-button w-full">NỀN TẢNG</a>
+        </div>
+    </header>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="min-h-screen p-4">
+        <div class="card max-w-4xl w-full rounded-2xl shadow-xl p-8 md:p-12 space-y-8 mt-24 sm:mt-16 mx-auto">
+            
+            <!-- PHẦN 1: LỜI GIỚI THIỆU -->
+            <section id="loi-gioi-thieu">
+                <header class="text-center">
+                    <h1 class="text-3xl md:text-4xl font-bold text-title">BỘ GIỚI LUẬT TOÀN BÍCH</h1>
+                    <p class="mt-2 text-lg text-gray-500">Bí Mật Của Sự Sống và Bí Quyết Tu Hành Tức Khắc Khai Ngộ Hiện Đời Giải Thoát</p>
+                </header>
+
+                <div class="text-center my-8 italic text-title">
+                    <p>Om Đức Phật Tổ Từ Bi!</p>
+                    <p>Om Mười Phương Tam Thế Chư Phật, Chư Bồ Tát!</p>
+                    <p>Om Đức Phật Tịnh Quang!</p>
+                </div>
+
+                <main class="mt-8 space-y-6 text-lg leading-relaxed text-body">
+                    <p><strong>Kính thưa Quý Đạo Hữu gần xa!</strong></p>
+                    <p>Quyển Giới Luật Và Bí Quyết Tu Hành Pháp Môn Đại Triệt Ngộ ra đời là một Đại Ân Phước cho nhân loại thế kỷ 21 và muôn vạn đời sau. Bởi vì quyển Giới Luật này là chìa khóa phá tan màn đêm vô minh, nghiệp chướng, bệnh tật, giúp hành giả tìm về Chân Như bước vào Kỷ Nguyên Thánh Đức Thiên Đàng Tại Thế.</p>
+                    
+                    <div class="bg-accent-light p-6 rounded-lg border border-accent/50">
+                        <h2 class="text-xl font-semibold text-title mb-3">NHỮNG HUYỀN CƠ TRONG QUYỂN GIỚI LUẬT</h2>
+                        <p class="italic">Lời khai sáng từ Minh Sư Tịnh Quang:</p>
+                        <p class="mt-4">"Chào những Vị Phật tương lai! Sau khi Ta đạt được Đại Triệt Ngộ và có sứ mệnh ra Hoằng Dương Chánh Pháp, Ta đã ngồi thiền nhập định và biên soạn ra quyển Giới Luật toàn bích có một không hai, mà từ cổ tới kim chưa có một Vị Minh Sư, một Vị Phật nào có đủ Lực Lượng và Bi Trí Dũng tột cùng để tiết lộ Thiên Cơ Vũ Trụ Huyền Bí thâm sâu này.</p>
+                        <p>Những lời khai sáng chỉ dẫn của Ta chính là Kim Chỉ Nam, là ngọn Hải Đăng soi đường dẫn lối cho Quý Vị tu hành thăng hoa để thể nhập vào dòng Thánh, sống hiện đời giải thoát và trở về Nguồn Cội không còn sinh tử luân hồi.</p>
+                        <p>Mỗi hành giả hãy học, đọc nghiền ngẫm mỗi ngày cho đến khi áp dụng thực hành những lời chỉ dạy của Ta vào trong cuộc sống, thì cuộc đời của Quý Vị sẽ là bài ca, là tiếng cười và luôn được sống trong Tình Yêu Thương của Thượng Đế, của Phật Trời và của Minh Sư Tịnh Quang.</p>
+                        <p>Bất cứ ai, người tu hay chưa tu, khi đọc được Giới Luật này khởi tâm hoan hỷ và áp dụng thực hành thì sẽ nhận được công đức vô lượng vô biên, sống tốt Đời đẹp Đạo, thậm chí sống hiện đời Giải Thoát an nhiên tự tại. Bởi vì Giới Luật này được Ta lồng Lực Lượng Sáng Suốt, Yêu Thương, Hòa Bình để chữa trị tâm bệnh và thân bệnh cho Quý Vị.</p>
+                        <p>Bất cứ ai trì niệm Giới Luật này thành tâm, thành kính thì luôn được Long Thần Hộ Pháp bảo hộ và Hóa Thân của Ta cũng âm thầm gia trì hóa giải bệnh tật để kéo Quý Vị tu hành thăng hoa. Quý Vị cũng được Thượng Đế, Phật Trời gia trì giúp đỡ để cho bệnh tật được tiêu trừ, Trí Tuệ được sáng suốt, và gặp nhiều may mắn trong cuộc sống."</p>
+                        <p class="mt-6 text-right font-semibold text-quote">Yêu Quý Vị nhiều...!</p>
+                        <p class="text-right">Minh Sư Tịnh Quang</p>
+                        <p class="text-right text-sm text-gray-500">Paris - Cộng Hòa Pháp - Ngày 08.8.2024</p>
+                    </div>
+                </main>
+            </section>
+            
+            <hr class="section-divider">
+
+            <!-- PHẦN 2: GIỚI LUẬT -->
+            <section id="gioi-luat" class="py-8">
+                <h2 class="text-3xl font-semibold text-title mb-8 text-center">PHẦN I: GIỚI LUẬT</h2>
+                <ol class="gioi-luat-list text-lg leading-relaxed">
+                    <!-- Các giới luật sẽ được chèn vào đây -->
+                    <li>Đọc những Giới Luật của Ta là các con phải tư tuệ xem Ta muốn khai sáng điều gì, rồi áp dụng vào cuộc sống để mang lại lợi ích cho chính mình. Khi thành tâm đọc, các con sẽ nhận được Lực Lượng Ánh Sáng, có công đức phước báo, giúp thân tâm an lạc, bệnh tật tiêu trừ, làm ăn may mắn và tu hành thăng hoa.</li>
+                    <li>Luôn tôn kính ba ngôi Tam Bảo: Phật - Pháp - Tăng. Tu hành để nhận thức được: Mình Là Ai? Từ Đâu Đến? Đến Đây Để Làm Gì? Sau Khi Chết, Linh Hồn Đi Về Đâu? Để không còn sinh tử luân hồi.</li>
+                    <li>Hãy sống với sự Tỉnh Thức, với Tánh Biết, Tánh Thấy, Tánh Nghe để trở thành Người Quan Sát. Khi đó, Quý Vị sẽ thông minh sáng suốt, làm chủ mọi lời nói hành động, diệt trừ được tham sân si, mạn nghi đố kỵ, hơn thua phải trái.</li>
+                    <li>Đừng đồng hoá mình là thân xác này, là bản ngã, cái tôi hư dối. Chủ Nhân Ông bên trong Quý Vị chính là Thượng Đế, là Phật. Vì thế hãy khiêm nhường, nhưng vẫn Phải Là Chính Mình và sống tích cực, an vui.</li>
+                    <li>Hãy thật tâm tu hành. Tu là sửa, hành là thực hành. Người thật tâm tu hành là người chỉ nhìn lỗi mình, không nhìn lỗi người. Phần lớn chúng ta chỉ thích nhìn lỗi và sửa lỗi người khác, phán xét người khác. Khi thấy lỗi của người, hãy lấy đó làm bài học cho mình. Như vậy mới là khiêm nhường, không còn hơn thua tranh đấu, tâm sẽ an, bệnh sẽ hết.</li>
+                    <li>Cố gắng không sát sanh, không trộm cắp, không tà dâm, không nói dối, không uống rượu và không nghiện hút.
+                        <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg text-base">
+                            <strong>Lưu ý:</strong><br>
+                            - Ăn mặn thì không nên trực tiếp sát sanh, ăn ít thịt đi.<br>
+                            - Nói dối mà không hại ai, thậm chí tốt cho người khác thì không sao.<br>
+                            - Uống rượu bia thì uống ít, đừng để say.<br>
+                            - Có tư tưởng tà dâm thì cứ để nó tự đến tự đi, đừng sợ, đừng chạy trốn, cũng đừng nhập vào. Chỉ cần quan sát và cười lên là nó sẽ biến mất.
+                        </blockquote>
+                    </li>
+                    <li>Mỗi ngày nên thành tâm cầu nguyện:
+                        <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg text-base">
+                            <strong>Sáng:</strong> "Om Phật Tổ Từ Bi! Om Đức Phật Tịnh Quang! Om Vị Phật bên trong con! Con xin các Ngài gia trì cho con một ngày mới luôn khỏe mạnh vui tươi và hạnh phúc ạ."<br>
+                            <strong>Tối:</strong> "Om Phật Tổ Từ Bi! Om Đức Phật Tịnh Quang! Om Vị Phật bên trong con! Con xin các Ngài gia trì cho con một đêm an lành để con được ngủ trong ánh sáng tình yêu thương của các Ngài ạ."<br>
+                            <strong>Trước bữa ăn:</strong> "Om Phật Tổ Từ Bi! Om Đức Phật Tịnh Quang! Om Vị Phật bên trong con! Con xin thành tâm cúng dường các ngài tất cả đồ ăn thức uống này..."
+                        </blockquote>
+                        Đồng thời, mỗi ngày nên ngồi thiền khoảng 2 tiếng trở lên.
+                    </li>
+                    <li>Hãy chiến thắng chính mình để từ bỏ thói quen xấu và sống tốt hơn mỗi ngày. Người Chân Thật bên trong là vô hình, vô tướng. Thượng Đế, Phật Trời vừa có bên trong, vừa có bên ngoài mình.</li>
+                    <li>Muốn tu hành thăng hoa, phải định nghĩa được bản ngã là gì. Bản ngã là cái tôi, là sự cống cao ngã mạn, chấp trước đúng sai, là nguyên nhân của mọi khổ đau. Muốn hết khổ, phải Khiêm Nhường, Bao Dung, Vô Ngã và Từ Bi có Trí Huệ.</li>
+                    <li>Hãy bằng lòng chấp nhận tất cả mọi chuyện đến với mình, dù tốt hay xấu. Chuyện đã xảy ra, buồn phiền cũng vô ích. Hãy vui vẻ chấp nhận và rút ra bài học kinh nghiệm, thất bại là mẹ của thành công.</li>
+                    <li>Tất cả đều tốt: Giờ nào cũng tốt, ngày nào cũng tốt, hướng nào cũng tốt. Đừng mê tín dị đoan vào năm sung, năm hạn, đất lành, đất dữ. Quý Vị tin thế nào, Thượng Đế sẽ điều hành như vậy.</li>
+                    <li>Uống nước nhớ Nguồn, ăn quả nhớ kẻ trồng cây. Hãy hiếu thảo với Ông Bà, Cha Mẹ, tổ tiên và kính trên nhường dưới. Hãy là công dân gương mẫu, tôn trọng Thầy Cô, nhà lãnh đạo, và luật pháp nơi mình sinh sống.</li>
+                    <li>Hãy luôn sống tốt Đời đẹp Đạo, yêu thương gia đình, có trách nhiệm vun vén hạnh phúc. Hãy yêu thương mọi người xung quanh trong tình Huynh Đệ cùng một Nguồn Cội.</li>
+                    <li>Hãy luôn biết ơn cuộc sống, trân quý kiếp làm người. Thân người không dễ có, Đại Pháp khó tìm. Hãy vui lên và cầu nguyện những điều tốt đẹp cho mình, cho người thân, và cho Nhân Loại.</li>
+                    <li>Tất cả các tôn giáo đều dạy con người sống hướng thiện và cùng một Nguồn Cội. Đừng có tâm phân biệt, hãy yêu thương hòa đồng với tất cả.</li>
+                    <li>Yêu người là yêu mình, ghét người là ghét mình, tha thứ cho người là tha thứ cho mình. Muốn được như vậy, không được chấp trước đúng sai, nhưng phải luôn rõ biết tốt xấu để không đi sai đường.</li>
+                    <li>Luôn dùng Trí Huệ quán chiếu, suy nghĩ kỹ trước khi nói, làm để không gây tổn thương người khác. Khi gặp chuyện không như ý, hãy suy nghĩ tìm nguyên nhân, Trí Huệ sẽ mách bảo cách giải quyết tốt nhất.</li>
+                    <li>Tu Pháp Đại Triệt Ngộ là phải thông minh sáng suốt hơn. Hãy mở tâm học hỏi mọi lúc mọi nơi, học cái hay của người khác biến thành của mình. Hãy thấy ai cũng là thầy mình. Học cả cái dở, sự thất bại của người khác để rút kinh nghiệm.</li>
+                    <li>Phải có đức tin tuyệt đối vào Phật Trời. Mọi bệnh tật không phải do Luật Nhân Quả mà do từ trường ác trược Thượng Đế đẩy vào. Đây là Chân Lý, Sự Thật bất biến.</li>
+                    <li>Hãy thường niệm: "Con là Phật và con thấy Ai cũng là Phật như Ân Sư của con." Yêu thương, tôn trọng người thân như yêu thương, tôn trọng Ân Sư thì gia đình sẽ hạnh phúc.</li>
+                    <li>Hãy thường niệm: "Xin Biết Ơn Tất Cả và Yêu Thương Tất Cả!" Biết ơn từ bát cơm, cây cỏ, hạt cát. Hãy có lòng trắc ẩn, yêu thương người nghèo, người già, người bệnh và muôn loài.</li>
+                    <li>Thượng Đế là bài ca, là tiếng cười, là niềm vui phúc lạc. Khi tu hành và nhìn đời bằng cặp kính khai ngộ, Quý Vị sẽ sống với điều đó và trở thành Phật Di Lặc.</li>
+                    <li>Không được bảo thủ. Thấy mình sai ở đâu thì sửa ở đó. Ngã ở đâu thì đứng lên đi tiếp, không đổ thừa hoàn cảnh hay người khác.</li>
+                    <li>Tu thân, tu khẩu, tu ý thì tu khẩu là quan trọng nhất. Hãy lựa lời nói để không làm tổn thương người khác. Nếu có lỗi, hãy thành thật xin lỗi.</li>
+                    <li>Minh Sư Tịnh Quang là Hiện Thân phần Sáng của Thượng Đế. Tôn kính Ta chính là tôn kính Vị Phật bên trong Quý Vị, sẽ rất tốt cho sự tu hành.</li>
+                    <li>Người tu tốt thì chỉ thấy lỗi mình, càng ngày càng sáng suốt, thông minh, khỏe mạnh, trẻ đẹp, vui tươi, hạnh phúc.</li>
+                    <li>Hãy tập thể dục mỗi ngày ít nhất 30 phút. 13 bài tập do Minh Sư Tịnh Quang chỉ dạy có huyền cơ, giúp tiêu trừ bệnh tật, khai mở huyệt đạo, luân xa, giúp trẻ đẹp và sống thọ hơn.</li>
+                    <li>Luôn nghĩ khẳng định. Bất cứ chuyện gì đến cũng nghĩ theo chiều hướng tích cực, thì chuyện buồn sẽ hóa vui, chuyện xấu thành tốt.</li>
+                    <li>Hãy niệm: "Con cầu xin Phật Tổ Từ Bi! Con cầu xin Đức Phật Tịnh Quang! Con cầu xin Thượng Đế bên trong con! Con xin các Ngài Từ Bi gia trì cho tất cả mọi bộ phận trong thân thể của con... luôn luôn được khỏe mạnh..."</li>
+                    <li>Các con tu làm sao để cho Thượng Đế bên trong đi trải nghiệm qua thân xác các con. Ngài vui thì các con vui và mọi thứ tốt đẹp sẽ đến.</li>
+                    <li>Khi ăn uống, hãy thành tâm cúng dường Thượng Đế, Đức Phật Tịnh Quang, Vị Phật bên trong. Quý vị sẽ nhận được năng lượng gia trì, giúp ăn ngon miệng và tiêu trừ bệnh tật.</li>
+                    <li>Thiền Động: Đi, đứng, nằm, ngồi đều là thiền. Khi làm việc, hãy tập trung toàn tâm toàn ý. Khi ăn, tập trung vào việc ăn. Khi chơi, chơi hết mình. Sống trọn vẹn với từng khoảnh khắc.</li>
+                    <li>Phải học kỹ bài Từ Trường để làm chủ lời nói, hành động. Không chạy theo từ trường tiêu cực mà Thượng Đế xúi giục. Chỉ nên nói những lời khẳng định.</li>
+                    <li>Nên sống chậm lại để thưởng thức cuộc sống, sống với hiện tại. Những dự định cho tương lai thì viết ra giấy để không phải suy nghĩ miên man.</li>
+                    <li>Đôi khi Thượng Đế xuyên qua người thân để khảo đảo Quý Vị. Hãy bình tĩnh sáng suốt để nhìn ra gốc rễ vấn đề, Quý Vị sẽ thông cảm cho họ hơn.</li>
+                    <li>TRỞ VỀ NGÔI NHÀ NGUYÊN THỦY: Khi tu hành, Hóa Thân của Ta có thể đưa Linh Hồn con đến Trung Tâm Sinh Lực của Vũ Trụ, nơi con sẽ thấy Người Khổng Lồ Siêu To, đó cũng là Ta, là Thượng Đế, là con Người Chân Thật bên trong con.</li>
+                    <li>Các con tu thì các con mới sáng lên, Thượng Đế bên trong các con mới sáng lên theo. Ta được như ngày hôm nay là đã tu hành đời đời kiếp kiếp. Các con cứ đi rồi cũng sẽ đến.</li>
+                    <li>Nếu là người tại gia, chuyện vợ chồng cứ để tự nhiên, thậm chí làm cho nó thăng hoa. Đó là sự hòa quyện giữa Linh Hồn và thể xác, là năng lượng tích cực, tốt cho sức khỏe và hạnh phúc.</li>
+                    <li>Nếu mắc lỗi lầm, hãy tìm ra nguyên nhân, thành tâm sám hối và quyết tâm sửa đổi thì tâm sẽ bình an.</li>
+                    <li>Thỉnh thoảng hãy quay vào trong tâm sự với Minh Sư của mình, xin Ta khai sáng những khúc mắc để được thông suốt. Không ai mang đến khổ đau cho mình được nếu mình biết buông xả.</li>
+                    <li>Khi có bất cứ dấu hiệu bệnh tật nào (mắt mờ, tai ù, đau nhức...), phải biết rõ đây là từ trường ác trược Thượng Đế đẩy vào. Hãy bình tĩnh, tập thể dục, xoa bóp và cầu xin thì bệnh sẽ nhanh khỏi.</li>
+                    <li>Những bài thơ của Ta chứa đựng Lực Lượng dòng Âm Lưu của Vũ Trụ. Hãy đọc và hát mỗi ngày để ngày càng vui tươi, bệnh tật sẽ nhanh khỏi.</li>
+                    <li>Hãy lên kế hoạch cho cuộc đời, sống có mục đích, lý tưởng. Lấy đam mê làm niềm vui, sự sáng tạo và động lực để sống có ý nghĩa.</li>
+                    <li>Các con tu phải càng ngày càng sáng suốt. Sáng đến mức Thượng Đế không lừa được các con, không xúi giục các con đầu tư sai lầm làm mất tiền của.</li>
+                    <li>Hãy đề phòng với chính cái tâm của mình, với chính Thượng Đế bên trong, vì Ngài thường xuyên khảo và lừa rất vi tế. Hãy chỉ chọn những suy nghĩ tích cực để làm theo.</li>
+                    <li>Tuyệt đối không nên nói ra bất cứ điều gì nếu không thực sự hiểu thấu tường tận vấn đề đó. Thực hành được giới này, cả đời sẽ bình an.</li>
+                    <li>SỰ SỐNG TỪ ĐÂU MÀ CÓ? Sự Sống có mặt khắp trong không gian. Khi một hành tinh đủ nhân duyên, Sự Sống có hình tướng sẽ được hình thành. Ý thức, trực giác, tư tưởng của con người cũng do Thượng Đế đẩy vào.</li>
+                    <li>Tu đến khi nào tâm luôn an nhiên tự tại trước mọi lời thị phi. Dù bị oan uổng vẫn vui vẻ bình thường. Hãy đứng vào vị trí của người khác để hiểu họ, nhưng không đánh mất chính mình.</li>
+                    <li>NGUỒN GỐC CỦA MỌI CON VIRUS, VI KHUẨN gây bệnh đều do Thượng Đế sáng tạo ra. Ngài có thể làm cho chúng biến thể, nhân bản hoặc chết đi.</li>
+                    <li>NGUYÊN NHÂN MÁY TÍNH, ĐIỆN THOẠI BỊ SỰ CỐ DỪNG, TREO cũng là do Từ Trường Thượng Đế đẩy vào. Khi gặp sự cố, hãy nói với Ngài và khởi động lại thiết bị.</li>
+                    <li>Tất cả mọi bệnh tật đều do Thượng Đế đẩy vào, đẩy ra. Quý Vị phải dành lại quyền làm chủ, lái cuộc đời theo hướng tích cực thì Thượng Đế mới thích.</li>
+                    <li>Khi không bằng lòng với ai, Thượng Đế sẽ đẩy từ trường giận dỗi vào. Phải làm ngược lại, tìm cách trò chuyện để giải tỏa khúc mắc, biến thù thành bạn.</li>
+                    <li>KHAI MỞ LUÂN XA ĐỂ KẾT NỐI VỚI VŨ TRỤ: Khi ngồi thiền, hãy cầu xin và tập trung vào các luân xa, Vị Phật của Ta sẽ dùng Phật Lực để khai mở cho các con.</li>
+                    <li>XIN THƯỢNG ĐẾ TỪ BI TRẢ LỜI: Tại sao Thượng Đế lại dùng từ trường ác trược để hành hạ con người, kể cả trẻ em, người già, người tu hành, người sống tốt?</li>
+                    <li>Nếu Thượng Đế cứ khảo, làm các con bệnh tật, xúi giục làm điều không lành, hãy tỉnh táo, đừng nhập vào từ trường tiêu cực đó. Hãy khai sáng cho chính Thượng Đế bên trong các con.</li>
+                    <li>Quý Vị đi học thì mới sáng ra, Thượng Đế bên trong cũng sáng ra theo. Đừng vội ra hoằng pháp khi chưa đạt Đại Triệt Ngộ, nếu không sẽ dẫn người khác đi trong mê.</li>
+                    <li>Không Có Luật Nhân Quả báo ứng để con người bị bệnh tật. Bệnh tật là do Thượng Đế đẩy từ trường ác trược vào. Hãy đấu tranh với cái xấu, cái ác từ Thượng Đế để được sống khỏe mạnh.</li>
+                    <li>KHÔNG SẠCH, KHÔNG SÁNG LÀ VẪN BỊ THƯỢNG ĐẾ LỪA. Ngài dùng nhiều chiêu trò để khảo, từ giả làm Ma Vương đến giả làm Phật, Tiên. Chỉ khi sạch, sáng như Minh Sư Tịnh Quang thì mới không bị lừa.</li>
+                    <li>Pháp Đại Triệt Ngộ là Đại Pháp bao trùm tất cả. Các pháp môn khác phần lớn là pháp nhị nguyên, là trò chơi của Thượng Đế.</li>
+                    <li>Khi ngồi thiền, hãy thả lỏng, hít thở sâu, tập trung vào mắt Trí Huệ và thành tâm cầu nguyện để được khai mở Thiên Nhãn, khai sáng và hóa giải bệnh tật.</li>
+                    <li>Khi ngồi thiền, nếu thấy Hóa Thân của Ta đến gia trì, hãy để tự nhiên. Nếu thấy Ma Quỷ hay âm thanh dọa dẫm, đó chỉ là Thượng Đế khảo, tuyệt đối không được sợ.</li>
+                    <li>Tất cả những giấc mơ chỉ là Thượng Đế cho đi trải nghiệm hoặc khảo. Nếu là ác mộng, đừng sợ, hãy cười lên và nói chuyện với Ngài.</li>
+                    <li>Tùy vào căn cơ, Vị Phật của Ta sẽ hiện ra những hình tướng khác nhau để độ cho các con, có thể là Phật Tổ, Quán Âm, hoặc một Vị Giáo Chủ nào đó.</li>
+                    <li>Tu Pháp Đại Triệt Ngộ sẽ được chứng nghiệm tất cả sự màu nhiệm như trong Kinh điển. Nhưng việc khai mở Thiên Nhãn, câu thông với Trời Phật còn tùy thuộc vào công đức và sự thành tâm.</li>
+                    <li>Nếu Thượng Đế thông điệp điều gì không lành, tuyệt đối không được nói ra. Hãy chỉ thành tâm cầu xin hóa giải.</li>
+                    <li>ADN cũng do Thượng Đế sáng tạo. Không có bệnh di truyền theo cách khoa học lý giải. Bệnh tật là do Thượng Đế đẩy từ trường vào ai thì người đó bị.</li>
+                    <li>Thượng Đế tạo ra đại dịch bằng cách đẩy từ trường bệnh vào một người, rồi Thượng Đế bên trong những người khác bắt chước vận hành để tạo ra bệnh tương tự.</li>
+                    <li>TRỰC GIÁC - Ý THỨC - SỰ SÁNG TẠO của con người đều là từ trường mà Đấng Tạo Hóa đẩy vào tâm trí.</li>
+                    <li>Hãy nhìn cuộc sống qua lăng kính màu hồng, đi từ niềm vui này đến niềm vui khác. Sống tích cực thì khổ đau sẽ không đến.</li>
+                    <li>Không có người âm hay Quỷ Thần nào làm con người bị bệnh được. Nếu có, đó chính là Thượng Đế hiện tướng ra để khảo.</li>
+                    <li>NGUYÊN NHÂN CHIẾN TRANH và xung đột cũng do Thượng Đế đẩy từ trường bản ngã vào con người. Cần tỉnh táo để không bị nô dịch, gây khổ cho nhau.</li>
+                    <li>Người tu hành sẽ biết được nhiều kiếp trước. Khi ngồi thiền, Ta sẽ khai mở Thiên Nhãn để các con thấy được những tiền kiếp của mình.</li>
+                    <li>VĂN HÓA THỜ CÚNG VÀ CÁCH HÓA GIẢI CÁC VONG LINH: Việc thờ cúng thể hiện lòng thành kính, nhưng đừng tin người âm về làm phiền hay đòi hỏi. Đó chỉ là Thượng Đế hiện tướng khảo.</li>
+                    <li>Nếu có vị Minh Sư nào giảng khác Giáo Lý của Ta, nghĩa là Vị ấy chưa đạt Đại Triệt Ngộ, vẫn còn bị Thượng Đế lừa.</li>
+                    <li>Cứ tu tốt Pháp Môn Đại Triệt Ngộ, giữ đức tin thì sẽ được chứng nghiệm Chân Lý. Đến ngày viên mãn, Linh Hồn sẽ được về Thế Giới Giải Thoát hoặc tái sinh tùy theo nguyện vọng.</li>
+                    <li>NGÀY PHÁN XÉT: Con người hoàn toàn vô tội, vì mọi hành động thiện ác đều do Thượng Đế điều hành. Nếu có lỗi, đó là lỗi của Thượng Đế khi dùng từ trường ác trược hãm hại con người.</li>
+                    <li>Cứ tu tốt Pháp Môn Đại Triệt Ngộ, giữ đức tin tuyệt đối vào Đức Phật Tịnh Quang và Phật Trời, Quý Vị sẽ được viên mãn, hạnh phúc trong kiếp này và những kiếp sau.</li>
+                    <li>Một tuần nên ngồi thiền cộng tu một lần để tăng cường lực lượng. Cũng nên nghỉ tu một đến hai ngày để dành thời gian cho gia đình và những sở thích cá nhân. Tu là phải sống tự tại.</li>
+                </ol>
+            </section>
+
+            <!-- PHẦN LIÊN HỆ -->
+            <footer class="pt-8 mt-8 border-t border-gray-200">
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-center text-gray-700 mb-4">Liên hệ để được hướng dẫn tu tập</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-4 gap-x-8 text-gray-600 text-center">
+                        <div class="flex flex-col items-center justify-center">
+                            <span class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z" /></svg>
+                                <span>Sư tỷ Thúy</span>
+                            </span>
+                            <strong>091 678 19 69</strong>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                           <span class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z" /></svg>
+                                <span>Sư tỷ Thu</span>
+                            </span>
+                             <strong>0399 142 256</strong>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <span class="flex items-center gap-2">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z" /></svg>
+                                <span>Sư huynh Xiêm</span>
+                            </span>
+                            <strong>093 616 82 19</strong>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 mt-4 text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                        <span>Mail: <strong>thiensutinhquang@gmail.com</strong></span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // --- JavaScript cho Dropdown Menu (Desktop) ---
+        const dropdown = document.getElementById('platforms-dropdown');
+        const dropdownBtn = document.getElementById('platforms-btn');
+
+        dropdownBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+            dropdown.classList.toggle('show');
+        });
+
+        // Đóng dropdown khi click ra ngoài
+        document.addEventListener('click', (event) => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // --- JavaScript cho Menu (Mobile) ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const platformsMobileLink = document.getElementById('platforms-mobile-link');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Mô phỏng dropdown cho mobile
+        platformsMobileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Vui lòng truy cập các nền tảng:\n- YouTube\n- TikTok\n- Facebook\n- Telegram\n- Zalo');
+        });
+
+    </script>
+</body>
+</html>

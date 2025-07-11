@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13 Bài Tập Thể Dục Của Bậc Đại Triệt Ngộ | Minh Sư Tịnh Quang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font cho nội dung chính -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font cho thanh điều hướng -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CÀI ĐẶT CHUNG --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: #3d4451;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-title { color: #8C5B00; }
+        .text-body { color: #3d4451; }
+        .text-quote { color: #a16207; }
+        .border-accent { border-color: #eab308; }
+        .bg-accent-light { background-color: #fefce8; }
+
+        /* --- THANH ĐIỀU HƯỚNG --- */
+        :root {
+            --glow-color-red: rgba(255, 31, 113, 0.8);
+            --glow-color-blue: rgba(0, 191, 255, 0.7);
+        }
+
+        .top-nav-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .nav-button-base {
+            background: #000;
+            color: #fff;
+            font-weight: 700;
+            height: 44px;
+            padding: 0 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-button-base:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+        .nav-button-base:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .main-action-button {
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px 8px rgba(172, 92, 232, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .main-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-red) 0%, #4a0e69 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 18px 8px rgba(255, 31, 113, 0.7); 
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .main-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat 1.2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat {
+            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+            70% { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 40px 18px rgba(255, 31, 113, 1); }
+            100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+        }
+        
+        .main-action-button:hover {
+            box-shadow: 0 0 45px 18px rgba(172, 92, 232, 0.8);
+        }
+
+        .footer-action-button {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px 7px rgba(172, 92, 232, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .footer-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-blue) 0%, #004d66 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .footer-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat-menu 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat-menu {
+            0% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+            70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px 12px rgba(0, 191, 255, 0.8); }
+            100% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+        }
+        
+        .footer-action-button:hover {
+            box-shadow: 0 0 30px 12px rgba(172, 92, 232, 0.6);
+        }
+
+        .button-text-wrapper {
+            font-size: 11px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .dropdown { position: relative; }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            transform: translateX(0);
+            display: flex; flex-direction: row;
+            align-items: center; gap: 6px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 4;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        
+        .dropdown.show .dropdown-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .dropdown-content a {
+            display: flex; justify-content: center; align-items: center;
+            width: 40px; height: 40px; border-radius: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .dropdown-content a img { width: 28px; height: 28px; }
+
+        .dropdown-content a:hover {
+            background-color: #374151;
+            transform: scale(1.1);
+        }
+        
+        .section-divider {
+            border-top: 1px solid;
+            border-image: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent) 1;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .bai-tap-list {
+            list-style: none;
+            padding-left: 0;
+            counter-reset: bai-tap-counter;
+        }
+        .bai-tap-list > li {
+            counter-increment: bai-tap-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+        .bai-tap-list > li::before {
+            content: counter(bai-tap-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background-color: #fefce8;
+            border: 1px solid #eab308;
+            color: #a16207;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body class="text-body">
+    
+    <!-- THANH ĐIỀU HƯỚNG CỐ ĐỊNH -->
+    <header class="w-full p-4 sticky top-0 z-50 transition-all duration-300" style="background-color: rgba(253, 251, 247, 0.85); backdrop-filter: blur(10px);">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" title="Trang Chủ">
+                <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Thiên Sứ Tịnh Quang" class="h-16 w-auto" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));" onerror="this.onerror=null; this.src='https://placehold.co/120x64/fdfbf7/8C5B00?text=Logo';">
+            </a>
+            
+            <!-- Các nút điều hướng (Desktop) -->
+            <div class="top-nav-bar hidden md:flex">
+                <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">TRANG CHỦ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button">
+                    <span class="button-text-wrapper">Play Nhạc</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Kho Thơ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Play Video</span>
+                </a>
+                <div class="dropdown" id="platforms-dropdown">
+                    <button class="nav-button-base footer-action-button" id="platforms-btn">
+                        <span class="button-text-wrapper">NỀN TẢNG</span>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="https://www.youtube.com/@Thi%C3%AAnS%E1%BB%A9TinhQuang" target="_blank" rel="noopener noreferrer" title="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube"></a>
+                        <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener noreferrer" title="TikTok"><img src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" alt="TikTok"></a>
+                        <a href="https://www.facebook.com/phatphapnhiemmauTinhQuang" target="_blank" rel="noopener noreferrer" title="Facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+                        <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener noreferrer" title="Telegram"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
+                        <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener noreferrer" title="Zalo"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo"></a>
+                    </div>
+                </div>
+            </div>
+             <!-- Nút menu cho di động -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-title p-2 rounded-md">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu di động (ẩn mặc định) -->
+        <div id="mobile-menu" class="hidden md:hidden p-4 space-y-2">
+             <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">TRANG CHỦ</a>
+             <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button w-full">PLAY NHẠC</a>
+             <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">KHO THƠ</a>
+             <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">PLAY VIDEO</a>
+             <a href="#" id="platforms-mobile-link" class="nav-button-base footer-action-button w-full">NỀN TẢNG</a>
+        </div>
+    </header>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="min-h-screen p-4">
+        <div class="card max-w-4xl w-full rounded-2xl shadow-xl p-8 md:p-12 space-y-8 mt-24 sm:mt-16 mx-auto">
+            
+            <!-- PHẦN 1: LỜI GIỚI THIỆU -->
+            <section id="loi-gioi-thieu">
+                <header class="text-center">
+                    <h1 class="text-3xl md:text-4xl font-bold text-title">13 BÀI TẬP THỂ DỤC CỦA BẬC ĐẠI TRIỆT NGỘ</h1>
+                </header>
+
+                <main class="mt-8 space-y-6 text-lg leading-relaxed text-body">
+                    <p><strong>Xin chào Quý Vị!</strong></p>
+                    <p>Những bài tập thể dục sau đây đều có tác dụng khai mở huyệt đạo, máu huyết lưu thông, giúp thân thể khỏe mạnh và không còn bệnh tật. Đây cũng là cách Quý Vị rèn luyện ý chí tinh thần, định lực và giúp Quý Vị tu hành ngày càng thăng hoa để sống tốt đời đẹp Đạo.</p>
+                    <p>Tác dụng hơn cả đó là Quý Vị tiếp nhận được sự gia trì của Trời Phật. Khi tập đúng cách và thành tâm tập trung vào mắt Trí Huệ hoặc đỉnh đầu, Quý Vị sẽ luôn câu thông với Vũ Trụ. Hãy cố gắng từng giây, từng phút, từng động tác đều chuyên tâm hướng vào bên trong để cảm nhận sự gia trì của Phật Trời và sự chuyển động khí huyết trong cơ thể.</p>
+                    <p>Những bài tập này cũng do Phật Tổ Tối Cao ấn chứng nên tác dụng khai mở không thể nghĩ bàn, giúp người tập thăng hoa trong tâm linh, bệnh tật nhanh tiêu trừ và sức khỏe ngày càng tốt lên.</p>
+                    <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg">
+                        Những bài tập này cũng được lồng lực lượng chữa bệnh, là <strong>Thuốc để phòng và chữa trị tất cả những bệnh tật</strong> Quý Vị nhé! Quý Vị bị đau ở đâu thì hãy tập ở chỗ đó nhiều vào để phá từ trường bệnh tật, đồng thời làm cho máu huyết ở chỗ đó được lưu thông.
+                    </blockquote>
+                    <p>Quý Vị muốn nhanh khỏi bệnh thì phải tập theo sự chỉ dạy của Minh Sư Tịnh Quang, bởi vì Minh Sư cũng chính là Hiện Thân của Vị Phật bên trong Quý Vị. Những động tác này rất dễ tập, có thể tập ở mọi lúc, mọi nơi mà lại đạt hiệu quả mỹ mãn.</p>
+                    <p>Cố gắng tập đều đặn mỗi ngày vào buổi sáng sớm là tốt nhất. Quý Vị nào bị bệnh nặng, bệnh mãn tính thì tập thêm vào buổi tối nữa. Thời gian tập từ 20 phút đến 1 tiếng. Trong 13 bài tập thì <strong>bài chạy tại chỗ là quan trọng nhất</strong>.</p>
+                </main>
+            </section>
+            
+            <hr class="section-divider">
+
+            <!-- PHẦN 2: CÁC BÀI TẬP -->
+            <section id="cac-bai-tap" class="py-8">
+                <ol class="bai-tap-list text-lg leading-relaxed">
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Cung Kính Đảnh Lễ</h3>
+                        <p>Người tập đứng ngay ngắn, chắp tay thành kính hướng về Phật Tổ Tối Cao, niệm chậm rãi, rõ ràng:</p>
+                        <div class="my-4 pl-4 border-l-4 border-gray-300 italic text-gray-600">
+                            <p>- Om Phật Tổ Tối Cao!</p>
+                            <p>- Om Đức Phật Tịnh Quang!</p>
+                            <p>- Om Vị Phật bên trong con!</p>
+                            <p>Ngài là Vua của Càn Khôn Vũ Trụ mênh mông bao la bát ngát!</p>
+                            <p>- Con cầu xin các Ngài gia trì lực lượng để cho con tập buổi thể dục này được viên mãn tròn đầy, để con được Thăng Hoa Tâm Linh và có nhiều sức khoẻ ạ!</p>
+                            <p>- Con xin thành tâm cảm tạ Phật Tổ Tối Cao!</p>
+                            <p>- Con xin thành tâm cảm tạ Đức Phật Tịnh Quang!</p>
+                        </div>
+                        <p>Sau đó, Quý Vị thả lỏng, hướng vào bên trong, tập trung ở đỉnh đầu để cảm nhận lực lượng gia trì từ Phật Trời đổ xuống trong khoảng 1 đến 3 phút.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Quay Cổ và Vặn Sườn</h3>
+                        <p><strong>a. Quay cổ:</strong> Quay cổ theo chiều kim đồng hồ 30 lần và ngược lại 30 lần. Tác dụng: đả thông huyệt đạo ở cổ, đưa máu lên não, phòng chống và chữa trị các bệnh như tai biến, đau đầu, hoa mắt, mờ mắt, viêm xoang...</p>
+                        <p class="mt-2"><strong>b. Vặn sườn:</strong> Chân, đầu gối co lên vặn sang phải, đồng thời hai tay vặn ngược sang trái. Mỗi bên 3 lần rồi đổi bên. Tổng cộng 24 lần. Tác dụng: chữa đau hông, mông, lưng và bụng.</p>
+                        <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg text-base">
+                            <strong>Lưu ý chung:</strong> Sau mỗi bài tập, đứng hoặc ngồi thẳng, hít thở sâu 5-7 lần. Hít vào phình bụng, giữ khí 7 giây. Thở ra hóp bụng, ngưng thở 7 giây. Luôn tập trung ở đỉnh đầu hoặc mắt Trí Huệ để nhận lực lượng gia trì.
+                        </blockquote>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Quay Khuỷu Tay và Bả Vai</h3>
+                        <p><strong>a. Quay khuỷu tay:</strong> Đứng rộng bằng vai, dang hai tay ngang vai. Chỉ quay khuỷu tay theo chiều kim đồng hồ 21 lần và ngược lại 21 lần. Tác dụng: phòng và chữa bệnh đau khuỷu tay.</p>
+                        <p class="mt-2"><strong>b. Quay bả vai:</strong> Đứng thẳng, hai tay duỗi thẳng. Tay phải quay ngược chiều kim đồng hồ, tay trái quay theo chiều kim đồng hồ, 21 lần. Tác dụng: phòng và chữa đau vai, co rút cơ tay, tê tay, tốt cho tim phổi.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Vảy Tay Khai Mở</h3>
+                        <p>Hai chân dang rộng bằng vai, hai bàn tay úp xuống, vảy mạnh về phía trước rồi vảy mạnh về phía sau. Vảy liên tục 100 lần. Luôn tập trung ở đỉnh đầu. Tác dụng: đẩy trược khí, phòng và chữa ung thư vú, đau tim phổi, đau vai, tê tay.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Quay Đầu Gối</h3>
+                        <p>Chùn hai đầu gối, hai tay chống gối. Quay theo chiều kim đồng hồ 13 lần và ngược lại 13 lần. Tác dụng: phòng và chữa đau, viêm, sưng đầu gối.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Chạy Tại Chỗ</h3>
+                        <p>Bài này vô cùng quan trọng. Đứng chạy tại chỗ, nâng đầu gối vuông góc ngang bụng, càng cao càng tốt. Chạy nhanh trong 1 phút, sau đó ngồi hít thở sâu 2 phút. Lặp lại 3 lần. Nếu có thể, chạy ngoài trời 1-2 km mỗi ngày là tốt nhất. Tác dụng: bơm máu tuần hoàn khắp cơ thể, phòng và chữa trị rất nhiều bệnh như ung thư, đột quỵ, tim phổi, tiểu đường, cao huyết áp...</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Quay Cổ Tay Và Xoa Mặt</h3>
+                        <p><strong>a. Quay cổ tay:</strong> Mười ngón tay đan vào nhau, quay cổ tay khoảng 1 phút.</p>
+                        <p class="mt-2"><strong>b. Xoa mặt:</strong> Dùng 10 đầu ngón tay và lòng bàn tay vuốt từ cằm ngược lên mặt, lên đầu và ra sau gáy.</p>
+                        <p class="mt-2"><strong>c. Vận động miệng:</strong> Há miệng rộng, thè lưỡi dài, dùng hai hàm nhai không khí trong 1 phút. Tác dụng: làm da mặt sáng đẹp, chống co rút cơ mặt, nói ngọng, rụng tóc.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Đứng Tấn Đấm Không Khí</h3>
+                        <p>Đứng tấn, lưng thẳng, hai tay nắm đấm để ở hông. Đấm mạnh về phía trước, một tay đấm, tay kia giật mạnh về sau. Làm liên tục 50 lần, càng nhanh càng tốt. Tác dụng: phòng và chữa bệnh tim phổi, rèn luyện thể lực, ý chí.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Gập Bụng Khai Mở Huyệt Bách Hội</h3>
+                        <p>Nằm duỗi thẳng, hai tay úp vào rốn. Nâng hai chân lên 45 độ, giữ 1-2 giây rồi hạ xuống nhưng không chạm đất. Lặp lại 20-50 lần, tập 3 lần. Luôn ngậm miệng và thở bằng mũi. Tập trung vào mắt Trí Huệ hoặc đỉnh đầu. Tác dụng: đốt mỡ bụng, chữa đau lưng, tốt cho hệ tiêu hóa.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Bài Tập Xấp Đẩy Hít Đất</h3>
+                        <p>Nằm úp, hai tay chống sàn rộng hơn vai. Dùng cơ tay nâng người lên, từ đầu đến chân thẳng tắp. Chống đẩy 10-40 lần. Tác dụng: giúp tay rắn chắc, cơ ngực săn chắc, tốt cho tim phổi.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Ngồi Gập Bụng</h3>
+                        <p>Ngồi xếp bằng, hai tay chống hông, lưng thẳng. Hít sâu, giữ khí. Gập bụng từ từ xuống cho mũi gần chạm sàn rồi trở lại. Lặp lại 13 lần, tập 3 lần. Tác dụng: kéo giãn cơ lưng, mông, chữa đau lưng, tốt cho thận, chữa tiểu đêm.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Xoay Người Theo Chiều Kim Đồng Hồ</h3>
+                        <p>Đứng thẳng, dang hai tay ngang vai. Xoay người theo chiều kim đồng hồ. Bắt đầu chậm 10 vòng, sau tăng dần lên 30 vòng. Tác dụng: phòng chống hoa mắt, chóng mặt, đột quỵ, giúp sống thọ hơn.</p>
+                    </li>
+                    <li>
+                        <h3 class="font-semibold text-xl text-title mb-3">Ngồi Thiền Hít Thở Để Nhận Lực Lượng</h3>
+                        <p>Sau khi tập, hãy thành tâm cảm tạ:</p>
+                        <div class="my-4 pl-4 border-l-4 border-gray-300 italic text-gray-600">
+                            <p>Con xin thành tâm cảm tạ Phật Tổ Tối Cao!... Con xin thành tâm cảm tạ Đức Phật Tịnh Quang!... Con xin thành tâm cảm tạ các Đấng Thiêng Liêng của Càn Khôn Vũ Trụ!...</p>
+                        </div>
+                        <p>Sau đó, đứng hoặc ngồi hít thở sâu liên tục 30 lần. Nếu có thời gian, nên ngồi thiền vì lúc này cơ thể đã thông, lực lượng gia trì sẽ rất mạnh.</p>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- PHẦN KẾT -->
+            <footer class="pt-8 mt-8 border-t border-gray-200">
+                <div class="bg-gray-100 p-6 rounded-lg text-center">
+                    <p class="text-lg mb-4">Quý Vị hãy tập đúng động tác 13 bài tập thể dục này và gửi cho người thân, bạn bè để mọi người cùng thực hành, vì những bài tập này rất cần thiết cho việc chữa trị bệnh tật, giúp mọi người sống khỏe mạnh, vui tươi và hạnh phúc.</p>
+                    <p class="mt-6 text-right font-semibold text-quote">Minh Sư Tịnh Quang</p>
+                    <p class="text-right text-sm text-gray-500">Upice - Cộng Hòa Séc - Ngày 28.2.2022</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // --- JavaScript cho Dropdown Menu (Desktop) ---
+        const dropdown = document.getElementById('platforms-dropdown');
+        const dropdownBtn = document.getElementById('platforms-btn');
+
+        dropdownBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+            dropdown.classList.toggle('show');
+        });
+
+        // Đóng dropdown khi click ra ngoài
+        document.addEventListener('click', (event) => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // --- JavaScript cho Menu (Mobile) ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const platformsMobileLink = document.getElementById('platforms-mobile-link');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Mô phỏng dropdown cho mobile
+        platformsMobileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Vui lòng truy cập các nền tảng:\n- YouTube\n- TikTok\n- Facebook\n- Telegram\n- Zalo');
+        });
+
+    </script>
+</body>
+</html>

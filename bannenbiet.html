@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BẠN NÊN BIẾT | Minh Sư Tịnh Quang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font cho nội dung chính -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font cho thanh điều hướng -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CÀI ĐẶT CHUNG --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: #3d4451;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-title { color: #8C5B00; }
+        .text-body { color: #3d4451; }
+        .text-quote { color: #a16207; }
+        .border-accent { border-color: #eab308; }
+        .bg-accent-light { background-color: #fefce8; }
+
+        /* --- THANH ĐIỀU HƯỚNG --- */
+        :root {
+            --glow-color-red: rgba(255, 31, 113, 0.8);
+            --glow-color-blue: rgba(0, 191, 255, 0.7);
+        }
+
+        .top-nav-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .nav-button-base {
+            background: #000;
+            color: #fff;
+            font-weight: 700;
+            height: 44px;
+            padding: 0 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-button-base:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+        .nav-button-base:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .main-action-button {
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px 8px rgba(172, 92, 232, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .main-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-red) 0%, #4a0e69 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 18px 8px rgba(255, 31, 113, 0.7); 
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .main-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat 1.2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat {
+            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+            70% { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 40px 18px rgba(255, 31, 113, 1); }
+            100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+        }
+        
+        .main-action-button:hover {
+            box-shadow: 0 0 45px 18px rgba(172, 92, 232, 0.8);
+        }
+
+        .footer-action-button {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px 7px rgba(172, 92, 232, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .footer-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-blue) 0%, #004d66 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .footer-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat-menu 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat-menu {
+            0% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+            70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px 12px rgba(0, 191, 255, 0.8); }
+            100% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+        }
+        
+        .footer-action-button:hover {
+            box-shadow: 0 0 30px 12px rgba(172, 92, 232, 0.6);
+        }
+
+        .button-text-wrapper {
+            font-size: 11px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .dropdown { position: relative; }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            transform: translateX(0);
+            display: flex; flex-direction: row;
+            align-items: center; gap: 6px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 4;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        
+        .dropdown.show .dropdown-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .dropdown-content a {
+            display: flex; justify-content: center; align-items: center;
+            width: 40px; height: 40px; border-radius: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .dropdown-content a img { width: 28px; height: 28px; }
+
+        .dropdown-content a:hover {
+            background-color: #374151;
+            transform: scale(1.1);
+        }
+        
+        .section-divider {
+            border-top: 1px solid;
+            border-image: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent) 1;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="text-body">
+    
+    <!-- THANH ĐIỀU HƯỚNG CỐ ĐỊNH -->
+    <header class="w-full p-4 sticky top-0 z-50 transition-all duration-300" style="background-color: rgba(253, 251, 247, 0.85); backdrop-filter: blur(10px);">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" title="Trang Chủ">
+                <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Thiên Sứ Tịnh Quang" class="h-16 w-auto" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));" onerror="this.onerror=null; this.src='https://placehold.co/120x64/fdfbf7/8C5B00?text=Logo';">
+            </a>
+            
+            <!-- Các nút điều hướng (Desktop) -->
+            <div class="top-nav-bar hidden md:flex">
+                <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">TRANG CHỦ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button">
+                    <span class="button-text-wrapper">Play Nhạc</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Kho Thơ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Play Video</span>
+                </a>
+                <div class="dropdown" id="platforms-dropdown">
+                    <button class="nav-button-base footer-action-button" id="platforms-btn">
+                        <span class="button-text-wrapper">NỀN TẢNG</span>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="https://www.youtube.com/@Thi%C3%AAnS%E1%BB%A9TinhQuang" target="_blank" rel="noopener noreferrer" title="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube"></a>
+                        <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener noreferrer" title="TikTok"><img src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" alt="TikTok"></a>
+                        <a href="https://www.facebook.com/phatphapnhiemmauTinhQuang" target="_blank" rel="noopener noreferrer" title="Facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+                        <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener noreferrer" title="Telegram"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
+                        <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener noreferrer" title="Zalo"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo"></a>
+                    </div>
+                </div>
+            </div>
+             <!-- Nút menu cho di động -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-title p-2 rounded-md">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu di động (ẩn mặc định) -->
+        <div id="mobile-menu" class="hidden md:hidden p-4 space-y-2">
+             <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">TRANG CHỦ</a>
+             <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button w-full">PLAY NHẠC</a>
+             <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">KHO THƠ</a>
+             <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">PLAY VIDEO</a>
+             <a href="#" id="platforms-mobile-link" class="nav-button-base footer-action-button w-full">NỀN TẢNG</a>
+        </div>
+    </header>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="min-h-screen p-4">
+        <div class="card max-w-4xl w-full rounded-2xl shadow-xl p-8 md:p-12 space-y-8 mt-24 sm:mt-16 mx-auto">
+            
+            <header class="text-center py-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-title" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.1);">BẠN NÊN BIẾT</h1>
+            </header>
+
+            <!-- PHẦN 1: CẦU NGUYỆN -->
+            <section id="phan1">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">NGƯỜI TU HÀNH CÙNG NHAU CẦU NGUYỆN CHO THẾ GIỚI NÀY NGÀY CÀNG ĐƯỢC TỐT ĐẸP</h2>
+                <main class="space-y-6 text-lg leading-relaxed text-body">
+                    <p><strong>Chào các con thân yêu!</strong></p>
+                    <p>Tình hình thế giới những năm gần đây rất là bất ổn, vì thế kể từ ngày 16.9.2024 trở đi cho đến hàng ngàn tỷ năm sau Ta mong rằng tất cả các con tu Pháp Đại Triệt Ngộ này cứ đến <strong>21 giờ</strong> hàng ngày thì các con hãy cùng nhau thành tâm cầu nguyện như sau:</p>
+                    <div class="my-4 p-6 border-l-4 border-accent bg-accent-light rounded-r-lg italic text-quote">
+                        <p>Con cầu xin Phật Tổ Từ Bi!<br>
+                        Con cầu xin Đức Phật Tịnh Quang!<br>
+                        Con cầu xin Mười Phương Tam Thế Chư Phật, Chư Bồ Tát cùng Thánh Thần!<br>
+                        Con cầu xin Vị Phật bên trong con!</p>
+                        <p class="mt-4">Chúng con xin các Ngài Từ Bi gia hộ cho thế giới nói chung và cho đất nước của chúng con nói riêng được mưa thuận gió hòa, trái đất không bị nóng lên, thời tiết luôn được ôn hòa mát mẻ để nhân loại được sống trong thái bình không còn chiến tranh, thiên tai, dịch bệnh xảy ra, đặc biệt là không có bão tố, lũ lụt, sóng thần, động đất gây ra thiệt hại về người cũng như tài sản của nhân dân. Nếu có bão to thì chúng con cầu xin các Ngài gia trì hóa giải cho bão thành nhỏ lại.</p>
+                        <p class="mt-4">Chúng con xin thành tâm cảm tạ Ngọc Hoàng Thượng Đế, cảm tạ Phật Trời, cảm tạ Đức Phật Tịnh Quang và cảm tạ Vị Phật bên trong chúng con.</p>
+                        <p class="mt-4">Chúng con nguyện tu hành thăng hoa để tìm về Nguồn Cội và sống tốt đời đẹp Đạo. Chúng con nguyện yêu thương tất cả muôn người vạn loài chúng sanh trong tình huynh đệ đồng nhất thể là Một.</p>
+                        <p class="mt-4">Om Phật Tổ Từ Bi!<br>
+                        Om Đức Phật Tịnh Quang!<br>
+                        Om Vị Phật bên trong con!</p>
+                    </div>
+                    <p>Các con hãy học thuộc lòng từng lời, từng chữ bài cầu nguyện ở trên để hàng ngày cùng nhau cộng hưởng. Hãy đặt chuông báo thức vào <strong>21 giờ</strong> theo giờ địa phương. Càng có nhiều người cùng một tâm, cùng một ý cầu nguyện thì lời cầu nguyện sẽ được Linh Ứng nhiệm mầu, thế giới sẽ ngày càng tốt đẹp hơn.</p>
+                    <p>Khi các con thành tâm cầu nguyện thì chính các con cũng nhận được lực lượng Ánh Sáng Hào Quang gia trì, giúp thân khỏe, tâm an, tu hành ngày càng thăng hoa tiến bộ.</p>
+                    <p class="mt-6 text-right font-semibold">Minh Sư Tịnh Quang</p>
+                    <p class="text-right text-sm text-gray-500">Revolucni 411, Upice - Cộng Hòa Séc - Ngày 16.9.2024</p>
+                </main>
+            </section>
+            
+            <hr class="section-divider">
+
+            <!-- PHẦN 2: YÊU BẰNG BẢN NGÃ -->
+            <section id="phan2" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">YÊU BẰNG BẢN NGÃ LÀ TỰ LÀM TỔN THƯƠNG CHÍNH MÌNH</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Khi các con chưa biết yêu ai thực lòng thì rất khó để ai đó yêu các con hết lòng. Hãy quay về yêu thương chính mình thì các con mới không còn cô đơn, từ đó mới biết yêu người khác chân thành và sẽ nhận lại được sự yêu thương chân thành.</p>
+                    <p>Khi yêu bằng bản ngã, các con chỉ muốn người khác làm theo ý mình. Nếu họ không làm theo, các con sẽ buồn, cảm thấy bị tổn thương. Hãy hiểu rằng, chính bản ngã mới làm các con khổ. Cần khuyên bảo bằng tình thương và trí tuệ, nhưng họ có nghe hay không thì cũng nên buông xả để không bị dính mắc.</p>
+                    <p>Khuyên bảo bằng trí tuệ là phải đứng vào vị trí của họ để thấu hiểu. Đừng tranh luận đúng sai khi họ đang nóng giận, vì chẳng khác nào tự lao đầu vào đá. Hãy kiên nhẫn chờ họ bình tĩnh rồi nhẹ nhàng khuyên bảo. Để làm được điều này, các con phải Thật Tâm tu hành, sống với Tánh Biết, Tánh Thấy, Tánh Nghe để trở thành Người Quan Sát, hiểu được sự vận hành của Thượng Đế bên trong mình và người khác.</p>
+                    <p>Hãy đọc bài Pháp này hàng ngày cho đến khi biết yêu thương vô ngã, các con sẽ thấy được vẻ đẹp của cuộc đời và không còn tự làm tổn thương mình và người khác nữa.</p>
+                    <p class="mt-6 text-right font-semibold">Minh Sư Tịnh Quang</p>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+            
+            <!-- PHẦN 3: SỰ THẬT ĐƯỢC PHƠI BÀY -->
+            <section id="phan3" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">SỰ THẬT ĐÃ ĐƯỢC BẬC ĐẠI TRIỆT NGỘ PHƠI BÀY RA ÁNH SÁNG</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Ta nhắc lại, tất cả mọi bệnh tật, dù là một cái mụn cơm, cũng không ngoài sự vận hành của Thượng Đế. Các con không được đổ thừa cho bất cứ điều gì. Ngứa ngáy là do Thượng Đế đẩy từ trường ngứa vào, không phải do bẩn. Con trâu, con bò cả đời không tắm có ngứa đâu?</p>
+                    <p>Các con phải khai ngộ bài Pháp này, nếu không sẽ bị Thượng Đế lừa đi lừa lại. Ta nói thật, Thượng Đế không từ bi như các con tưởng, thậm chí còn rất ác. Áp dụng bài Pháp này, bệnh tật sẽ tiêu trừ, thân tâm an lạc. Chỉ khi khai ngộ đến cỡ này, các con mới được hoà vào Thượng Đế.</p>
+                    <p>Khi các con tu đúng Pháp, các con sẽ là Minh Sư trong dòng họ, giúp người thân giữ được sự quân bình, không lo lắng sợ hãi khi bị bệnh tật. Các con phải sáng suốt thì mới làm Minh Sư được. Hãy nói thẳng với người thân: "Đây là từ trường Thượng Đế đẩy vào". Họ không tin cũng phải nói, đó là cách yêu thương họ. Khi các con nói ra, ông Thượng Đế bên trong người đó sẽ hiểu và bớt ác lại.</p>
+                    <p>Các con cố gắng nghe Pháp, thấu hiểu, áp dụng một cách có trí tuệ thì sẽ là Minh Sư của chính mình, của gia đình mình, và trở thành Thánh Nhân, Bồ Tát trong gia đình.</p>
+                     <p class="mt-6 text-right font-semibold">Ngài Minh Sư Tịnh Quang khai sáng cho học trò thân yêu.</p>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- PHẦN 4: SỰ THẬT NHÂN LOẠI CẦN BIẾT -->
+            <section id="phan4" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">SỰ THẬT NHÂN LOẠI CẦN PHẢI BIẾT</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Có một loại đã làm cho bố mẹ, con cái, người thân của quý vị bị bệnh tật khổ ải, đã gieo ra dịch bệnh cho nhân loại hàng nghìn năm qua - nó chính là Thượng Đế, hay còn gọi là Thiên Chúa, Ma Vương...</p>
+                    <p>Ta đã từng chất vấn nó và nó phải thừa nhận là "nó vốn không bằng một con chó điên, chó dại, chó cắn càn". Ta mong rằng nó - chó Thượng Đế hãy tự mình chuyển hóa phần xấu ác, để không còn cắn càn, hãm hại nhân loại nữa.</p>
+                    <p>Khi quý vị thấy chó Thượng Đế cố tình làm cho quý vị hay người thân bị bệnh, hãy cứ chất vấn, chửi mắng nó để nó bớt ngu, bớt cắn càn. Giống như gặp chó điên, phải cầm gậy đập thẳng vào nó.</p>
+                    <p>Bất cứ ai may mắn biết được Sự Thật này thì bệnh tật đều được tiêu trừ, thân tâm an lạc, sống khỏe, sống thọ hơn. Vì khi phần xấu ác được phơi bày ra ánh sáng, nó sẽ yếu dần, nhường chỗ cho tình yêu thương đơm hoa kết trái.</p>
+                     <p class="mt-6 text-right font-semibold">Minh Sư Tịnh Quang</p>
+                     <p class="text-right text-sm text-gray-500">Upice - Cộng Hòa Séc - Ngày 06.7.2025</p>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- PHẦN 5: ĐẠT ĐƯỢC ĐẠI TRIỆT NGỘ -->
+            <section id="phan5" class="py-8">
+                 <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">ĐẠT ĐƯỢC ĐẠI TRIỆT NGỘ 08.7.2023</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p><strong>Ta chào các con!</strong></p>
+                    <p>Hôm nay Ta chính thức đạt đến trình độ Đại Triệt Ngộ mà từ trước đến giờ chưa có một vị Minh Sư nào đạt được. Phật Tổ Tối Cao cũng ấn chứng: “Minh Sư Tịnh Quang đã hòa toàn diện vào Biển và đạt được Đại Triệt Ngộ, đây là cảnh giới cao nhất”.</p>
+                    <p>Từ giờ các con cần phải cố gắng tu hành nhiều hơn, nếu không rất khó bắt được tần số của Ta. Hôm nay có rất nhiều Thánh Nhân, Bồ Tát, Chư Phật đến rải hoa chúc mừng Ta. Khi các con chuyên tâm ngồi thiền sẽ thấy được điều đó.</p>
+                    <p>Các con hãy cố gắng, Hoá Thân của Ta sẽ thường xuyên đến gia trì và khai sáng cho các con. Khi các con càng chuyên tâm hướng về Ta, các con càng nhận được nhiều Ánh Sáng Hào Quang.</p>
+                    <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg">
+                        <p class="font-semibold">Trải nghiệm của học trò:</p>
+                        <p class="mt-2 italic">"Dạ thưa Ân Sư, khoảng 10 giờ trưa hôm nay ngày 08.7.2023 thì con nhận được Ánh Sáng trong như Lưu Ly sáng mát vô cùng... Trời rất nóng mà tự nhiên bừng lên một Ánh Sáng rất lớn, mát rượi, người con tự nhiên rất sung sướng, an lạc bất ngờ luôn ạ..."</p>
+                    </blockquote>
+                     <p class="mt-6 text-right font-semibold">Minh Sư Tịnh Quang</p>
+                     <p class="text-right text-sm text-gray-500">Hronov - Cộng Hòa Séc - Ngày 08.7.2023</p>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- PHẦN 6: LỜI PHÁP VÔ GIÁ -->
+            <section id="phan6" class="py-8">
+                 <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">Những Lời Pháp Vô Giá Thâm Sâu Từ Một Bậc Thầy Đại Triệt Ngộ</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Các con tin Minh Sư chính là các con tin vào lực lượng vạn năng, tin vào vị Phật bên trong của mình thì bệnh tật sẽ được chuyển hoá và mọi cái tốt đẹp sẽ đến.</p>
+                    <p>Không coi đó là bệnh nữa, không lo lắng, vì biết đó chỉ là từ trường Thượng Đế đẩy vào. Nhiệm vụ của các con là tìm cách hoá giải bằng cách áp dụng những gì Ta đã chỉ dạy. Đối với Ta, thân thể các con không có bệnh, chỉ là trò chơi của Thượng Đế.</p>
+                    <p>Ta tiết lộ một bí mật: Các con phải luôn giữ Đại Bảo Pháp này. Nếu các con lơ là, Ông Thượng Đế lại đẩy từ trường đau nhức vào. Lúc này, cứ cười lên, vui lên, hát lên thì từ trường sẽ được hoá giải. Nếu không, các con sẽ bị trùm lên màn vô minh, đi từ sáng vào tối.</p>
+                    <p>Các con phải thực sự làm thầy mình, tự vươn lên thì nó sẽ phải hết. Đừng để Thượng Đế kéo các con từ sáng vào tối. Các con đã ra sáng rồi thì phải từ sáng ra sáng nữa.</p>
+                    <p class="mt-6 text-right font-semibold">Minh Sư Tịnh Quang khai sáng cho học trò.</p>
+                </div>
+            </section>
+
+            <!-- PHẦN LIÊN HỆ -->
+            <footer class="pt-8 mt-8 border-t border-gray-200">
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-center text-gray-700 mb-4">Liên hệ để được hướng dẫn tu tập</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-4 gap-x-8 text-gray-600 text-center">
+                        <div class="flex flex-col items-center justify-center">
+                            <span class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+                                <span>BT Thúy</span>
+                            </span>
+                            <strong>091 678 19 69</strong>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                           <span class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+                                <span>BT Thu</span>
+                            </span>
+                             <strong>0399 142 256</strong>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <span class="flex items-center gap-2">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+                                <span>BT Xiêm</span>
+                            </span>
+                            <strong>093 616 82 19</strong>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 mt-4 text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                        <span>Mail: <strong>thiensutinhquang@gmail.com</strong></span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // --- JavaScript cho Dropdown Menu (Desktop) ---
+        const dropdown = document.getElementById('platforms-dropdown');
+        const dropdownBtn = document.getElementById('platforms-btn');
+
+        dropdownBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+            dropdown.classList.toggle('show');
+        });
+
+        // Đóng dropdown khi click ra ngoài
+        document.addEventListener('click', (event) => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // --- JavaScript cho Menu (Mobile) ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const platformsMobileLink = document.getElementById('platforms-mobile-link');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Mô phỏng dropdown cho mobile
+        platformsMobileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Vui lòng truy cập các nền tảng:\n- YouTube\n- TikTok\n- Facebook\n- Telegram\n- Zalo');
+        });
+
+    </script>
+</body>
+</html>

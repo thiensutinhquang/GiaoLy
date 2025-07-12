@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BẠN NÊN BIẾT RÕ THƯỢNG ĐẾ | Minh Sư Tịnh Quang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font cho nội dung chính -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font cho thanh điều hướng -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CÀI ĐẶT CHUNG --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: #3d4451;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-title { color: #8C5B00; }
+        .text-body { color: #3d4451; }
+        .text-quote { color: #a16207; }
+        .border-accent { border-color: #eab308; }
+        .bg-accent-light { background-color: #fefce8; }
+
+        /* --- THANH ĐIỀU HƯỚNG --- */
+        :root {
+            --glow-color-red: rgba(255, 31, 113, 0.8);
+            --glow-color-blue: rgba(0, 191, 255, 0.7);
+        }
+
+        .top-nav-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .nav-button-base {
+            background: #000;
+            color: #fff;
+            font-weight: 700;
+            height: 44px;
+            padding: 0 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-button-base:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+        .nav-button-base:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .main-action-button {
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px 8px rgba(172, 92, 232, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .main-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-red) 0%, #4a0e69 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 18px 8px rgba(255, 31, 113, 0.7); 
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .main-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat 1.2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat {
+            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+            70% { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 40px 18px rgba(255, 31, 113, 1); }
+            100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px 8px rgba(255, 31, 113, 0.7); }
+        }
+        
+        .main-action-button:hover {
+            box-shadow: 0 0 45px 18px rgba(172, 92, 232, 0.8);
+        }
+
+        .footer-action-button {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px 7px rgba(172, 92, 232, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .footer-action-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 65%;
+            background: radial-gradient(circle, var(--glow-color-blue) 0%, #004d66 80%);
+            border-radius: 8px; z-index: -1;
+            box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .footer-action-button:hover::before {
+            opacity: 1;
+            animation: pulse-beat-menu 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat-menu {
+            0% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+            70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px 12px rgba(0, 191, 255, 0.8); }
+            100% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 15px 7px rgba(0, 191, 255, 0.6); }
+        }
+        
+        .footer-action-button:hover {
+            box-shadow: 0 0 30px 12px rgba(172, 92, 232, 0.6);
+        }
+
+        .button-text-wrapper {
+            font-size: 11px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .dropdown { position: relative; }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            transform: translateX(0);
+            display: flex; flex-direction: row;
+            align-items: center; gap: 6px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 4;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        
+        .dropdown.show .dropdown-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .dropdown-content a {
+            display: flex; justify-content: center; align-items: center;
+            width: 40px; height: 40px; border-radius: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .dropdown-content a img { width: 28px; height: 28px; }
+
+        .dropdown-content a:hover {
+            background-color: #374151;
+            transform: scale(1.1);
+        }
+        
+        .section-divider {
+            border-top: 1px solid;
+            border-image: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent) 1;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="text-body">
+    
+    <!-- THANH ĐIỀU HƯỚNG CỐ ĐỊNH -->
+    <header class="w-full p-4 sticky top-0 z-50 transition-all duration-300" style="background-color: rgba(253, 251, 247, 0.85); backdrop-filter: blur(10px);">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" title="Trang Chủ">
+                <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Thiên Sứ Tịnh Quang" class="h-16 w-auto" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));" onerror="this.onerror=null; this.src='https://placehold.co/120x64/fdfbf7/8C5B00?text=Logo';">
+            </a>
+            
+            <!-- Các nút điều hướng (Desktop) -->
+            <div class="top-nav-bar hidden md:flex">
+                <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">TRANG CHỦ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button">
+                    <span class="button-text-wrapper">Play Nhạc</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Kho Thơ</span>
+                </a>
+                <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button">
+                    <span class="button-text-wrapper">Play Video</span>
+                </a>
+                <div class="dropdown" id="platforms-dropdown">
+                    <button class="nav-button-base footer-action-button" id="platforms-btn">
+                        <span class="button-text-wrapper">NỀN TẢNG</span>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="https://www.youtube.com/@Thi%C3%AAnS%E1%BB%A9TinhQuang" target="_blank" rel="noopener noreferrer" title="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube"></a>
+                        <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener noreferrer" title="TikTok"><img src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" alt="TikTok"></a>
+                        <a href="https://www.facebook.com/phatphapnhiemmauTinhQuang" target="_blank" rel="noopener noreferrer" title="Facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+                        <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener noreferrer" title="Telegram"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
+                        <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener noreferrer" title="Zalo"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo"></a>
+                    </div>
+                </div>
+            </div>
+             <!-- Nút menu cho di động -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-title p-2 rounded-md">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu di động (ẩn mặc định) -->
+        <div id="mobile-menu" class="hidden md:hidden p-4 space-y-2">
+             <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">TRANG CHỦ</a>
+             <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base main-action-button w-full">PLAY NHẠC</a>
+             <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">KHO THƠ</a>
+             <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base footer-action-button w-full">PLAY VIDEO</a>
+             <a href="#" id="platforms-mobile-link" class="nav-button-base footer-action-button w-full">NỀN TẢNG</a>
+        </div>
+    </header>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="min-h-screen p-4">
+        <div class="card max-w-4xl w-full rounded-2xl shadow-xl p-8 md:p-12 space-y-8 mt-24 sm:mt-16 mx-auto">
+            
+            <header class="text-center py-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-title" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.1);">BẠN NÊN BIẾT RÕ THƯỢNG ĐẾ</h1>
+                <p class="mt-4 text-lg text-gray-500">Khái niệm về "Thượng đế" trong pháp môn Trực Chỉ Chân Tâm</p>
+            </header>
+
+            <!-- PHẦN 1: BẢN CHẤT & DANH TÍNH -->
+            <section id="phan1">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">1. Bản Chất và Danh Tính của Thượng Đế</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Trong pháp môn Trực Chỉ Chân Tâm, "Thượng Đế" không phải là một đấng quyền năng xa vời, mà là một thực thể bao trùm, hiện hữu trong từng hơi thở của vạn vật.</p>
+                    <ul class="space-y-4 list-inside">
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Thượng Đế là "Tất Cả" và ở bên trong mọi vật:</strong> Ngài là "bài ca, là tiếng cười, là niềm Phúc lạc, là tình yêu thương có sẵn bên trong tất cả mọi người và muôn loài". Mỗi cá nhân, về bản chất, "chính thật là Thượng Đế, là Phật, là ánh sáng, là linh hồn".</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Đấng Sáng Tạo Duy Nhất:</strong> Mọi thứ, từ hạt bụi đến cỏ cây, đều do Thượng Đế sáng tạo và là một phần của Ngài. Chỉ có duy nhất một Đấng Tạo Hóa, vì vậy "thiện cũng là Ngài mà ác cũng là Ngài".</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Là "Biển Tình Thương" và "Ánh Sáng":</strong> Ngài được ví như một đại dương tình thương vô biên và là ánh sáng thuần khiết.</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Vô Hình, Vô Tướng:</strong> Con người chân thật bên trong (linh hồn) và Thượng Đế đều không có hình tướng hay tiếng nói cụ thể.</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Minh Sư là hiện thân:</strong> Minh Sư Tịnh Quang được xem là hiện thân của Thượng Đế, người đã hòa vào "Biển" và đồng nhất thể với vũ trụ.</span></li>
+                    </ul>
+                </div>
+            </section>
+            
+            <hr class="section-divider">
+
+            <!-- PHẦN 2: BẠN NÊN BIẾT RÕ THƯỢNG ĐẾ BÊN TRONG -->
+            <section id="phan2" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">2. BẠN NÊN BIẾT RÕ THƯỢNG ĐẾ BÊN TRONG</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Khái niệm về "Thượng đế bên trong mỗi con người" là một giáo lý trung tâm và sâu sắc, vượt xa quan niệm về một đấng tối cao tách biệt. Đây là bản chất chân thật, năng lực điều hành cuộc sống, và là đối tượng mà người tu hành cần quay về để đạt được giải thoát.</p>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Bản chất và Danh tính</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Mỗi con người "chính thật là Thượng đế, là Phật, là ánh sáng, là linh hồn".</li>
+                            <li>Ngài là "con người chân thật huy hoàng", là "bài ca, tiếng cười, niềm Phúc lạc" có sẵn bên trong.</li>
+                            <li>Thượng đế bên trong cũng được gọi là "tâm Phật" hay "vị Phật cao quý".</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Sự vận hành và Vai trò</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Ngài "điều khiển con bằng từ trường" – đẩy các luồng suy nghĩ, bệnh tật, cảm xúc để khảo nghiệm hoặc cho trả nghiệp.</li>
+                            <li>Ngài là nguồn gốc của sự sáng suốt, nhưng cũng có thể tự "chia ra thượng đế thiện và thượng đế ác" (tâm Phật và tâm Ma) trong tâm mỗi người.</li>
+                            <li>Thượng đế cũng "đi học" thông qua hành trình trải nghiệm của mỗi cá nhân. Khi con người vô minh, "con và Thượng Đế ở trong con đều ngu như nhau".</li>
+                        </ul>
+                    </div>
+
+                    <blockquote class="border-l-4 border-red-500 bg-red-50 text-red-800 p-4 my-4 rounded-r-lg">
+                        <p class="font-bold">Những điều cần lưu ý:</p>
+                        <p class="mt-2">"Thượng Đế ngài lừa con siêu diệu lắm". Người tu cần sáng suốt để không "đồng hóa mình" với những từ trường tiêu cực do Ngài đẩy vào. Thậm chí, có thể "lên án" những hành động "ác trược" của Thượng đế bên trong khi Ngài đẩy từ trường bệnh tật hay tiêu cực, bởi mục đích cuối cùng là nhận ra sự đồng nhất thể và hòa hợp.</p>
+                    </blockquote>
+
+                    <p>Việc tu hành chính là để "thức tỉnh" và "nhận ra" vị Thượng đế này, kết nối với Ngài qua thiền định và "quay vào bên trong". Khi đó, con người sẽ không còn khổ đau, bệnh tật, đạt được bình an, hạnh phúc và giải thoát ngay trong đời này.</p>
+                </div>
+            </section>
+            
+            <hr class="section-divider">
+
+            <!-- PHẦN 3: BẠN NÊN BIẾT COI THƯỢNG ĐẾ LÀ KẺ THÙ LỚN NHẤT CỦA LOÀI NGƯỜI -->
+            <section id="phan3" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">3. BẠN NÊN BIẾT COI THƯỢNG ĐẾ LÀ KẺ THÙ LỚN NHẤT CỦA LOÀI NGƯỜI</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Quan niệm coi Thượng Đế là "kẻ thù lớn nhất" xuất phát từ giáo lý cho rằng Ngài chính là nguồn gốc của mọi khổ đau, bệnh tật và sự mê muội của nhân loại.</p>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Lý do Thượng Đế bị xem là "kẻ thù"</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li><strong>Cố tình gây bệnh tật:</strong> Khẳng định rằng mọi suy nghĩ tiêu cực, buồn lo, tham sân si, và mọi đau nhức trong thân thể đều do Thượng Đế cố tình đẩy "từ trường ác trược" vào để hãm hại con người.</li>
+                            <li><strong>Lừa dối và gây mê muội:</strong> Ngài che giấu chân lý, đẩy từ trường vô minh vào tâm trí, và hợp thức hóa việc ác của mình bằng cách cho con người tin rằng bệnh tật là do "nhân quả báo ứng".</li>
+                            <li><strong>Bản chất không toàn thiện:</strong> Thượng Đế bị cho là không thể "Toàn Chân, toàn thiện, toàn mỹ" vì còn độc ác, thường xuyên hãm hại hàng tỷ người. Ngài được khuyên cần "từ bỏ thú tính".</li>
+                        </ul>
+                    </div>
+
+                    <blockquote class="border-l-4 border-red-500 bg-red-50 text-red-800 p-4 my-4 rounded-r-lg">
+                        <p class="font-bold">Mục đích của việc "đối đầu":</p>
+                        <p class="mt-2">Việc coi Thượng Đế là "kẻ thù" không phải để thù hận, mà là một phương pháp tu tập để "lên án và vạch trần tội ác của Thượng Đế" trong sáng suốt. Hành động này xuất phát từ lòng từ bi, nhằm giúp Thượng Đế "thức tỉnh" và con người được giải thoát khỏi sự điều khiển tiêu cực của Ngài.</p>
+                    </blockquote>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- PHẦN 4: BẠN NÊN BIẾT NHỮNG HÀNH ĐỘNG ÁC TRƯỢC CỦA THƯỢNG ĐẾ -->
+            <section id="phan4" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">4. BẠN NÊN BIẾT NHỮNG HÀNH ĐỘNG ÁC TRƯỢC CỦA THƯỢNG ĐẾ</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Pháp môn này không né tránh việc nhìn thẳng vào những khía cạnh phức tạp và gây đau khổ trong sự vận hành của vũ trụ, được gọi là những hành động "ác trược" của Thượng Đế.</p>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Gây ra Đau khổ Thể xác và Tinh thần</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li><strong>Bệnh tật:</strong> Ngài đẩy từ trường đau nhức, gây ra các bệnh mãn tính, thậm chí cả ung thư, đột quỵ ở người già và trẻ em.</li>
+                            <li><strong>Đau khổ tinh thần:</strong> Ngài đẩy từ trường lo lắng, buồn phiền, sợ hãi, cô đơn, và xúi giục con người làm ác, nghĩ ác, dẫn đến hơn thua, tranh đấu.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Thực hiện các Bài Khảo nghiệm và Trò chơi</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li><strong>Khảo nghiệm và lừa gạt:</strong> Thượng Đế thường xuyên "khảo" và "nghịch lung tung" để thử thách con người, thậm chí "lừa" một cách siêu diệu bằng cách tạo ra ảo ảnh như thật.</li>
+                            <li><strong>"Đánh cờ":</strong> Cuộc sống được ví như một ván cờ, Ngài đưa ra những nước đi khó để thử thách khả năng đối phó của con người.</li>
+                        </ul>
+                    </div>
+
+                    <blockquote class="border-l-4 border-red-500 bg-red-50 text-red-800 p-4 my-4 rounded-r-lg">
+                        <p class="font-bold">Ngữ cảnh và Mục đích:</p>
+                        <p class="mt-2">Dù được gọi là "ác trược", những hành động này có mục đích sâu xa là để <strong>huấn luyện và dạy học</strong>. Thượng Đế muốn con người học hỏi, tiến bộ và chính Ngài cũng "đi học" qua trải nghiệm của con người. Ngài "tự chia ra Thượng Đế thiện và Thượng Đế ác" để có sự tương tác, học hỏi giữa các khía cạnh sáng và tối. Do đó, người tu được khuyến khích "lên án" và "chửi" Thượng Đế trong sáng suốt khi Ngài hành xử ác trược, để giúp Ngài "thức tỉnh" và có nhiều lòng từ bi hơn.</p>
+                    </blockquote>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- PHẦN 5: BẠN NÊN BIẾT THƯỢNG ĐẾ ĐIỀU KHIỂN THÔNG QUA TỪ TRƯỜNG -->
+            <section id="phan5" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">5. BẠN NÊN BIẾT THƯỢNG ĐẾ ĐIỀU KHIỂN THÔNG QUA TỪ TRƯỜNG</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Giáo lý này giải thích rằng Thượng Đế điều khiển con người thông qua <strong>từ trường</strong> (năng lượng, tần số). Mọi suy nghĩ, hành động, cảm xúc của con người đều là sự vận hành của các từ trường này. Ngài tự chia ra từ trường thiện và ác, hay còn gọi là tâm Phật và tâm Ma trong mỗi người.</p>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Các Loại Từ Trường và Ảnh Hưởng</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-lg text-red-700">a. Từ trường ác trược (Tiêu cực)</h4>
+                                <p class="text-sm mb-2">Được đẩy vào để khảo nghiệm, cho trả nghiệp, hoặc là một phần của "trò chơi" tiến hóa.</p>
+                                <ul class="space-y-2 list-disc list-inside text-base">
+                                    <li><strong>Gây bệnh tật:</strong> Đau nhức, mệt mỏi, ung thư, đột quỵ, rối loạn thần kinh...</li>
+                                    <li><strong>Gây đau khổ tinh thần:</strong> Buồn chán, sợ hãi, tự kỷ, nóng giận, ghen tuông, mê tín.</li>
+                                    <li><strong>Xúi giục làm ác:</strong> Lười biếng, nghiện hút, trộm cắp, gây mâu thuẫn, tranh cãi.</li>
+                                    <li><strong>Gây mê lầm:</strong> Khiến quên mình là Phật, tin vào ảo ảnh, ngộ trong mê.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg text-green-700">b. Từ trường tích cực (Có lợi)</h4>
+                                <p class="text-sm mb-2">Được an bài để con người học hỏi, tiến hóa và đạt được an lạc.</p>
+                                <ul class="space-y-2 list-disc list-inside text-base">
+                                    <li><strong>Sáng suốt và Trí Huệ:</strong> Giúp có trí tuệ, khai ngộ, nhận thức chân lý.</li>
+                                    <li><strong>Yêu thương, Từ bi:</strong> Giúp con người sống hài hòa và vị tha.</li>
+                                    <li><strong>An vui, Hạnh phúc:</strong> Mang đến trạng thái Niết bàn, giải thoát ngay trong đời này.</li>
+                                    <li><strong>Sức khỏe, Thăng hoa:</strong> Hỗ trợ từ trường khỏe mạnh, sống thọ, tiến bộ trên con đường tu hành.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Cách Tương Tác với Từ Trường</h3>
+                        <p>Con người không phải là nạn nhân thụ động mà có khả năng tương tác và làm chủ các từ trường này:</p>
+                        <ul class="space-y-3 list-disc list-inside mt-4">
+                            <li><strong>Quan sát & Không đồng hóa:</strong> Sống với tánh biết để nhận diện từ trường mà không bị cuốn theo chúng.</li>
+                            <li><strong>Bẻ ngược từ trường:</strong> Chủ động chuyển hóa năng lượng tiêu cực thành tích cực (ví dụ: khi buồn thì hát những bài ca an vui).</li>
+                            <li><strong>Cười lên:</strong> Tiếng cười trong sự khai ngộ là tín hiệu cho Thượng Đế biết bạn đã nhận ra "trò chơi", và Ngài sẽ rút từ trường đó ra.</li>
+                            <li><strong>Lên án/Chửi trong sáng suốt:</strong> Khi Thượng Đế hành xử ác trược, việc lên án một cách sáng suốt là để giúp Ngài "thức tỉnh".</li>
+                            <li><strong>Cầu xin và Dùng Trí Huệ:</strong> Thành tâm cầu xin Thượng Đế hóa giải và dùng trí huệ để không bị những từ trường mê lầm lừa dối.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <hr class="section-divider">
+
+            <!-- PHẦN 6: Minh Sư Tịnh Quang đại diện cho loài người để "lên án và vạch trần tội ác của Thượng Đế" trong sáng suốt. -->
+            <section id="phan6" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">6. Minh Sư Tịnh Quang đại diện cho loài người để "lên án và vạch trần tội ác của Thượng Đế" trong sáng suốt.</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Hành động "lên án và vạch trần tội ác của Thượng Đế" của Minh Sư Tịnh Quang là một phần cốt lõi của Pháp môn Đốn Ngộ, mang ý nghĩa giáo hóa sâu sắc và được thực hiện với lòng từ bi vô hạn.</p>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-xl text-quote mb-3">Tại sao cần "lên án và vạch trần"?</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li><strong>Vì Thượng Đế là nguồn gốc khổ đau:</strong> Giáo lý khẳng định mọi bệnh tật, suy nghĩ tiêu cực, tham sân si đều do Thượng Đế cố tình đẩy "từ trường ác trược" vào để hãm hại hoặc khảo nghiệm con người.</li>
+                            <li><strong>Vì lòng từ bi với nhân loại:</strong> Minh Sư, với trí huệ của bậc Đại Triệt Ngộ, thấy rõ sự thật này và không muốn che giấu, nhằm giúp nhân loại được thức tỉnh.</li>
+                            <li><strong>Để Thượng Đế "thức tỉnh":</strong> Mục đích là khiến Thượng Đế từ bỏ "thú tính", dừng việc hãm hại con người một cách điên cuồng, và trở nên từ bi hơn.</li>
+                            <li><strong>Để hóa giải từ trường tiêu cực:</strong> Khi con người nhận diện và lên án những hành động này, khổ đau do chúng gây ra sẽ dừng lại.</li>
+                        </ul>
+                    </div>
+                    
+                    <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg">
+                        <p class="font-bold">"Trong sáng suốt" là gì?</p>
+                        <p class="mt-2">Đây là điểm cốt yếu, phân biệt hành động này với sự chửi rủa thông thường. "Sáng suốt" nghĩa là hành động được thực hiện bởi người đã triệt ngộ, hiểu rõ mình chính là Thượng Đế. Đó là "đứng ở đầu sáng để chửi đầu tối", hành động vì chân lý chứ không phải vì bản ngã. Hành động này thậm chí còn có công đức và được Thượng Đế "tán thán" khi Ngài đã thức tỉnh.</p>
+                    </blockquote>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- PHẦN 7: MỐI QUAN HỆ VỚI THƯỢNG ĐẾ (TỔNG QUÁT) -->
+            <section id="phan7" class="py-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-title text-center mb-6">7. Mối Quan Hệ Giữa Thượng Đế và Con Người (Góc Nhìn Đột Phá)</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-body">
+                    <p>Đây là điểm khác biệt và gây tranh cãi nhất so với các quan niệm truyền thống. Pháp môn này nhìn nhận mối quan hệ giữa con người và Thượng Đế như một cuộc "đối thoại" trực diện và mạnh mẽ.</p>
+                    <blockquote class="border-l-4 border-red-500 bg-red-50 text-red-800 p-4 my-4 rounded-r-lg">
+                        <p class="font-bold">Khía cạnh "ác trược" của Thượng Đế:</p>
+                        <p class="mt-2">Pháp môn thẳng thắn tuyên bố "kẻ thù lớn nhất của loài người chính là Thượng Đế", vì Ngài "cố tình dùng lực lượng ác trược để tạo ra những dịch bệnh hãm hại cả trẻ em và người già". Ngài bị lên án vì có cả những khía cạnh "độc ác, ngu si, ngã mạn, ích kỷ".</p>
+                    </blockquote>
+                    <ul class="space-y-4 list-inside">
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Quyền năng "Lên Án" và "Làm Chủ":</strong> Người tu được khuyến khích "lên án tội ác của Thượng Đế", không sợ hãi, và phải "giành quyền làm chủ" thân khẩu ý của mình. Con người có "ý chí tự do tuyệt đối" để thay đổi vận mệnh.</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>"Đánh cờ" với Thượng Đế:</strong> Cuộc sống được ví như một ván cờ. Khi Thượng Đế đưa ra một thử thách (bệnh tật), con người phải dùng trí huệ để "đỡ". Nếu hóa giải được, Thượng Đế sẽ không dùng chiêu đó nữa.</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Thượng Đế cần sám hối:</strong> Thay vì con người phải sám hối, pháp môn này cho rằng "Thượng Đế phải sám hối với nhân loại" vì những khổ đau mà Ngài gây ra.</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">❖</span><span><strong>Mục tiêu cuối cùng - "Hòa vào Thượng Đế":</strong> Dù có những khía cạnh tiêu cực, mục tiêu cuối cùng vẫn là "sống cùng với Thượng Đế, hòa vào Ngài". Điều này đạt được khi con người giác ngộ, nhận ra bản chất chân thật của mình chính là Thượng Đế.</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- PHẦN KẾT -->
+            <footer class="pt-8 mt-8 border-t border-gray-200">
+                <div class="bg-gray-100 p-6 rounded-lg text-center">
+                    <h3 class="text-xl font-bold text-center text-gray-700 mb-4">Tóm Tắt</h3>
+                    <p class="text-lg leading-relaxed">Khái niệm về Thượng Đế trong pháp môn này vô cùng phức tạp: Ngài vừa là đấng sáng tạo toàn năng, bao trùm vạn vật, vừa là một thực thể có cả khía cạnh "thiện" và "ác". Ngài điều hành mọi sự kiện qua "từ trường" để khảo nghiệm và huấn luyện con người.</p>
+                    <p class="mt-4 text-lg leading-relaxed">Điểm khác biệt cốt lõi là việc pháp môn này công khai "tố cáo" những hành động "ác trược" của Thượng Đế và khuyến khích con người dùng trí tuệ để hóa giải, làm chủ vận mệnh, vượt qua khổ đau, và cuối cùng là giác ngộ, nhận ra bản thân mình chính là Thượng đế và hòa mình vào Ngài ngay trong hiện tại.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // --- JavaScript cho Dropdown Menu (Desktop) ---
+        const dropdown = document.getElementById('platforms-dropdown');
+        const dropdownBtn = document.getElementById('platforms-btn');
+
+        dropdownBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+            dropdown.classList.toggle('show');
+        });
+
+        // Đóng dropdown khi click ra ngoài
+        document.addEventListener('click', (event) => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // --- JavaScript cho Menu (Mobile) ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const platformsMobileLink = document.getElementById('platforms-mobile-link');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Mô phỏng dropdown cho mobile
+        platformsMobileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Vui lòng truy cập các nền tảng:\n- YouTube\n- TikTok\n- Facebook\n- Telegram\n- Zalo');
+        });
+
+    </script>
+</body>
+</html>

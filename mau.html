@@ -8,13 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg-color: #fbf9f3;
-            --card-bg-color: rgba(255, 255, 255, 0.95);
-            --text-color: #212529;
+            --card-bg-color: rgba(255, 255, 255, 0.85);
+            --text-color: #3d3d3d;
             --title-color: #6B4400;
             --section-title-color: #7f5539;
             --quote-color: #996515;
@@ -22,13 +22,13 @@
             --divider-color: rgba(161, 98, 7, 0.4);
             --shadow-color: rgba(184, 134, 11, 0.2);
             --accent-light-bg: #fffdf5;
-            --header-bg: rgba(251, 249, 243, 0.85);
+            --header-bg: rgba(251, 249, 243, 0.8);
             --font-size: 1.1rem;
             --progress-bar-color: var(--quote-color);
         }
         body.dark-theme {
-            --bg-color: #1a1a1a;
-            --card-bg-color: rgba(44, 44, 44, 0.85);
+            --bg-color: #121212;
+            --card-bg-color: rgba(30, 30, 30, 0.85);
             --text-color: #e0e5ec;
             --title-color: #e7d192;
             --section-title-color: #d4b483;
@@ -41,7 +41,7 @@
         }
         body.sepia-theme {
             --bg-color: #f4e9d8;
-            --card-bg-color: rgba(253, 250, 242, 0.95);
+            --card-bg-color: rgba(253, 250, 242, 0.9);
             --text-color: #4a4033;
             --title-color: #5c4033;
             --section-title-color: #704214;
@@ -52,13 +52,16 @@
             --accent-light-bg: #f9f4eb;
             --header-bg: rgba(244, 233, 216, 0.85);
         }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Source Serif Pro', serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.8;
             font-size: var(--font-size);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.5s ease, color 0.5s ease;
             overflow-x: hidden;
         }
         #particle-canvas {
@@ -68,6 +71,17 @@
             width: 100%;
             height: 100%;
             z-index: -1;
+            opacity: 0.7;
+        }
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--progress-bar-color);
+            width: 0%;
+            z-index: 100;
+            transition: width 0.1s;
         }
         .card {
             background-color: var(--card-bg-color);
@@ -75,13 +89,10 @@
             -webkit-backdrop-filter: blur(15px);
             border-radius: 1.5rem;
             position: relative;
-            padding: 3rem;
-            border: 2px solid var(--border-color); 
-            box-shadow: 
-                inset 0 0 0 1px rgba(255, 255, 255, 0.7),
-                0 4px 15px rgba(0, 0, 0, 0.1),
-                0 15px 35px var(--shadow-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 2rem md:3rem;
+            border: 1px solid var(--divider-color); 
+            box-shadow: 0 15px 35px var(--shadow-color);
+            transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
         }
         .main-title {
             font-size: 2.75rem;
@@ -101,8 +112,7 @@
             border: 0;
             height: 1px;
             background-image: linear-gradient(to right, transparent, var(--divider-color), transparent);
-            margin-top: 3rem;
-            margin-bottom: 3rem;
+            margin: 3rem 0;
             position: relative;
         }
         .section-divider::after {
@@ -115,45 +125,35 @@
             padding: 0 1rem;
             color: var(--quote-color);
             font-size: 1.5rem;
+            transition: background-color 0.5s ease;
         }
         header {
             background-color: var(--header-bg) !important;
-        }
-        .top-nav-bar {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            font-family: 'Be Vietnam Pro', sans-serif;
-            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .nav-button-base {
-            background: rgba(255,255,255,0.1);
+            background: transparent;
             color: var(--text-color);
+            font-family: 'Be Vietnam Pro', sans-serif;
             font-weight: 600;
             font-size: 0.9rem;
             height: 44px;
             padding: 0 18px;
             border-radius: 10px;
-            text-decoration: none;
             transition: all 0.2s ease-in-out;
             display: flex;
-            justify-content: center;
             align-items: center;
-            flex-shrink: 0;
             cursor: pointer;
-            position: relative;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid transparent;
         }
-        
         .nav-button-base:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background-color: var(--shadow-color);
+            border-color: var(--divider-color);
         }
-        
         .tts-highlight {
-            background-color: rgba(255, 215, 0, 0.4);
-            color: #000;
+            background-color: rgba(255, 215, 0, 0.5);
+            color: #000 !important;
             padding: 0.1em 0.2em;
             border-radius: 4px;
             transition: background-color 0.3s ease;
@@ -165,8 +165,9 @@
             z-index: 1000;
         }
         #like-button {
-            background-color: #fff;
-            border: 2px solid #eab308;
+            background-color: var(--card-bg-color);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
             border-radius: 50px;
             padding: 0.75rem 1.5rem;
             display: flex;
@@ -177,44 +178,15 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         #like-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(184, 134, 11, 0.3);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px var(--shadow-color);
         }
-        #like-button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        #like-button .heart-icon {
-            width: 24px;
-            height: 24px;
-            fill: #ccc;
-            transition: all 0.3s ease;
-        }
-        #like-button.liked .heart-icon {
-            fill: #e74c3c;
-            animation: heart-beat 0.5s ease;
-        }
-        #like-button #like-count {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            font-weight: 600;
-            color: #3a3a3a;
-            font-size: 1rem;
-        }
-        @keyframes heart-beat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
+        #like-button.liked .heart-icon { fill: #e74c3c; animation: heart-beat 0.5s ease; }
+        #like-button .heart-icon { width: 24px; height: 24px; fill: #ccc; transition: all 0.3s ease; }
+        @keyframes heart-beat { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
         
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
 
         .dropdown { position: relative; }
         .dropdown-menu {
@@ -226,195 +198,343 @@
             border-radius: 10px;
             padding: 1rem;
             z-index: 1001;
-            width: 220px;
+            width: 240px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
             transition: opacity 0.3s, transform 0.3s;
         }
-        .dropdown.active .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+        .dropdown.active .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .theme-btn { width: 30px; height: 30px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: border-color 0.2s; box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+        .theme-btn.active { border-color: var(--quote-color); }
+        .font-size-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-color); background: transparent; color: var(--text-color); font-size: 1.2rem; cursor: pointer; }
+
+        .tooltip-trigger {
+            border-bottom: 2px dotted var(--quote-color);
+            cursor: help;
+            position: relative;
         }
-        .theme-options, .font-size-controls {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 1rem;
+        
+        #heart-rain-container {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            width: 200px;
+            height: 200px;
+            pointer-events: none;
+            z-index: 9998;
         }
-        .theme-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-        .theme-btn.active {
-            border-color: var(--quote-color);
-        }
-        .font-size-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--border-color);
-            background: transparent;
-            color: var(--text-color);
-            font-size: 1.2rem;
-            cursor: pointer;
+        .heart-particle {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: red;
+            opacity: 0;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
     </style>
 </head>
-<body class="text-body p-4 md:p-8">
+<body class="p-4 md:p-8">
+    <div id="progress-bar"></div>
+    <canvas id="particle-canvas"></canvas>
     
-    <!-- THANH ĐIỀU HƯỚNG CỐ ĐỊNH -->
     <header class="w-full p-4 sticky top-0 z-50 transition-all duration-300">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" title="Trang Chủ">
+            <a href="https://thiensutinhquang.github.io/home/" title="Trang Chủ">
                 <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Thiên Sứ Tịnh Quang" class="h-16 w-auto" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));" onerror="this.onerror=null; this.src='https://placehold.co/120x64/fdfbf7/8C5B00?text=Logo';">
             </a>
             
-            <!-- Các nút điều hướng (Desktop) -->
-            <div class="top-nav-bar hidden md:flex">
+            <div class="hidden md:flex items-center gap-2">
                 <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" class="nav-button-base">Trang Chủ</a>
                 <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" class="nav-button-base">Play Nhạc</a>
                 <a href="https://thiensutinhquang.github.io/playtholientuc/" target="_blank" rel="noopener noreferrer" class="nav-button-base">Kho Thơ</a>
                 <a href="https://thiensutinhquang.github.io/Playlist-YouTube/" target="_blank" rel="noopener noreferrer" class="nav-button-base">Play Video</a>
                 <button id="tts-toggle-btn" class="nav-button-base">Đọc chữ</button>
+                <div class="dropdown">
+                    <button id="customize-btn" class="nav-button-base">Tùy chỉnh</button>
+                    <div id="customize-menu" class="dropdown-menu">
+                        <div class="mb-4">
+                            <h4 class="font-bold text-sm mb-2 text-center" style="font-family: 'Be Vietnam Pro', sans-serif;">GIAO DIỆN</h4>
+                            <div class="flex justify-around items-center">
+                                <button class="theme-btn" data-theme="light" style="background-color: #fbf9f3;"></button>
+                                <button class="theme-btn" data-theme="dark" style="background-color: #121212;"></button>
+                                <button class="theme-btn" data-theme="sepia" style="background-color: #f4e9d8;"></button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm mb-2 text-center" style="font-family: 'Be Vietnam Pro', sans-serif;">CỠ CHỮ</h4>
+                            <div class="flex justify-around items-center">
+                                <button id="font-decrease" class="font-size-btn">-</button>
+                                <button id="font-increase" class="font-size-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-             <!-- Nút menu cho di động -->
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-title p-2 rounded-md">
+                <button id="mobile-menu-button" class="p-2 rounded-md">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </div>
-        <!-- Menu di động (ẩn mặc định) -->
-        <div id="mobile-menu" class="hidden md:hidden p-4 space-y-2">
-             <button id="tts-toggle-btn-mobile" class="nav-button-base w-full">Đọc chữ</button>
+        <div id="mobile-menu" class="hidden md:hidden p-4 space-y-2 bg-card-bg-color rounded-lg mt-2">
+             <button id="tts-toggle-btn-mobile" class="nav-button-base w-full justify-center">Đọc chữ</button>
+             <button id="customize-btn-mobile" class="nav-button-base w-full justify-center">Tùy chỉnh</button>
+             <div id="customize-menu-mobile" class="hidden p-4 border-t border-divider-color">
+                <div class="mb-4">
+                    <h4 class="font-bold text-sm mb-2 text-center" style="font-family: 'Be Vietnam Pro', sans-serif;">GIAO DIỆN</h4>
+                    <div class="flex justify-around items-center">
+                        <button class="theme-btn" data-theme="light" style="background-color: #fbf9f3;"></button>
+                        <button class="theme-btn" data-theme="dark" style="background-color: #121212;"></button>
+                        <button class="theme-btn" data-theme="sepia" style="background-color: #f4e9d8;"></button>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-2 text-center" style="font-family: 'Be Vietnam Pro', sans-serif;">CỠ CHỮ</h4>
+                    <div class="flex justify-around items-center">
+                        <button id="font-decrease-mobile" class="font-size-btn">-</button>
+                        <button id="font-increase-mobile" class="font-size-btn">+</button>
+                    </div>
+                </div>
+             </div>
         </div>
     </header>
 
-    <!-- NỘI DUNG CHÍNH -->
     <div class="min-h-screen p-4">
         <div id="main-content" class="card max-w-4xl w-full mx-auto mt-24 sm:mt-16">
-            
             <header class="text-center py-8">
                 <h1 class="main-title">Pháp Đốn Ngộ - Phá Chấp Phá Mê</h1>
-                <p class="mt-4 text-lg text-gray-600">Con đường trở về ngôi nhà chân thật</p>
+                <p class="mt-4 text-lg" style="color: var(--section-title-color);">Con đường trở về ngôi nhà chân thật</p>
             </header>
 
-            <!-- PHẦN 1: LỜI PHÁP -->
             <section class="py-6">
-                <div class="space-y-6 text-lg leading-relaxed text-body">
+                <div class="space-y-6 text-lg leading-relaxed">
                     <section class="fade-in-section">
                         <h2 class="section-title">1. Gánh Nặng Trần Gian & Quả Bóng Bay</h2>
                         <p>Quý vị muốn tu hành để trở Về Nhà, nhưng lại ôm theo tất cả những điều giả tạm của nhân gian thì làm sao có thể về được? Nó cũng giống như một quả bóng bay bị buộc vào một cục đá, làm sao có thể bay lên cao?</p>
-                        <blockquote class="border-l-4 border-accent bg-accent-light text-quote p-4 my-4 rounded-r-lg">
+                        <blockquote class="border-l-4 p-4 my-4 rounded-r-lg" style="border-color: var(--border-color); background-color: var(--accent-light-bg); color: var(--quote-color);">
                             Người tu hành cần xác định rõ: <strong>buông hết mọi việc trong tâm, chính là giải thoát</strong>. Ngay tức khắc, quý vị sẽ khai ngộ, sống an vui từng phút giây, không còn phiền não nào có thể làm khổ được nữa.
                         </blockquote>
                     </section>
                     <section class="fade-in-section">
                         <h2 class="section-title">2. Cái Bẫy Của "Bản Ngã"</h2>
-                        <p>Ngồi thiền là để khám phá miền đất tâm linh, đi sâu vào Con Người Chân Thật bên trong. Nếu chưa buông bỏ được cái "bản ngã" hư dối, quý vị chỉ mãi đứng ngoài cổng nhà mình, không bao giờ tìm thấy phúc lạc và bình an vĩnh hằng.</p>
-                        <p class="mt-2">Cứ khư khư ôm lấy "bản ngã" thì tu đến muôn kiếp cũng chỉ như "nấu cát muốn thành cơm" hay "mài ngói muốn thành gương". Muốn giải thoát mà lại ôm tất cả, thì giải thoát ở nơi nào?</p>
+                        <p>Ngồi thiền là để khám phá miền đất tâm linh, đi sâu vào Con Người Chân Thật bên trong. Nếu chưa buông bỏ được cái <span class="tooltip-trigger" data-tooltip="Là cái 'tôi' giả tạo, được tạo nên từ những suy nghĩ, cảm xúc, ký ức, và vai trò xã hội. Nó không phải là bản chất thật sự của chúng ta.">bản ngã</span> hư dối, quý vị chỉ mãi đứng ngoài cổng nhà mình, không bao giờ tìm thấy phúc lạc và bình an vĩnh hằng.</p>
+                        <p class="mt-2">Cứ khư khư ôm lấy <span class="tooltip-trigger" data-tooltip="Là cái 'tôi' giả tạo, được tạo nên từ những suy nghĩ, cảm xúc, ký ức, và vai trò xã hội. Nó không phải là bản chất thật sự của chúng ta.">bản ngã</span> thì tu đến muôn kiếp cũng chỉ như "nấu cát muốn thành cơm" hay "mài ngói muốn thành gương". Muốn giải thoát mà lại ôm tất cả, thì giải thoát ở nơi nào?</p>
                     </section>
                 </div>
             </section>
             
             <hr class="section-divider">
 
-            <!-- PHẦN KẾT -->
-            <footer class="pt-8 mt-8 border-t border-gray-200">
-                <div class="bg-gray-100 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold text-center text-gray-700 mb-4">Liên hệ để được hướng dẫn tu tập</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-4 gap-x-8 text-gray-600 text-center">
-                        <div class="flex flex-col items-center justify-center">
-                            <span class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-                                <span>Sư tỷ Thúy</span>
-                            </span>
-                            <strong>091 678 19 69</strong>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                           <span class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-                                <span>Sư tỷ Thu</span>
-                            </span>
-                             <strong>0399 142 256</strong>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                            <span class="flex items-center gap-2">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h.007zM16 12a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-                                <span>Sư huynh Xiêm</span>
-                            </span>
-                            <strong>093 616 82 19</strong>
-                        </div>
+            <footer class="pt-8 mt-8 border-t" style="border-color: var(--divider-color);">
+                <div class="p-6 rounded-lg" style="background-color: var(--accent-light-bg);">
+                    <h3 class="text-xl font-bold text-center mb-4" style="color: var(--section-title-color);">Liên hệ để được hướng dẫn tu tập</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-4 gap-x-8 text-center" style="font-family: 'Be Vietnam Pro', sans-serif;">
+                        <!-- Contact Info -->
+                         <div class="flex flex-col items-center justify-center"><strong>Sư tỷ Thúy:</strong> 091 678 19 69</div>
+                         <div class="flex flex-col items-center justify-center"><strong>Sư tỷ Thu:</strong> 0399 142 256</div>
+                         <div class="flex flex-col items-center justify-center"><strong>Sư huynh Xiêm:</strong> 093 616 82 19</div>
                     </div>
-                    <div class="flex items-center justify-center gap-2 mt-4 text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-title" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                        <span>Mail: <strong>thiensutinhquang@gmail.com</strong></span>
+                    <div class="flex items-center justify-center gap-2 mt-4" style="font-family: 'Be Vietnam Pro', sans-serif;">
+                        Mail: <strong>thiensutinhquang@gmail.com</strong>
                     </div>
                 </div>
             </footer>
         </div>
     </div>
     
-    <!-- NÚT LIKE -->
     <div id="like-button-container">
         <button id="like-button">
             <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
-            <span id="like-count">0</span>
+            <span id="like-count" style="font-family: 'Be Vietnam Pro', sans-serif; font-weight: 600; font-size: 1rem;">0</span>
         </button>
     </div>
+    <div id="heart-rain-container"></div>
+    <div id="tooltip-element" class="hidden absolute p-3 rounded-lg shadow-lg text-sm z-50 max-w-xs" style="background-color: var(--card-bg-color); border: 1px solid var(--border-color);"></div>
 
     <script type="module">
-        // Import các hàm cần thiết từ Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, runTransaction, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, runTransaction, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- CÀI ĐẶT FIREBASE ---
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        
         let db, auth;
-
         try {
             if (Object.keys(firebaseConfig).length > 0) {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-            } else {
-                 throw new Error("Firebase config is missing or empty.");
-            }
+            } else { throw new Error("Firebase config is missing."); }
         } catch (e) {
-            console.error("Lỗi khởi tạo Firebase: ", e);
-            const likeContainer = document.getElementById('like-button-container');
-            if (likeContainer) likeContainer.style.display = 'none';
+            console.error("Lỗi Firebase:", e);
+            document.getElementById('like-button-container').style.display = 'none';
         }
         
-        // --- LOGIC CHUNG ---
         document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
             
-            // --- LOGIC NÚT LIKE ---
+            // --- 1. HIỆU ỨNG HÀO QUANG (PARTICLE) ---
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particles = [];
+            function createParticles() {
+                particles = [];
+                let particleCount = window.innerWidth > 768 ? 200 : 70;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: Math.random() * 0.4 - 0.2,
+                        vy: Math.random() * 0.4 - 0.2,
+                        radius: Math.random() * 1.5 + 0.5,
+                    });
+                }
+            }
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(218, 165, 32, 0.5)';
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            createParticles();
+            animateParticles();
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                createParticles();
+            });
+
+            // --- 2. THANH TIẾN TRÌNH ĐỌC ---
+            const progressBar = document.getElementById('progress-bar');
+            window.addEventListener('scroll', () => {
+                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = (window.scrollY / scrollableHeight) * 100;
+                progressBar.style.width = `${scrolled}%`;
+            });
+
+            // --- 3. HIỆU ỨNG FADE-IN KHI CUỘN ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-in-section').forEach(section => observer.observe(section));
+
+            // --- 4. MENU TÙY CHỈNH (GIAO DIỆN & CỠ CHỮ) ---
+            const customizeBtn = document.getElementById('customize-btn');
+            const customizeMenu = document.getElementById('customize-menu');
+            const customizeBtnMobile = document.getElementById('customize-btn-mobile');
+            const customizeMenuMobile = document.getElementById('customize-menu-mobile');
+            
+            function applyTheme(theme) {
+                body.classList.remove('dark-theme', 'sepia-theme');
+                if (theme === 'dark' || theme === 'sepia') {
+                    body.classList.add(`${theme}-theme`);
+                }
+                document.querySelectorAll('.theme-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.theme === theme);
+                });
+                localStorage.setItem('theme', theme);
+            }
+
+            function applyFontSize(size) {
+                 const newSize = Math.max(0.8, Math.min(1.5, size));
+                 document.documentElement.style.setProperty('--font-size', `${newSize}rem`);
+                 localStorage.setItem('fontSize', newSize);
+                 return newSize;
+            }
+
+            let currentFontSize = parseFloat(localStorage.getItem('fontSize')) || 1.1;
+            applyFontSize(currentFontSize);
+            applyTheme(localStorage.getItem('theme') || 'light');
+
+            [customizeBtn, customizeBtnMobile].forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const menu = btn.id.includes('mobile') ? customizeMenuMobile : customizeMenu;
+                    if(btn.id.includes('mobile')) menu.classList.toggle('hidden');
+                    else btn.parentElement.classList.toggle('active');
+                });
+            });
+
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+            });
+
+            document.getElementById('font-increase').addEventListener('click', () => { currentFontSize = applyFontSize(currentFontSize + 0.1); });
+            document.getElementById('font-decrease').addEventListener('click', () => { currentFontSize = applyFontSize(currentFontSize - 0.1); });
+            document.getElementById('font-increase-mobile').addEventListener('click', () => { currentFontSize = applyFontSize(currentFontSize + 0.1); });
+            document.getElementById('font-decrease-mobile').addEventListener('click', () => { currentFontSize = applyFontSize(currentFontSize - 0.1); });
+            
+            document.addEventListener('click', () => {
+                customizeBtn.parentElement.classList.remove('active');
+            });
+            customizeMenu.addEventListener('click', e => e.stopPropagation());
+
+
+            // --- 5. CHÚ GIẢI (TOOLTIP) ---
+            const tooltipElement = document.getElementById('tooltip-element');
+            document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+                trigger.addEventListener('mouseenter', (e) => {
+                    tooltipElement.textContent = trigger.dataset.tooltip;
+                    tooltipElement.classList.remove('hidden');
+                    const rect = trigger.getBoundingClientRect();
+                    tooltipElement.style.left = `${rect.left + window.scrollX}px`;
+                    tooltipElement.style.top = `${rect.bottom + window.scrollY + 5}px`;
+                });
+                trigger.addEventListener('mouseleave', () => {
+                    tooltipElement.classList.add('hidden');
+                });
+            });
+
+            // --- 6. NÚT LIKE & HIỆU ỨNG MƯA TIM ---
+            function createHeartRain() {
+                const container = document.getElementById('heart-rain-container');
+                for (let i = 0; i < 30; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-particle';
+                    const randomColor = `hsl(${Math.random() * 60}, 100%, 70%)`;
+                    heart.style.background = `radial-gradient(circle, ${randomColor}, #ff4757)`;
+                    container.appendChild(heart);
+
+                    const anim = heart.animate([
+                        { transform: `translate(${(Math.random() - 0.5) * 200}px, 0) scale(0.5)`, opacity: 1 },
+                        { transform: `translate(${(Math.random() - 0.5) * 400}px, -300px) scale(1.5)`, opacity: 0 }
+                    ], {
+                        duration: 1500 + Math.random() * 1000,
+                        easing: 'ease-out',
+                        delay: Math.random() * 500
+                    });
+                    anim.onfinish = () => heart.remove();
+                }
+            }
+
             function setupLikeButton(userId) {
-                const pageId = 'huong_dan_tu_tap';
+                const pageId = 'huong_dan_tu_tap_v2';
                 const likeDocRef = doc(db, "artifacts", appId, "public", "data", "page_likes", pageId);
-                const userLikeRef = doc(db, `artifacts/${appId}/users/${userId}/page_likes`, pageId);
                 const likeButton = document.getElementById('like-button');
                 const likeCountSpan = document.getElementById('like-count');
 
-                if (!likeButton || !likeCountSpan) return;
-
                 onSnapshot(likeDocRef, (docSnap) => {
                     likeCountSpan.textContent = docSnap.exists() ? docSnap.data().count || 0 : 0;
-                }, (error) => {
-                    console.error("Lỗi lắng nghe lượt thích (onSnapshot):", error);
-                });
+                }, console.error);
 
                 const hasLiked = localStorage.getItem(`liked_${pageId}_${userId}`);
                 if (hasLiked) {
@@ -429,220 +549,126 @@
                     try {
                         await runTransaction(db, async (transaction) => {
                             const likeDoc = await transaction.get(likeDocRef);
-                            if (!likeDoc.exists()) {
-                                transaction.set(likeDocRef, { count: 1 });
-                            } else {
-                                transaction.update(likeDocRef, { count: increment(1) });
-                            }
+                            transaction.set(likeDocRef, { count: (likeDoc.data()?.count || 0) + 1 }, { merge: true });
                         });
                         
                         likeButton.classList.add('liked');
                         localStorage.setItem(`liked_${pageId}_${userId}`, 'true');
+                        createHeartRain(); // Kích hoạt hiệu ứng mưa tim
 
                     } catch (e) {
-                        console.error("Lỗi khi cập nhật lượt thích (transaction): ", e);
+                        console.error("Lỗi khi thích:", e);
                         likeButton.disabled = false;
                     }
                 });
             }
+            
+            // --- 7. ĐIỀU KHIỂN MENU DI ĐỘNG ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-            // --- XÁC THỰC FIREBASE ---
+            // --- 8. XÁC THỰC & KHỞI TẠO CÁC TÍNH NĂNG ---
             if (auth) {
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
-                        console.log("Người dùng đã xác thực:", user.uid);
                         setupLikeButton(user.uid);
                     } else {
-                        console.log("Người dùng chưa xác thực, đang tiến hành đăng nhập...");
                         const signInPromise = (typeof __initial_auth_token !== 'undefined' && __initial_auth_token)
                             ? signInWithCustomToken(auth, __initial_auth_token)
                             : signInAnonymously(auth);
-
-                        signInPromise.catch((error) => {
-                            console.error("Lỗi đăng nhập:", error);
-                            const likeContainer = document.getElementById('like-button-container');
-                            if (likeContainer) likeContainer.style.display = 'none';
-                        });
+                        signInPromise.catch(console.error);
                     }
                 });
             }
 
-            // --- JavaScript cho Menu (Mobile) ---
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-            
-            // --- JavaScript cho tính năng đọc chữ (Text-to-Speech) ---
-            const ttsButton = document.getElementById('tts-toggle-btn');
-            const ttsButtonMobile = document.getElementById('tts-toggle-btn-mobile');
+            // --- 9. TÍNH NĂNG ĐỌC CHỮ (TTS) ---
+            const ttsButtons = [document.getElementById('tts-toggle-btn'), document.getElementById('tts-toggle-btn-mobile')];
             const contentContainer = document.getElementById('main-content');
             let isSpeaking = false;
             let utteranceQueue = [];
             let currentUtteranceIndex = 0;
             let wakeLock = null;
             let lastHighlightedElement = null;
-            let wakeLockPermissionError = false;
-
-            if (!('speechSynthesis' in window)) {
-                if(ttsButton) ttsButton.style.display = 'none';
-                if(ttsButtonMobile) ttsButtonMobile.style.display = 'none';
-                return;
-            }
-            
-            function showTempMessage(message, type = 'error') {
-                const messageDiv = document.createElement('div');
-                messageDiv.textContent = message;
-                messageDiv.style.cssText = `
-                    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-                    padding: 10px 20px; background-color: ${type === 'error' ? '#f44336' : '#4CAF50'};
-                    color: white; border-radius: 5px; z-index: 9999; text-align: center;
-                    font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.9rem;
-                `;
-                document.body.appendChild(messageDiv);
-                setTimeout(() => {
-                    if (messageDiv.parentNode) {
-                        messageDiv.parentNode.removeChild(messageDiv);
-                    }
-                }, 5000);
-            }
 
             async function requestWakeLock() {
-                if ('wakeLock' in navigator && !wakeLockPermissionError) {
+                if ('wakeLock' in navigator) {
                     try {
                         if (wakeLock === null) {
                             wakeLock = await navigator.wakeLock.request('screen');
-                            wakeLock.addEventListener('release', () => { wakeLock = null; });
                         }
-                    } catch (err) {
-                        if (err.name === 'NotAllowedError') {
-                            if (!wakeLockPermissionError) {
-                                showTempMessage('Tính năng giữ màn hình sáng không được phép. Màn hình có thể tự tắt.', 'error');
-                                wakeLockPermissionError = true;
-                            }
-                        }
-                        console.error(`Không thể kích hoạt Wake Lock: ${err.name}, ${err.message}`);
-                    }
+                    } catch (err) { console.error(`Wake Lock Error: ${err.name}, ${err.message}`); }
                 }
             }
-
             async function releaseWakeLock() {
                 if (wakeLock !== null) {
                     await wakeLock.release();
                     wakeLock = null;
                 }
             }
-
             function stopReading() {
                 speechSynthesis.cancel();
                 isSpeaking = false;
-                if(ttsButton) ttsButton.textContent = 'Đọc chữ';
-                if(ttsButtonMobile) ttsButtonMobile.textContent = 'Đọc chữ';
-                if(lastHighlightedElement) {
-                    lastHighlightedElement.classList.remove('tts-highlight');
-                }
+                ttsButtons.forEach(btn => btn.textContent = 'Đọc chữ');
+                if(lastHighlightedElement) lastHighlightedElement.classList.remove('tts-highlight');
                 releaseWakeLock();
             }
-
             function startReading() {
-                if (!contentContainer) return;
-                
                 utteranceQueue = [];
-                
-                const elementsToRead = contentContainer.querySelectorAll('h1, h2, h3, p, li');
-                
-                elementsToRead.forEach(el => {
+                contentContainer.querySelectorAll('h1, h2, h3, p, blockquote').forEach(el => {
                     const text = el.textContent.trim();
                     if (text) {
                         const utterance = new SpeechSynthesisUtterance(text);
                         const voice = speechSynthesis.getVoices().find(v => v.lang.startsWith("vi"));
                         if (voice) utterance.voice = voice;
                         utterance.rate = 1.0;
-                        utterance.pitch = 1.0;
                         utterance.elementRef = el; 
                         utteranceQueue.push(utterance);
                     }
                 });
-
                 if (utteranceQueue.length > 0) {
                     isSpeaking = true;
-                    if(ttsButton) ttsButton.textContent = 'Dừng đọc';
-                    if(ttsButtonMobile) ttsButtonMobile.textContent = 'Dừng đọc';
+                    ttsButtons.forEach(btn => btn.textContent = 'Dừng đọc');
                     currentUtteranceIndex = 0;
                     playNextUtterance();
                     requestWakeLock();
                 }
             }
-
             function playNextUtterance() {
-                if (!isSpeaking || currentUtteranceIndex >= utteranceQueue.length) {
-                    stopReading();
-                    return;
-                }
-
+                if (!isSpeaking || currentUtteranceIndex >= utteranceQueue.length) { stopReading(); return; }
                 const utterance = utteranceQueue[currentUtteranceIndex];
-
                 utterance.onstart = () => {
-                    if(lastHighlightedElement) {
-                        lastHighlightedElement.classList.remove('tts-highlight');
-                    }
+                    if(lastHighlightedElement) lastHighlightedElement.classList.remove('tts-highlight');
                     utterance.elementRef.classList.add('tts-highlight');
                     utterance.elementRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     lastHighlightedElement = utterance.elementRef;
                 };
-
                 utterance.onend = () => {
                     if(utterance.elementRef) utterance.elementRef.classList.remove('tts-highlight');
                     lastHighlightedElement = null;
                     currentUtteranceIndex++;
-                    setTimeout(playNextUtterance, 50); // Thêm độ trễ nhỏ
+                    setTimeout(playNextUtterance, 50);
                 };
-                
                 utterance.onerror = (e) => {
-                    console.error("Lỗi phát âm:", e.error);
-                    if (isSpeaking) {
-                         currentUtteranceIndex++;
-                         playNextUtterance();
-                    } else {
-                         stopReading();
-                    }
+                    console.error("TTS Error:", e.error);
+                    currentUtteranceIndex++;
+                    playNextUtterance();
                 };
-
                 speechSynthesis.speak(utterance);
             }
-
-            function togglePlayback() {
-                if (isSpeaking) {
-                    stopReading();
-                } else {
-                    speechSynthesis.cancel();
-                    setTimeout(() => {
-                        if (speechSynthesis.getVoices().length === 0) {
-                            speechSynthesis.onvoiceschanged = startReading;
-                        } else {
-                            startReading();
-                        }
-                    }, 150);
-                }
-            }
-            
-            if(ttsButton) ttsButton.addEventListener('click', togglePlayback);
-            if(ttsButtonMobile) ttsButtonMobile.addEventListener('click', togglePlayback);
-
-            document.addEventListener('visibilitychange', async () => {
-                if (document.visibilityState === 'hidden' && isSpeaking) {
-                    speechSynthesis.pause();
-                    releaseWakeLock();
-                } else if (document.visibilityState === 'visible' && isSpeaking) {
-                   await requestWakeLock();
-                }
+            ttsButtons.forEach(btn => {
+                if(btn) btn.addEventListener('click', () => {
+                    if (isSpeaking) stopReading();
+                    else {
+                        speechSynthesis.cancel();
+                        setTimeout(() => {
+                            if (speechSynthesis.getVoices().length === 0) speechSynthesis.onvoiceschanged = startReading;
+                            else startReading();
+                        }, 150);
+                    }
+                });
             });
         });
-
     </script>
 </body>
 </html>

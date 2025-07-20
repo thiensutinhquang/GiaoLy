@@ -224,7 +224,7 @@
     // Global variables for Firebase config and auth token
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
     const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; // Corrected variable name
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
     let app, db, auth, userId;
     const ARTICLE_ID = 'mainArticleLikes'; // Unique ID for this article's likes
@@ -353,19 +353,45 @@
     let paragraphElements = []; // Stores all elements (h1, h2, p) to be read
     let currentParagraphIndex = 0;
     let currentUtterance = null; // Stores the current utterance being spoken
+    let isSpeechReady = false; // Flag to indicate if speech synthesis is ready
 
     // Function to initialize paragraphElements on page load
     function initializeParagraphElements() {
       paragraphElements = Array.from(content.querySelectorAll('h1, h2, p'));
     }
 
-    // Call this on DOMContentLoaded to ensure content is loaded
-    window.addEventListener('DOMContentLoaded', initializeParagraphElements);
+    // Initialize speech synthesizer and load voices
+    const initSpeechSynthesis = () => {
+      speechSynthesizer = window.speechSynthesis;
+      if (speechSynthesizer) {
+        // Listen for voices to be loaded
+        speechSynthesizer.onvoiceschanged = () => {
+          isSpeechReady = true;
+          console.log("SpeechSynthesis voices loaded.");
+        };
+        // If voices are already loaded (e.g., on subsequent calls or after a delay)
+        if (speechSynthesizer.getVoices().length > 0) {
+          isSpeechReady = true;
+          console.log("SpeechSynthesis voices already loaded.");
+        }
+      } else {
+        console.warn("SpeechSynthesis not supported in this browser.");
+        showMessageBox("Trình duyệt của bạn không hỗ trợ đọc văn bản.");
+        readBtn.disabled = true; // Disable the read button if not supported
+      }
+    };
+
+    // Call this on DOMContentLoaded to ensure content and speech are ready
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeParagraphElements();
+      initSpeechSynthesis();
+    });
 
     // Click handler for the read button
     readBtn.onclick = () => {
-      if (!speechSynthesizer) {
-        speechSynthesizer = window.speechSynthesis;
+      if (!isSpeechReady) {
+        showMessageBox("Đang tải giọng đọc, vui lòng thử lại sau giây lát.");
+        return;
       }
 
       // If currently speaking and not paused, pause it
@@ -438,7 +464,7 @@
       }
       clearAllHighlights(); // Remove all highlights
       currentParagraphIndex = 0; // Reset paragraph index
-      readBtn.textContent = '� Đọc bài'; // Reset button text to "Read Article"
+      readBtn.textContent = '🔊 Đọc bài'; // Reset button text to "Read Article"
     }
 
     // Function to remove all highlight classes from paragraphs
@@ -645,4 +671,3 @@
 </body>
 
 </html>
-�

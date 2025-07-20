@@ -49,20 +49,6 @@
       padding: 2px 0;
     }
 
-    /* Highlight for current reading paragraph */
-    .highlight-paragraph {
-      background-color: #fffacd; /* Light yellow for highlighting */
-      transition: background-color 0.3s ease;
-      padding: 0.25em 0.5em; /* Add some padding for better visual */
-      border-radius: 0.25em; /* Rounded corners for highlight */
-      display: block; /* Ensure it takes full width */
-    }
-
-    /* Dark mode adjustment for highlight */
-    body.dark .highlight-paragraph {
-      background-color: #3a3f4a; /* Darker shade for contrast in dark mode */
-    }
-
     /* Smooth scroll behavior */
     html {
       scroll-behavior: smooth;
@@ -73,7 +59,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* Dark mode styles (applied on top of themes) */
+    /* Dark mode styles */
     body.dark {
       background-color: #1a202c; /* Tailwind gray-900 */
       color: #e2e8f0; /* Tailwind gray-200 */
@@ -106,116 +92,6 @@
 
     body.dark #shareModal > div {
       background-color: #2d3748;
-    }
-
-    /* --- New Theme Styles --- */
-
-    /* Xanh Lục Tĩnh Lặng (Serene Green) */
-    body.theme-green {
-      background-color: #e0f2f7; /* Light Cyan */
-      color: #2f4f4f; /* Dark Slate Gray */
-    }
-    body.theme-green .bg-yellow-200 {
-      background-color: #a7d9d9; /* Lighter Teal */
-    }
-    body.theme-green .text-yellow-900 {
-      color: #2f4f4f;
-    }
-    body.theme-green .bg-gray-50 {
-      background-color: #c0e0e0; /* Light Teal */
-    }
-    body.theme-green .bg-gray-200 {
-      background-color: #80ced6; /* Medium Teal */
-    }
-    body.theme-green .text-gray-800 {
-      color: #2f4f4f;
-    }
-    body.theme-green .bg-gray-700 {
-      background-color: #5f9ea0; /* Cadet Blue */
-    }
-    body.theme-green .bg-pink-500 {
-      background-color: #ffb6c1; /* Light Pink for contrast */
-    }
-    body.theme-green .bg-blue-600 {
-      background-color: #6495ed; /* Cornflower Blue for contrast */
-    }
-    body.theme-green #shareModal > div {
-      background-color: #e0f2f7;
-    }
-    body.theme-green #content {
-      background-color: #d4f0f0; /* Slightly darker light cyan for content */
-    }
-
-    /* Tím Thiền Định (Meditative Purple) */
-    body.theme-purple {
-      background-color: #f0e6fa; /* Lavender Blush */
-      color: #4b0082; /* Indigo */
-    }
-    body.theme-purple .bg-yellow-200 {
-      background-color: #d8bfd8; /* Thistle */
-    }
-    body.theme-purple .text-yellow-900 {
-      color: #4b0082;
-    }
-    body.theme-purple .bg-gray-50 {
-      background-color: #e6cce6; /* Plum */
-    }
-    body.theme-purple .bg-gray-200 {
-      background-color: #b0e0e6; /* Powder Blue (for contrast) */
-    }
-    body.theme-purple .text-gray-800 {
-      color: #4b0082;
-    }
-    body.theme-purple .bg-gray-700 {
-      background-color: #9370db; /* Medium Purple */
-    }
-    body.theme-purple .bg-pink-500 {
-      background-color: #ff69b4; /* Hot Pink for contrast */
-    }
-    body.theme-purple .bg-blue-600 {
-      background-color: #8a2be2; /* Blue Violet for contrast */
-    }
-    body.theme-purple #shareModal > div {
-      background-color: #f0e6fa;
-    }
-    body.theme-purple #content {
-      background-color: #e8d0f2; /* Slightly darker lavender for content */
-    }
-
-    /* Vàng Nhẹ Thoát Tục (Subtle Yellow/Gold) */
-    body.theme-gold {
-      background-color: #fffaf0; /* Floral White */
-      color: #5a4a3a; /* Darker Brown */
-    }
-    body.theme-gold .bg-yellow-200 {
-      background-color: #ffe4b5; /* Moccasin */
-    }
-    body.theme-gold .text-yellow-900 {
-      color: #5a4a3a;
-    }
-    body.theme-gold .bg-gray-50 {
-      background-color: #fffacd; /* Lemon Chiffon */
-    }
-    body.theme-gold .bg-gray-200 {
-      background-color: #f0e68c; /* Khaki */
-    }
-    body.theme-gold .text-gray-800 {
-      color: #5a4a3a;
-    }
-    body.theme-gold .bg-gray-700 {
-      background-color: #daa520; /* Goldenrod */
-    }
-    body.theme-gold .bg-pink-500 {
-      background-color: #ffc0cb; /* Pink for contrast */
-    }
-    body.theme-gold .bg-blue-600 {
-      background-color: #add8e6; /* Light Blue for contrast */
-    }
-    body.theme-gold #shareModal > div {
-      background-color: #fffaf0;
-    }
-    body.theme-gold #content {
-      background-color: #fff5e0; /* Slightly darker floral white for content */
     }
   </style>
 </head>
@@ -277,12 +153,6 @@
         <button id="searchBtn" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 shadow-md">
           🔍
         </button>
-        <select id="themeSelector" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-200">
-          <option value="default">Mặc định</option>
-          <option value="green">Xanh Lục Tĩnh Lặng</option>
-          <option value="purple">Tím Thiền Định</option>
-          <option value="gold">Vàng Nhẹ Thoát Tục</option>
-        </select>
         <button id="darkModeToggle" class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors duration-200 shadow-md">
           🌙
         </button>
@@ -338,223 +208,22 @@
     import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Global variables for Firebase config and auth token
-    const firebaseConfig = {
-      apiKey: "AIzaSyAYDG6sVKYbLBzO_iQGwoK9FTH8deJVo3s",
-      authDomain: "giaoly-editor.firebaseapp.com",
-      projectId: "giaoly-editor",
-      storageBucket: "giaoly-editor.firebasestorage.app",
-      messagingSenderId: "62184116846",
-      appId: "1:62184116846:web:5bd50b4f8a433a066bcc7f",
-      measurementId: "G-56PKNCYV6D"
-    };
-
-    const appId = firebaseConfig.projectId;
-    const initialAuthToken = null;
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
     let app, db, auth, userId;
-    const ARTICLE_ID = 'mainArticleLikes';
-    let currentLikeCount = 0;
+    const ARTICLE_ID = 'mainArticleLikes'; // Unique ID for this article's likes
+    let currentLikeCount = 0; // Local state for like count
 
-    // Log Firebase Config and App ID for debugging
-    console.log("Firebase Config:", firebaseConfig);
-    console.log("App ID for Firestore paths:", appId);
-
-    // --- Helper Functions (Defined before they are called) ---
-
-    // Message Box Display
-    function showMessageBox(message) {
-      const messageBox = document.getElementById('messageBox'); // Ensure messageBox is accessed here
-      if (messageBox) {
-        messageBox.textContent = message;
-        messageBox.classList.remove('hidden');
-        setTimeout(() => {
-          messageBox.classList.add('hidden');
-        }, 3000); // Hide after 3 seconds
-      } else {
-        console.warn("Message box element not found.");
-      }
-    }
-
-    // Clear highlights for search functionality
-    let lastHighlightedRanges = []; // Keep this global as it's modified by searchBtn.onclick
-
-    function clearHighlights() {
-      const content = document.getElementById('content'); // Ensure content is accessed here
-      if (content) {
-        const highlights = content.querySelectorAll('.highlight');
-        highlights.forEach(span => {
-          const parent = span.parentNode;
-          while (span.firstChild) {
-            parent.insertBefore(span.firstChild, span);
-          }
-          parent.removeChild(span);
-        });
-        content.normalize(); // Normalize the parent to merge adjacent text nodes
-        lastHighlightedRanges = [];
-      }
-    }
-
-    // Apply Theme Logic
-    const themes = ['default', 'green', 'purple', 'gold'];
-
-    const applyTheme = (themeName) => {
-      themes.forEach(theme => {
-        document.body.classList.remove(`theme-${theme}`);
-      });
-      if (themeName !== 'default') {
-        document.body.classList.add(`theme-${themeName}`);
-      }
-      localStorage.setItem('selectedTheme', themeName);
-    };
-
-    // Text-to-Speech Helper Functions
-    let speechSynthesizer = null;
-    let paragraphElements = [];
-    let currentParagraphIndex = 0;
-    let currentUtterance = null;
-    let isSpeechReady = false;
-
-    function initializeParagraphElements() {
-      const content = document.getElementById('content'); // Ensure content is accessed here
-      if (content) {
-        paragraphElements = Array.from(content.querySelectorAll('h1, h2, p'));
-      }
-    }
-
-    const initSpeechSynthesis = () => {
-      speechSynthesizer = window.speechSynthesis;
-      const readBtn = document.getElementById('readBtn'); // Ensure readBtn is accessed here
-      if (speechSynthesizer && readBtn) {
-        speechSynthesizer.onvoiceschanged = () => {
-          isSpeechReady = true;
-          console.log("SpeechSynthesis voices loaded.");
-        };
-        if (speechSynthesizer.getVoices().length > 0) {
-          isSpeechReady = true;
-          console.log("SpeechSynthesis voices already loaded.");
-        }
-      } else if (readBtn) {
-        console.warn("SpeechSynthesis not supported in this browser.");
-        showMessageBox("Trình duyệt của bạn không hỗ trợ đọc văn bản.");
-        readBtn.disabled = true;
-      }
-    };
-
-    function clearAllHighlightsForSpeech() { // Renamed to avoid conflict with search highlight clear
-      paragraphElements.forEach(el => el.classList.remove('highlight-paragraph'));
-    }
-
-    function stopReading() {
-      const readBtn = document.getElementById('readBtn'); // Ensure readBtn is accessed here
-      if (speechSynthesizer && readBtn) {
-        speechSynthesizer.cancel();
-      }
-      clearAllHighlightsForSpeech();
-      currentParagraphIndex = 0;
-      if (readBtn) readBtn.textContent = '🔊 Đọc bài';
-    }
-
-    function startReading() {
-      const readBtn = document.getElementById('readBtn'); // Ensure readBtn is accessed here
-      clearAllHighlightsForSpeech();
-
-      if (currentParagraphIndex >= paragraphElements.length) {
-        stopReading();
-        return;
-      }
-
-      const currentElement = paragraphElements[currentParagraphIndex];
-      currentElement.classList.add('highlight-paragraph');
-      currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-      currentUtterance = new SpeechSynthesisUtterance(currentElement.innerText);
-
-      const voices = speechSynthesizer.getVoices();
-      const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN');
-      if (vietnameseVoice) {
-        currentUtterance.voice = vietnameseVoice;
-      } else {
-        console.warn("Vietnamese voice not found. Using default voice.");
-      }
-
-      currentUtterance.onend = () => {
-        currentElement.classList.remove('highlight-paragraph');
-        currentParagraphIndex++;
-        startReading();
-      };
-
-      currentUtterance.onerror = (event) => {
-        console.error('SpeechSynthesisUtterance.onerror', event);
-        stopReading();
-        showMessageBox("Lỗi khi đọc bài viết.");
-      };
-
-      speechSynthesizer.speak(currentUtterance);
-      if (readBtn) readBtn.textContent = '⏸️ Tạm dừng';
-    }
-
-    // Function to update active TOC link based on scroll position
-    const updateTocActive = () => {
-      const tocLinks = []; // Re-initialize or pass as argument if needed globally
-      const headers = document.getElementById('content').querySelectorAll('h1, h2');
-      headers.forEach((header, i) => {
-        const id = 'section-' + i;
-        const link = document.querySelector(`#toc a[href="#${id}"]`); // Find existing link
-        if (link) {
-          tocLinks.push({ id, link, element: header });
-        }
-      });
-
-      let currentActive = null;
-      for (let i = tocLinks.length - 1; i >= 0; i--) {
-        const { element, link } = tocLinks[i];
-        const rect = element.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 2) {
-          currentActive = link;
-          break;
-        }
-      }
-      tocLinks.forEach(({ link }) => link.classList.remove('toc-active'));
-      if (currentActive) {
-        currentActive.classList.add('toc-active');
-      }
-    };
-
-    // Setup Real-time Likes Listener (moved to top for definition before call)
-    const setupLikesListener = () => {
-      if (!db) {
-        console.warn("Firestore not ready for likes listener.");
-        return;
-      }
-      const articleRef = doc(db, `favorites`, ARTICLE_ID);
-      console.log("Firestore listener path (read):", articleRef.path);
-
-      onSnapshot(articleRef, (docSnap) => {
-        const likeCountSpan = document.getElementById('likeCount'); // Ensure likeCountSpan is accessed here
-        if (docSnap.exists()) {
-          currentLikeCount = docSnap.data().likes || 0;
-        } else {
-          currentLikeCount = 0;
-          // Tùy chọn: Khởi tạo tài liệu lượt thích nếu nó chưa tồn tại.
-          // Điều này đảm bảo tài liệu tồn tại cho lượt thích đầu tiên.
-          setDoc(articleRef, { likes: 0 }, { merge: true }).catch(e => console.error("Error initializing likes document:", e));
-        }
-        if (likeCountSpan) likeCountSpan.textContent = currentLikeCount;
-        console.log("Current like count:", currentLikeCount);
-      }, (error) => {
-        console.error("Error listening to likes:", error);
-        showMessageBox("Lỗi khi tải số lượt thích. Vui lòng kiểm tra kết nối mạng.");
-      });
-    };
-
-
-    // --- Initialize Firebase and handle authentication ---
+    // Initialize Firebase and handle authentication
     const initFirebase = async () => {
       try {
         app = initializeApp(firebaseConfig);
         db = getFirestore(app);
         auth = getAuth(app);
 
+        // Sign in with custom token or anonymously
         if (initialAuthToken) {
           await signInWithCustomToken(auth, initialAuthToken);
           console.log("Signed in with custom token.");
@@ -567,22 +236,22 @@
           if (user) {
             userId = user.uid;
             console.log("User ID:", userId);
-            setupLikesListener(); // Call after user is authenticated
+            // Once authenticated, set up real-time listener for likes
+            setupLikesListener();
           } else {
             console.log("No user is signed in.");
-            userId = null;
-            setupLikesListener(); // Still call to load public likes even if anonymous
+            userId = null; // Or a random ID if you want to store anonymous data
+            // If not authenticated, still try to load likes, but user can't increment
+            setupLikesListener();
           }
         });
       } catch (error) {
         console.error("Error initializing Firebase or signing in:", error);
-        showMessageBox("Lỗi khởi tạo Firebase. Vui lòng kiểm tra cấu hình API Key và các thông số khác.");
       }
     };
 
     // Call Firebase initialization
     initFirebase();
-
 
     // --- DOM Elements ---
     const menuToggle = document.getElementById('menuToggle');
@@ -598,242 +267,303 @@
     const shareModal = document.getElementById('shareModal');
     const closeShare = document.getElementById('closeShare');
     const shareFacebook = document.getElementById('shareFacebook');
-    const copyLinkBtn = document.getElementById('copyLinkBtn'); // Corrected from 'document = document.getElementById'
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
     const messageBox = document.getElementById('messageBox');
     const searchBox = document.getElementById('searchBox');
     const searchBtn = document.getElementById('searchBtn');
     const darkModeToggle = document.getElementById('darkModeToggle');
-    const themeSelector = document.getElementById('themeSelector');
 
+    // --- Mobile Menu Toggle ---
+    menuToggle.onclick = () => mobileMenu.classList.remove('hidden');
+    closeMenu.onclick = () => mobileMenu.classList.add('hidden');
 
-    // --- Event Listeners ---
+    // --- Table of Contents (TOC) Generation and Highlighting ---
+    const headers = content.querySelectorAll('h1, h2');
+    const tocLinks = [];
 
-    // Mobile Menu Toggle
-    if (menuToggle) menuToggle.onclick = () => mobileMenu.classList.remove('hidden');
-    if (closeMenu) closeMenu.onclick = () => mobileMenu.classList.add('hidden');
+    headers.forEach((header, i) => {
+      const id = 'section-' + i;
+      header.id = id;
+      const link = document.createElement('a');
+      link.href = '#' + id;
+      link.textContent = header.textContent;
+      link.className = 'block py-1 px-2 rounded-md hover:bg-yellow-100 transition-colors duration-200';
+      toc.appendChild(link);
+      tocLinks.push({ id, link, element: header });
 
-    // Table of Contents (TOC) Generation and Highlighting
-    // This part needs to run after content is loaded
-    window.addEventListener('DOMContentLoaded', () => {
-      const headers = content.querySelectorAll('h1, h2');
-      const tocLinksArray = []; // Use a local array for TOC generation
-      headers.forEach((header, i) => {
-        const id = 'section-' + i;
-        header.id = id;
-        const link = document.createElement('a');
-        link.href = '#' + id;
-        link.textContent = header.textContent;
-        link.className = 'block py-1 px-2 rounded-md hover:bg-yellow-100 transition-colors duration-200';
-        if (toc) toc.appendChild(link);
-        tocLinksArray.push({ id, link, element: header }); // Store for updateTocActive
-
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          header.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(() => updateTocActive(), 600);
-        });
+      // Add click listener for smooth scroll and active state
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        header.scrollIntoView({ behavior: 'smooth' });
+        // Update active state after scroll (or use IntersectionObserver)
+        setTimeout(() => updateTocActive(), 600); // Give time for smooth scroll
       });
-      // Re-assign tocLinks global variable after generation
-      // This is a bit tricky with global `tocLinks` and local `tocLinksArray`.
-      // For simplicity, I'll keep `tocLinks` as a global variable and populate it directly.
-      // The `updateTocActive` function will then correctly iterate over it.
     });
 
-
-    // Scroll Progress Bar
-    window.onscroll = () => {
-      if (scrollProgress) {
-        const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-        scrollProgress.style.width = scrolled + '%';
+    // Function to update active TOC link based on scroll position
+    const updateTocActive = () => {
+      let currentActive = null;
+      // Find the header closest to the top of the viewport
+      for (let i = tocLinks.length - 1; i >= 0; i--) {
+        const { element, link } = tocLinks[i];
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2) { // Consider active if top is within upper half of screen
+          currentActive = link;
+          break;
+        }
       }
-      updateTocActive();
+
+      // Remove active class from all links
+      tocLinks.forEach(({ link }) => link.classList.remove('toc-active'));
+
+      // Add active class to the current active link
+      if (currentActive) {
+        currentActive.classList.add('toc-active');
+      }
     };
 
-    // Text-to-Speech (Read Article) Click Handler
-    if (readBtn) {
-      readBtn.onclick = () => {
-        if (!isSpeechReady) {
-          showMessageBox("Đang tải giọng đọc, vui lòng thử lại sau giây lát.");
-          return;
-        }
-        if (speechSynthesizer.speaking && !speechSynthesizer.paused) {
-          speechSynthesizer.pause();
-          readBtn.textContent = '▶️ Tiếp tục';
-          return;
-        }
-        if (speechSynthesizer.paused) {
-          speechSynthesizer.resume();
-          readBtn.textContent = '⏸️ Tạm dừng';
-          return;
-        }
-        startReading();
+    // Listen for scroll events to update TOC active state
+    window.addEventListener('scroll', updateTocActive);
+    // Initial update on load
+    window.addEventListener('DOMContentLoaded', updateTocActive);
+
+    // --- Scroll Progress Bar ---
+    window.onscroll = () => {
+      const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      scrollProgress.style.width = scrolled + '%';
+      updateTocActive(); // Also update TOC active state on scroll
+    };
+
+    // --- Text-to-Speech (Read Article) ---
+    let speechSynthesizer = null;
+    let isSpeaking = false;
+
+    readBtn.onclick = () => {
+      if (!speechSynthesizer) {
+        speechSynthesizer = window.speechSynthesis;
+      }
+
+      if (isSpeaking) {
+        speechSynthesizer.cancel();
+        isSpeaking = false;
+        readBtn.textContent = '🔊 Đọc bài';
+        return;
+      }
+
+      const textToRead = content.innerText;
+      const utterance = new SpeechSynthesisUtterance(textToRead);
+
+      // Set Vietnamese voice if available
+      const voices = speechSynthesizer.getVoices();
+      const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN');
+      if (vietnameseVoice) {
+        utterance.voice = vietnameseVoice;
+      } else {
+        console.warn("Vietnamese voice not found. Using default voice.");
+      }
+
+      utterance.onstart = () => {
+        isSpeaking = true;
+        readBtn.textContent = '⏸️ Dừng đọc';
       };
-    }
-
-
-    // Like Button + Heart Rain Effect with Firestore
-    if (likeBtn) {
-      likeBtn.onclick = async (e) => {
-        if (!db) {
-          console.error("Firestore not initialized. Cannot update likes.");
-          showMessageBox("Lỗi: Không thể kết nối đến máy chủ. Vui lòng kiểm tra cấu hình Firebase.");
-          return;
-        }
-        const articleRef = doc(db, `favorites`, ARTICLE_ID);
-        console.log("Firestore article likes path (write):", articleRef.path);
-
-        try {
-          await setDoc(articleRef, { likes: increment(1) }, { merge: true });
-          console.log("Like count updated in Firestore.");
-          const heart = document.createElement('div');
-          heart.textContent = '❤️';
-          heart.className = 'rain-heart';
-          const rect = likeBtn.getBoundingClientRect();
-          heart.style.left = (e.clientX - rect.left + likeBtn.offsetWidth / 2 - 10) + 'px';
-          heart.style.top = (e.clientY - rect.top + likeBtn.offsetHeight / 2 - 10) + 'px';
-          likeBtn.appendChild(heart);
-          setTimeout(() => heart.remove(), 1000);
-        } catch (error) {
-          console.error("Error updating like count:", error);
-          showMessageBox("Lỗi khi thích bài viết. Vui lòng kiểm tra quy tắc bảo mật Firestore và kết nối.");
-        }
+      utterance.onend = () => {
+        isSpeaking = false;
+        readBtn.textContent = '🔊 Đọc bài';
       };
-    }
-
-
-    // Share Modal
-    if (shareBtn) {
-      shareBtn.onclick = () => {
-        if (shareModal) shareModal.classList.remove('hidden');
-        const currentUrl = window.location.href;
-        if (shareFacebook) shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+      utterance.onerror = (event) => {
+        console.error('SpeechSynthesisUtterance.onerror', event);
+        isSpeaking = false;
+        readBtn.textContent = '🔊 Đọc bài';
       };
-    }
-    if (closeShare) closeShare.onclick = () => shareModal.classList.add('hidden');
-    if (shareModal) {
-      shareModal.addEventListener('click', (e) => {
-        if (e.target === shareModal) {
-          shareModal.classList.add('hidden');
-        }
-      });
-    }
 
+      speechSynthesizer.speak(utterance);
+    };
 
-    // Copy Link Functionality
-    if (copyLinkBtn) {
-      copyLinkBtn.onclick = () => {
-        const currentUrl = window.location.href;
-        try {
-          const tempInput = document.createElement('textarea');
-          tempInput.value = currentUrl;
-          document.body.appendChild(tempInput);
-          tempInput.select();
-          document.execCommand('copy');
-          document.body.removeChild(tempInput);
-          showMessageBox('Đã sao chép vào clipboard!');
-          if (shareModal) shareModal.classList.add('hidden');
-        } catch (err) {
-          console.error('Failed to copy text: ', err);
-          showMessageBox('Sao chép thất bại. Vui lòng sao chép thủ công.');
-        }
-      };
-    }
+    // --- Like Button + Heart Rain Effect with Firestore ---
+    likeBtn.onclick = async (e) => {
+      if (!db) {
+        console.error("Firestore not initialized.");
+        showMessageBox("Lỗi: Không thể kết nối đến máy chủ.");
+        return;
+      }
 
+      const articleRef = doc(db, `artifacts/${appId}/public/data/articleLikes`, ARTICLE_ID);
 
-    // Search and Highlight Functionality
-    if (searchBtn) {
-      searchBtn.onclick = () => {
-        const searchTerm = searchBox.value.trim();
-        if (searchTerm === '') {
-          clearHighlights();
-          return;
-        }
-        clearHighlights();
-        const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null, false);
-        let node;
-        let foundCount = 0;
-        const rangesToHighlight = [];
-        while ((node = walker.nextNode())) {
-          const text = node.nodeValue;
-          let startIndex = 0;
-          while ((startIndex = text.toLowerCase().indexOf(searchTerm.toLowerCase(), startIndex)) !== -1) {
-            const range = document.createRange();
-            range.setStart(node, startIndex);
-            range.setEnd(node, startIndex + searchTerm.length);
-            rangesToHighlight.push(range);
-            startIndex += searchTerm.length;
-            foundCount++;
-          }
-        }
-        if (foundCount > 0) {
-          rangesToHighlight.forEach(range => {
-            const span = document.createElement('span');
-            span.classList.add('highlight');
-            range.surroundContents(span);
-          });
-          lastHighlightedRanges = rangesToHighlight;
-          showMessageBox(`Tìm thấy ${foundCount} kết quả.`);
+      try {
+        // Increment the like count in Firestore
+        await setDoc(articleRef, { likes: increment(1) }, { merge: true });
+        console.log("Like count updated in Firestore.");
+
+        // Trigger heart animation
+        const heart = document.createElement('div');
+        heart.textContent = '❤️';
+        heart.className = 'rain-heart';
+
+        const rect = likeBtn.getBoundingClientRect();
+        heart.style.left = (e.clientX - rect.left + likeBtn.offsetWidth / 2 - 10) + 'px';
+        heart.style.top = (e.clientY - rect.top + likeBtn.offsetHeight / 2 - 10) + 'px';
+
+        likeBtn.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
+
+      } catch (error) {
+        console.error("Error updating like count:", error);
+        showMessageBox("Lỗi khi thích bài viết. Vui lòng thử lại.");
+      }
+    };
+
+    // --- Setup Real-time Likes Listener ---
+    const setupLikesListener = () => {
+      if (!db) {
+        console.warn("Firestore not ready for likes listener.");
+        return;
+      }
+      const articleRef = doc(db, `artifacts/${appId}/public/data/articleLikes`, ARTICLE_ID);
+
+      onSnapshot(articleRef, (docSnap) => {
+        if (docSnap.exists()) {
+          currentLikeCount = docSnap.data().likes || 0;
         } else {
-          showMessageBox('Không tìm thấy kết quả nào.');
+          currentLikeCount = 0; // Document doesn't exist yet
         }
-      };
+        likeCountSpan.textContent = currentLikeCount;
+        console.log("Current like count:", currentLikeCount);
+      }, (error) => {
+        console.error("Error listening to likes:", error);
+        showMessageBox("Lỗi khi tải số lượt thích.");
+      });
+    };
+
+
+    // --- Share Modal ---
+    shareBtn.onclick = () => {
+      shareModal.classList.remove('hidden');
+      const currentUrl = window.location.href;
+      shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+    };
+    closeShare.onclick = () => shareModal.classList.add('hidden');
+
+    // Close modal when clicking outside
+    shareModal.addEventListener('click', (e) => {
+      if (e.target === shareModal) {
+        shareModal.classList.add('hidden');
+      }
+    });
+
+    // --- Copy Link Functionality ---
+    copyLinkBtn.onclick = () => {
+      const currentUrl = window.location.href;
+      try {
+        // Use document.execCommand for better compatibility in iframes
+        const tempInput = document.createElement('textarea');
+        tempInput.value = currentUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        showMessageBox('Đã sao chép vào clipboard!');
+        shareModal.classList.add('hidden'); // Close modal after copying
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+        showMessageBox('Sao chép thất bại. Vui lòng sao chép thủ công.');
+      }
+    };
+
+    // --- Message Box Display ---
+    function showMessageBox(message) {
+      messageBox.textContent = message;
+      messageBox.classList.remove('hidden');
+      setTimeout(() => {
+        messageBox.classList.add('hidden');
+      }, 3000); // Hide after 3 seconds
+    }
+
+    // --- Search and Highlight Functionality ---
+    let lastHighlightedRanges = [];
+
+    searchBtn.onclick = () => {
+      const searchTerm = searchBox.value.trim();
+      if (searchTerm === '') {
+        clearHighlights();
+        return;
+      }
+
+      clearHighlights(); // Clear previous highlights
+
+      const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      let foundCount = 0;
+      const rangesToHighlight = [];
+
+      while ((node = walker.nextNode())) {
+        const text = node.nodeValue;
+        let startIndex = 0;
+        while ((startIndex = text.toLowerCase().indexOf(searchTerm.toLowerCase(), startIndex)) !== -1) {
+          const range = document.createRange();
+          range.setStart(node, startIndex);
+          range.setEnd(node, startIndex + searchTerm.length);
+          rangesToHighlight.push(range);
+          startIndex += searchTerm.length;
+          foundCount++;
+        }
+      }
+
+      if (foundCount > 0) {
+        rangesToHighlight.forEach(range => {
+          const span = document.createElement('span');
+          span.classList.add('highlight');
+          range.surroundContents(span);
+        });
+        lastHighlightedRanges = rangesToHighlight;
+        showMessageBox(`Tìm thấy ${foundCount} kết quả.`);
+      } else {
+        showMessageBox('Không tìm thấy kết quả nào.');
+      }
+    };
+
+    function clearHighlights() {
+      const highlights = content.querySelectorAll('.highlight');
+      highlights.forEach(span => {
+        const parent = span.parentNode;
+        while (span.firstChild) {
+          parent.insertBefore(span.firstChild, span);
+        }
+        parent.removeChild(span);
+      });
+      // Normalize the parent to merge adjacent text nodes
+      content.normalize();
+      lastHighlightedRanges = [];
     }
 
     // Clear highlights when search box is cleared
-    if (searchBox) {
-      searchBox.addEventListener('input', () => {
-        if (searchBox.value.trim() === '') {
-          clearHighlights();
-        }
-      });
-    }
-
-    // Dark Mode Toggle
-    if (darkModeToggle) {
-      darkModeToggle.onclick = () => {
-        document.body.classList.toggle('dark');
-        if (document.body.classList.contains('dark')) {
-          localStorage.setItem('theme', 'dark');
-          darkModeToggle.innerHTML = '☀️';
-        } else {
-          localStorage.setItem('theme', 'light');
-          darkModeToggle.innerHTML = '🌙';
-        }
-      };
-    }
-
-
-    // Apply saved theme and dark mode on load
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('selectedTheme');
-      if (savedTheme) {
-        applyTheme(savedTheme);
-        if (themeSelector) themeSelector.value = savedTheme;
-      } else {
-        applyTheme('default');
-        if (themeSelector) themeSelector.value = 'default';
-      }
-
-      const savedDarkMode = localStorage.getItem('theme');
-      if (savedDarkMode === 'dark') {
-        document.body.classList.add('dark');
-        if (darkModeToggle) darkModeToggle.innerHTML = '☀️';
-      } else {
-        if (darkModeToggle) darkModeToggle.innerHTML = '🌙';
+    searchBox.addEventListener('input', () => {
+      if (searchBox.value.trim() === '') {
+        clearHighlights();
       }
     });
 
-    // Event listener for theme selection change
-    if (themeSelector) {
-      themeSelector.onchange = (event) => {
-        applyTheme(event.target.value);
-      };
-    }
+    // --- Dark Mode Toggle ---
+    darkModeToggle.onclick = () => {
+      document.body.classList.toggle('dark');
+      // Store user preference in localStorage
+      if (document.body.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+        darkModeToggle.innerHTML = '☀️'; // Sun icon for light mode
+      } else {
+        localStorage.setItem('theme', 'light');
+        darkModeToggle.innerHTML = '🌙'; // Moon icon for dark mode
+      }
+    };
 
-    // Add an event listener to stop reading if the user navigates away or closes the tab
-    window.addEventListener('beforeunload', () => {
-      if (speechSynthesizer && speechSynthesizer.speaking) {
-        speechSynthesizer.cancel();
+    // Apply saved theme on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+        darkModeToggle.innerHTML = '☀️';
+      } else {
+        darkModeToggle.innerHTML = '🌙';
       }
     });
 

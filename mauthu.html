@@ -49,6 +49,20 @@
       padding: 2px 0;
     }
 
+    /* Highlight for current reading paragraph */
+    .highlight-paragraph {
+      background-color: #fffacd; /* Light yellow for highlighting */
+      transition: background-color 0.3s ease;
+      padding: 0.25em 0.5em; /* Add some padding for better visual */
+      border-radius: 0.25em; /* Rounded corners for highlight */
+      display: block; /* Ensure it takes full width */
+    }
+
+    /* Dark mode adjustment for highlight */
+    body.dark .highlight-paragraph {
+      background-color: #3a3f4a; /* Darker shade for contrast in dark mode */
+    }
+
     /* Smooth scroll behavior */
     html {
       scroll-behavior: smooth;
@@ -210,7 +224,7 @@
     // Global variables for Firebase config and auth token
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
     const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; // Corrected variable name
 
     let app, db, auth, userId;
     const ARTICLE_ID = 'mainArticleLikes'; // Unique ID for this article's likes
@@ -334,50 +348,110 @@
       updateTocActive(); // Also update TOC active state on scroll
     };
 
-    // --- Text-to-Speech (Read Article) ---
+    // --- Text-to-Speech (Read Article) with Paragraph Highlighting ---
     let speechSynthesizer = null;
-    let isSpeaking = false;
+    let paragraphElements = []; // Stores all elements (h1, h2, p) to be read
+    let currentParagraphIndex = 0;
+    let currentUtterance = null; // Stores the current utterance being spoken
 
+    // Function to initialize paragraphElements on page load
+    function initializeParagraphElements() {
+      paragraphElements = Array.from(content.querySelectorAll('h1, h2, p'));
+    }
+
+    // Call this on DOMContentLoaded to ensure content is loaded
+    window.addEventListener('DOMContentLoaded', initializeParagraphElements);
+
+    // Click handler for the read button
     readBtn.onclick = () => {
       if (!speechSynthesizer) {
         speechSynthesizer = window.speechSynthesis;
       }
 
-      if (isSpeaking) {
-        speechSynthesizer.cancel();
-        isSpeaking = false;
-        readBtn.textContent = '🔊 Đọc bài';
+      // If currently speaking and not paused, pause it
+      if (speechSynthesizer.speaking && !speechSynthesizer.paused) {
+        speechSynthesizer.pause();
+        readBtn.textContent = '▶️ Tiếp tục'; // Change button text to "Resume"
         return;
       }
 
-      const textToRead = content.innerText;
-      const utterance = new SpeechSynthesisUtterance(textToRead);
+      // If paused, resume it
+      if (speechSynthesizer.paused) {
+        speechSynthesizer.resume();
+        readBtn.textContent = '⏸️ Tạm dừng'; // Change button text to "Pause"
+        return;
+      }
+
+      // If not speaking and not paused (i.e., stopped or first time), start reading
+      startReading();
+    };
+
+    // Function to start reading from the current paragraph index
+    function startReading() {
+      clearAllHighlights(); // Clear any previous highlights
+
+      // If all paragraphs have been read, reset and stop
+      if (currentParagraphIndex >= paragraphElements.length) {
+        stopReading();
+        return;
+      }
+
+      const currentElement = paragraphElements[currentParagraphIndex];
+      currentElement.classList.add('highlight-paragraph'); // Add highlight to the current paragraph
+
+      // Scroll to the current paragraph for better user experience
+      currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      currentUtterance = new SpeechSynthesisUtterance(currentElement.innerText);
 
       // Set Vietnamese voice if available
       const voices = speechSynthesizer.getVoices();
       const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN');
       if (vietnameseVoice) {
-        utterance.voice = vietnameseVoice;
+        currentUtterance.voice = vietnameseVoice;
       } else {
         console.warn("Vietnamese voice not found. Using default voice.");
       }
 
-      utterance.onstart = () => {
-        isSpeaking = true;
-        readBtn.textContent = '⏸️ Dừng đọc';
-      };
-      utterance.onend = () => {
-        isSpeaking = false;
-        readBtn.textContent = '🔊 Đọc bài';
-      };
-      utterance.onerror = (event) => {
-        console.error('SpeechSynthesisUtterance.onerror', event);
-        isSpeaking = false;
-        readBtn.textContent = '🔊 Đọc bài';
+      // Event handler when the current utterance finishes speaking
+      currentUtterance.onend = () => {
+        currentElement.classList.remove('highlight-paragraph'); // Remove highlight
+        currentParagraphIndex++; // Move to the next paragraph
+        startReading(); // Recursively call to read the next paragraph
       };
 
-      speechSynthesizer.speak(utterance);
-    };
+      // Event handler for any errors during speech
+      currentUtterance.onerror = (event) => {
+        console.error('SpeechSynthesisUtterance.onerror', event);
+        stopReading(); // Stop reading on error
+        showMessageBox("Lỗi khi đọc bài viết.");
+      };
+
+      speechSynthesizer.speak(currentUtterance); // Start speaking the current utterance
+      readBtn.textContent = '⏸️ Tạm dừng'; // Update button text to "Pause"
+    }
+
+    // Function to stop reading completely
+    function stopReading() {
+      if (speechSynthesizer) {
+        speechSynthesizer.cancel(); // Stop any ongoing speech
+      }
+      clearAllHighlights(); // Remove all highlights
+      currentParagraphIndex = 0; // Reset paragraph index
+      readBtn.textContent = '🔊 Đọc bài'; // Reset button text to "Read Article"
+    }
+
+    // Function to remove all highlight classes from paragraphs
+    function clearAllHighlights() {
+      paragraphElements.forEach(el => el.classList.remove('highlight-paragraph'));
+    }
+
+    // Add an event listener to stop reading if the user navigates away or closes the tab
+    window.addEventListener('beforeunload', () => {
+      if (speechSynthesizer && speechSynthesizer.speaking) {
+        speechSynthesizer.cancel();
+      }
+    });
 
     // --- Like Button + Heart Rain Effect with Firestore ---
     likeBtn.onclick = async (e) => {

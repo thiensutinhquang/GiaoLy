@@ -222,9 +222,22 @@
     import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Global variables for Firebase config and auth token
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    // VUI LÒNG THAY THẾ CÁC GIÁ TRỊ DƯỚI ĐÂY BẰNG CẤU HÌNH FIREBASE THỰC TẾ CỦA BẠN
+    // Bạn có thể tìm thấy chúng trong Firebase Console -> Project settings -> Your apps
+    const firebaseConfig = {
+      apiKey: "AIzaSyAYDG6sVKYbLBzO_iQGwoK9FTH8deJVo3s",
+      authDomain: "giaoly-editor.firebaseapp.com",
+      projectId: "giaoly-editor",
+      storageBucket: "giaoly-editor.firebasestorage.app",
+      messagingSenderId: "62184116846",
+      appId: "1:62184116846:web:5bd50b4f8a433a066bcc7f",
+      measurementId: "G-56PKNCYV6D"
+    };
+
+    // Đối với việc triển khai bên ngoài Canvas (như GitHub Pages), appId cho Firestore
+    // nên là projectId của bạn để đảm bảo đường dẫn dữ liệu nhất quán.
+    const appId = firebaseConfig.projectId; // Sử dụng projectId làm appId cho đường dẫn Firestore
+    const initialAuthToken = null; // Không cần thiết khi triển khai tĩnh, giữ nguyên là null
 
     let app, db, auth, userId;
     const ARTICLE_ID = 'mainArticleLikes'; // Unique ID for this article's likes
@@ -261,6 +274,7 @@
         });
       } catch (error) {
         console.error("Error initializing Firebase or signing in:", error);
+        showMessageBox("Lỗi khởi tạo Firebase. Vui lòng kiểm tra cấu hình API Key và các thông số khác.");
       }
     };
 
@@ -482,8 +496,8 @@
     // --- Like Button + Heart Rain Effect with Firestore ---
     likeBtn.onclick = async (e) => {
       if (!db) {
-        console.error("Firestore not initialized.");
-        showMessageBox("Lỗi: Không thể kết nối đến máy chủ.");
+        console.error("Firestore not initialized. Cannot update likes.");
+        showMessageBox("Lỗi: Không thể kết nối đến máy chủ. Vui lòng kiểm tra cấu hình Firebase.");
         return;
       }
 
@@ -508,7 +522,7 @@
 
       } catch (error) {
         console.error("Error updating like count:", error);
-        showMessageBox("Lỗi khi thích bài viết. Vui lòng thử lại.");
+        showMessageBox("Lỗi khi thích bài viết. Vui lòng kiểm tra quy tắc bảo mật Firestore và kết nối.");
       }
     };
 
@@ -525,12 +539,15 @@
           currentLikeCount = docSnap.data().likes || 0;
         } else {
           currentLikeCount = 0; // Document doesn't exist yet
+          // Optionally, initialize the likes document if it doesn't exist
+          // This ensures the document exists for the first like
+          setDoc(articleRef, { likes: 0 }, { merge: true }).catch(e => console.error("Error initializing likes document:", e));
         }
         likeCountSpan.textContent = currentLikeCount;
         console.log("Current like count:", currentLikeCount);
       }, (error) => {
         console.error("Error listening to likes:", error);
-        showMessageBox("Lỗi khi tải số lượt thích.");
+        showMessageBox("Lỗi khi tải số lượt thích. Vui lòng kiểm tra kết nối mạng.");
       });
     };
 
@@ -663,7 +680,7 @@
         document.body.classList.add('dark');
         darkModeToggle.innerHTML = '☀️';
       } else {
-        darkModeToggle.innerHTML = '🌙';
+        darkModeToggle.innerHTML = '�';
       }
     });
 
@@ -671,3 +688,4 @@
 </body>
 
 </html>
+�

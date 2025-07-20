@@ -73,7 +73,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* Dark mode styles */
+    /* Dark mode styles (applied on top of themes) */
     body.dark {
       background-color: #1a202c; /* Tailwind gray-900 */
       color: #e2e8f0; /* Tailwind gray-200 */
@@ -106,6 +106,116 @@
 
     body.dark #shareModal > div {
       background-color: #2d3748;
+    }
+
+    /* --- New Theme Styles --- */
+
+    /* Xanh Lục Tĩnh Lặng (Serene Green) */
+    body.theme-green {
+      background-color: #e0f2f7; /* Light Cyan */
+      color: #2f4f4f; /* Dark Slate Gray */
+    }
+    body.theme-green .bg-yellow-200 {
+      background-color: #a7d9d9; /* Lighter Teal */
+    }
+    body.theme-green .text-yellow-900 {
+      color: #2f4f4f;
+    }
+    body.theme-green .bg-gray-50 {
+      background-color: #c0e0e0; /* Light Teal */
+    }
+    body.theme-green .bg-gray-200 {
+      background-color: #80ced6; /* Medium Teal */
+    }
+    body.theme-green .text-gray-800 {
+      color: #2f4f4f;
+    }
+    body.theme-green .bg-gray-700 {
+      background-color: #5f9ea0; /* Cadet Blue */
+    }
+    body.theme-green .bg-pink-500 {
+      background-color: #ffb6c1; /* Light Pink for contrast */
+    }
+    body.theme-green .bg-blue-600 {
+      background-color: #6495ed; /* Cornflower Blue for contrast */
+    }
+    body.theme-green #shareModal > div {
+      background-color: #e0f2f7;
+    }
+    body.theme-green #content {
+      background-color: #d4f0f0; /* Slightly darker light cyan for content */
+    }
+
+    /* Tím Thiền Định (Meditative Purple) */
+    body.theme-purple {
+      background-color: #f0e6fa; /* Lavender Blush */
+      color: #4b0082; /* Indigo */
+    }
+    body.theme-purple .bg-yellow-200 {
+      background-color: #d8bfd8; /* Thistle */
+    }
+    body.theme-purple .text-yellow-900 {
+      color: #4b0082;
+    }
+    body.theme-purple .bg-gray-50 {
+      background-color: #e6cce6; /* Plum */
+    }
+    body.theme-purple .bg-gray-200 {
+      background-color: #b0e0e6; /* Powder Blue (for contrast) */
+    }
+    body.theme-purple .text-gray-800 {
+      color: #4b0082;
+    }
+    body.theme-purple .bg-gray-700 {
+      background-color: #9370db; /* Medium Purple */
+    }
+    body.theme-purple .bg-pink-500 {
+      background-color: #ff69b4; /* Hot Pink for contrast */
+    }
+    body.theme-purple .bg-blue-600 {
+      background-color: #8a2be2; /* Blue Violet for contrast */
+    }
+    body.theme-purple #shareModal > div {
+      background-color: #f0e6fa;
+    }
+    body.theme-purple #content {
+      background-color: #e8d0f2; /* Slightly darker lavender for content */
+    }
+
+    /* Vàng Nhẹ Thoát Tục (Subtle Yellow/Gold) */
+    body.theme-gold {
+      background-color: #fffaf0; /* Floral White */
+      color: #5a4a3a; /* Darker Brown */
+    }
+    body.theme-gold .bg-yellow-200 {
+      background-color: #ffe4b5; /* Moccasin */
+    }
+    body.theme-gold .text-yellow-900 {
+      color: #5a4a3a;
+    }
+    body.theme-gold .bg-gray-50 {
+      background-color: #fffacd; /* Lemon Chiffon */
+    }
+    body.theme-gold .bg-gray-200 {
+      background-color: #f0e68c; /* Khaki */
+    }
+    body.theme-gold .text-gray-800 {
+      color: #5a4a3a;
+    }
+    body.theme-gold .bg-gray-700 {
+      background-color: #daa520; /* Goldenrod */
+    }
+    body.theme-gold .bg-pink-500 {
+      background-color: #ffc0cb; /* Pink for contrast */
+    }
+    body.theme-gold .bg-blue-600 {
+      background-color: #add8e6; /* Light Blue for contrast */
+    }
+    body.theme-gold #shareModal > div {
+      background-color: #fffaf0;
+    }
+    body.theme-gold #content {
+      background-color: #fff5e0; /* Slightly darker floral white for content */
     }
   </style>
 </head>
@@ -167,6 +277,12 @@
         <button id="searchBtn" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 shadow-md">
           🔍
         </button>
+        <select id="themeSelector" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-200">
+          <option value="default">Mặc định</option>
+          <option value="green">Xanh Lục Tĩnh Lặng</option>
+          <option value="purple">Tím Thiền Định</option>
+          <option value="gold">Vàng Nhẹ Thoát Tục</option>
+        </select>
         <button id="darkModeToggle" class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors duration-200 shadow-md">
           🌙
         </button>
@@ -300,6 +416,7 @@
     const searchBox = document.getElementById('searchBox');
     const searchBtn = document.getElementById('searchBtn');
     const darkModeToggle = document.getElementById('darkModeToggle');
+    const themeSelector = document.getElementById('themeSelector'); // New theme selector
 
     // --- Mobile Menu Toggle ---
     menuToggle.onclick = () => mobileMenu.classList.remove('hidden');
@@ -420,7 +537,7 @@
         speechSynthesizer.resume();
         readBtn.textContent = '⏸️ Tạm dừng'; // Change button text to "Pause"
         return;
-      }
+        }
 
       // If not speaking and not paused (i.e., stopped or first time), start reading
       startReading();
@@ -680,7 +797,49 @@
         document.body.classList.add('dark');
         darkModeToggle.innerHTML = '☀️';
       } else {
-        darkModeToggle.innerHTML = '�';
+        darkModeToggle.innerHTML = '🌙';
+      }
+    });
+
+    // --- Theme Selector Logic ---
+    const themes = ['default', 'green', 'purple', 'gold']; // List of available themes
+
+    const applyTheme = (themeName) => {
+      // Remove all existing theme classes
+      themes.forEach(theme => {
+        document.body.classList.remove(`theme-${theme}`);
+      });
+
+      // Add the selected theme class, if not default
+      if (themeName !== 'default') {
+        document.body.classList.add(`theme-${themeName}`);
+      }
+      localStorage.setItem('selectedTheme', themeName); // Save preference
+    };
+
+    // Event listener for theme selection change
+    themeSelector.onchange = (event) => {
+      applyTheme(event.target.value);
+    };
+
+    // Apply saved theme on load (after existing dark mode logic)
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('selectedTheme');
+      if (savedTheme) {
+        applyTheme(savedTheme);
+        themeSelector.value = savedTheme; // Set dropdown to saved theme
+      } else {
+        applyTheme('default'); // Apply default if no theme saved
+        themeSelector.value = 'default';
+      }
+
+      // Re-apply dark mode preference to ensure it layers correctly on top of the new theme
+      const savedDarkMode = localStorage.getItem('theme');
+      if (savedDarkMode === 'dark') {
+        document.body.classList.add('dark');
+        darkModeToggle.innerHTML = '☀️';
+      } else {
+        darkModeToggle.innerHTML = '🌙';
       }
     });
 
@@ -688,4 +847,3 @@
 </body>
 
 </html>
-�

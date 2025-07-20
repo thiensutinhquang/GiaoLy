@@ -356,7 +356,9 @@
     const initialAuthToken = null; // Không cần thiết khi triển khai tĩnh, giữ nguyên là null
 
     let app, db, auth, userId;
-    const ARTICLE_ID = 'mainArticleLikes'; // Unique ID for this article's likes
+    // Đổi ARTICLE_ID thành một ID duy nhất cho bài viết này, ví dụ: 'mainArticleLikes'
+    // Hoặc bạn có thể sử dụng một ID cụ thể hơn nếu có nhiều bài viết.
+    const ARTICLE_ID = 'mainArticleLikes';
     let currentLikeCount = 0; // Local state for like count
 
     // Initialize Firebase and handle authentication
@@ -618,7 +620,10 @@
         return;
       }
 
-      const articleRef = doc(db, `artifacts/${appId}/public/data/articleLikes`, ARTICLE_ID);
+      // Thay đổi đường dẫn Firestore để ghi vào bộ sưu tập 'favorites'
+      // và sử dụng một ID tài liệu cố định cho lượt thích của bài viết này.
+      const articleRef = doc(db, `favorites`, ARTICLE_ID);
+      console.log("Firestore article likes path:", articleRef.path); // Log the path for debugging
 
       try {
         // Increment the like count in Firestore
@@ -649,7 +654,9 @@
         console.warn("Firestore not ready for likes listener.");
         return;
       }
-      const articleRef = doc(db, `artifacts/${appId}/public/data/articleLikes`, ARTICLE_ID);
+      // Thay đổi đường dẫn Firestore để lắng nghe từ bộ sưu tập 'favorites'
+      const articleRef = doc(db, `favorites`, ARTICLE_ID);
+      console.log("Firestore listener path:", articleRef.path); // Log the path for debugging
 
       onSnapshot(articleRef, (docSnap) => {
         if (docSnap.exists()) {
@@ -797,7 +804,7 @@
         document.body.classList.add('dark');
         darkModeToggle.innerHTML = '☀️';
       } else {
-        darkModeToggle.innerHTML = '🌙';
+        darkModeToggle.innerHTML = '�';
       }
     });
 
@@ -847,3 +854,4 @@
 </body>
 
 </html>
+�

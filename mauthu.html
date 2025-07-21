@@ -339,13 +339,12 @@
 
     // Global variables for Firebase config and auth token
     const firebaseConfig = {
-      apiKey: "AIzaSyAYDG6sVKYbLBzO_iQGwoK9FTH8deJVo3s",
-      authDomain: "giaoly-editor.firebaseapp.com",
-      projectId: "giaoly-editor",
-      storageBucket: "giaoly-editor.firebasestorage.app",
-      messagingSenderId: "62184116846",
-      appId: "1:62184116846:web:1a4ca1d52a0f80b36bcc7f", // Đã cập nhật appId
-      measurementId: "G-TXW244M1DN"
+      apiKey: "AIzaSyCWv6m3Vw76HPYSRd96U847qViV_EJXZ0Q",
+      authDomain: "giaolylikes.firebaseapp.com",
+      projectId: "giaolylikes",
+      storageBucket: "giaolylikes.firebasestorage.app",
+      messagingSenderId: "580748260318",
+      appId: "1:580748260318:web:0922e75d385ccab02fa34f"
     };
 
     const appId = firebaseConfig.projectId;
@@ -607,7 +606,7 @@
     if (closeMenu) closeMenu.onclick = () => mobileMenu.classList.add('hidden');
 
     window.addEventListener('DOMContentLoaded', () => {
-      initializeParagraphElements(); // Ensure paragraphs are initialized
+      initializeParagraphElements();
       const headers = content.querySelectorAll('h1, h2');
       const tocLinksArray = [];
       headers.forEach((header, i) => {

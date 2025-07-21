@@ -329,7 +329,7 @@
   <!-- Message Box for copy confirmation -->
   <div id="messageBox" class="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg hidden z-[10000]">
     Đã sao chép vào clipboard!
-  </d>
+  </div>
 
   <script type="module">
     // Firebase imports (using modular SDK)
@@ -424,14 +424,50 @@
       speechSynthesizer = window.speechSynthesis;
       const readBtn = document.getElementById('readBtn');
       if (speechSynthesizer && readBtn) {
+        // Ensure voices are loaded before marking as ready
         speechSynthesizer.onvoiceschanged = () => {
-          isSpeechReady = true;
-          console.log("SpeechSynthesis voices loaded.");
+          console.log("SpeechSynthesis voices changed. Voices available:", speechSynthesis.getVoices().length);
+          if (speechSynthesis.getVoices().length > 0) {
+            isSpeechReady = true;
+            console.log("SpeechSynthesis is ready.");
+            readBtn.disabled = false; // Enable button once ready
+            showMessageBox("Hệ thống đọc bài đã sẵn sàng.");
+          } else {
+            console.warn("No voices found after onvoiceschanged event.");
+            showMessageBox("Không tìm thấy giọng đọc. Vui lòng kiểm tra cài đặt trình duyệt.");
+          }
         };
+
+        // Fallback/initial check if voices are already loaded
         if (speechSynthesizer.getVoices().length > 0) {
           isSpeechReady = true;
-          console.log("SpeechSynthesis voices already loaded.");
+          console.log("SpeechSynthesis voices already loaded (initial check).");
+          readBtn.disabled = false;
+        } else {
+          console.log("No voices initially available. Waiting for onvoiceschanged or polling.");
+          readBtn.disabled = true; // Disable until ready
+          // Polling mechanism to check for voices if onvoiceschanged doesn't fire
+          let voiceCheckInterval = setInterval(() => {
+            if (speechSynthesis.getVoices().length > 0) {
+              clearInterval(voiceCheckInterval);
+              isSpeechReady = true;
+              console.log("SpeechSynthesis voices loaded via polling. Ready.");
+              readBtn.disabled = false;
+              showMessageBox("Hệ thống đọc bài đã sẵn sàng.");
+            } else {
+              console.log("Polling for voices... Still not ready.");
+            }
+          }, 500); // Check every 500ms
+          // Set a timeout to stop polling after some time if voices don't load
+          setTimeout(() => {
+            if (!isSpeechReady) {
+              clearInterval(voiceCheckInterval);
+              console.warn("SpeechSynthesis voices not loaded after timeout.");
+              showMessageBox("Không thể tải giọng đọc. Vui lòng thử lại hoặc kiểm tra cài đặt trình duyệt.");
+            }
+          }, 10000); // Stop polling after 10 seconds
         }
+
       } else if (readBtn) {
         console.warn("SpeechSynthesis not supported in this browser.");
         showMessageBox("Trình duyệt của bạn không hỗ trợ đọc văn bản.");
@@ -439,7 +475,7 @@
       }
     };
 
-    function clearAllHighlightsForSpeech() {
+    function clearAllHighlightsForSpeech() { // Renamed to avoid conflict with search highlight clear
       paragraphElements.forEach(el => el.classList.remove('highlight-paragraph'));
     }
 
@@ -451,6 +487,7 @@
       clearAllHighlightsForSpeech();
       currentParagraphIndex = 0;
       if (readBtn) readBtn.textContent = '🔊 Đọc bài';
+      console.log("Reading stopped. Resetting button and highlights.");
     }
 
     function startReading() {
@@ -458,6 +495,7 @@
       clearAllHighlightsForSpeech();
 
       if (currentParagraphIndex >= paragraphElements.length) {
+        console.log("End of article reached. Stopping reading.");
         stopReading();
         return;
       }
@@ -465,6 +503,7 @@
       const currentElement = paragraphElements[currentParagraphIndex];
       currentElement.classList.add('highlight-paragraph');
       currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      console.log(`Reading paragraph ${currentParagraphIndex}:`, currentElement.innerText.substring(0, 50) + "...");
 
       currentUtterance = new SpeechSynthesisUtterance(currentElement.innerText);
 
@@ -472,11 +511,13 @@
       const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN');
       if (vietnameseVoice) {
         currentUtterance.voice = vietnameseVoice;
+        console.log("Using Vietnamese voice.");
       } else {
         console.warn("Vietnamese voice not found. Using default voice.");
       }
 
       currentUtterance.onend = () => {
+        console.log(`Finished paragraph ${currentParagraphIndex}.`);
         currentElement.classList.remove('highlight-paragraph');
         currentParagraphIndex++;
         startReading();
@@ -607,6 +648,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       initializeParagraphElements();
+      initSpeechSynthesis(); // Call initSpeechSynthesis on DOMContentLoaded
       const headers = content.querySelectorAll('h1, h2');
       const tocLinksArray = [];
       headers.forEach((header, i) => {
@@ -642,15 +684,18 @@
           return;
         }
         if (speechSynthesizer.speaking && !speechSynthesizer.paused) {
+          console.log("Pausing speech.");
           speechSynthesizer.pause();
           readBtn.textContent = '▶️ Tiếp tục';
           return;
         }
         if (speechSynthesizer.paused) {
+          console.log("Resuming speech.");
           speechSynthesizer.resume();
           readBtn.textContent = '⏸️ Tạm dừng';
           return;
         }
+        console.log("Starting speech.");
         startReading();
       };
     }

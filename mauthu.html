@@ -94,6 +94,10 @@
     body.dark .text-yellow-900 {
       color: #f6e05e; /* Tailwind yellow-300 */
     }
+    
+    body.dark .bg-gray-50 { /* Adjust for dark mode TOC */
+      background-color: #2d3748;
+    }
 
     body.dark .bg-gray-200 {
       background-color: #4a5568;
@@ -108,115 +112,260 @@
       background-color: #2d3748;
     }
 
-    /* --- New Theme Styles --- */
+    /* --- Define CSS Variables for Dynamic Theming --- */
+    :root {
+      --main-border-color: #f59e0b; /* Default: yellow-500 */
+      --glowing-shadow-color: rgba(252, 211, 77, 0.4); /* Default: yellow-300 with alpha */
+      --content-bg-color: #ffffff; /* Default: white */
+      --content-text-color: #1f2937; /* Default: gray-900 */
+      --header-bg-color: #fef08a; /* Default: yellow-200 */
+      --header-text-color: #92400e; /* Default: yellow-900 */
+      --toc-bg-color: #f9fafb; /* Default: gray-50 */
+      --button-bg-blue: #2563eb; /* Default: blue-600 */
+      --button-hover-blue: #1d4ed8; /* Default: blue-700 */
+      --button-bg-pink: #ec4899; /* Default: pink-500 */
+      --button-hover-pink: #db2777; /* Default: pink-600 */
+      --button-bg-gray: #e5e7eb; /* Default: gray-200 */
+      --button-hover-gray: #d1d5db; /* Default: gray-300 */
+      --button-text-gray: #1f2937; /* Default: gray-800 */
+      --button-bg-green: #22c55e; /* Default: green-500 */
+      --button-hover-green: #16a34a; /* Default: green-600 */
+      --button-bg-dark: #374151; /* Default: gray-700 */
+      --button-hover-dark: #1f2937; /* Default: gray-800 */
+      --input-border-color: #d1d5db; /* Default: gray-300 */
+      --input-focus-ring: #f59e0b; /* Default: yellow-500 */
+    }
 
-    /* Xanh Lục Tĩnh Lặng (Serene Green) */
+    /* Dark mode variables */
+    body.dark {
+      --main-border-color: #fcd34d; /* yellow-300 */
+      --glowing-shadow-color: rgba(251, 191, 36, 0.3); /* yellow-500 with alpha */
+      --content-bg-color: #2d3748; /* gray-800 */
+      --content-text-color: #e2e8f0; /* gray-200 */
+      --header-bg-color: #4a5568; /* gray-700 */
+      --header-text-color: #f6e05e; /* yellow-300 */
+      --toc-bg-color: #2d3748; /* gray-800 */
+      --button-bg-blue: #3b82f6; /* blue-500 */
+      --button-hover-blue: #2563eb; /* blue-600 */
+      --button-bg-pink: #fb7185; /* pink-400 */
+      --button-hover-pink: #f43f5e; /* pink-500 */
+      --button-bg-gray: #4a5568; /* gray-700 */
+      --button-hover-gray: #6a7382; /* gray-600 */
+      --button-text-gray: #e2e8f0; /* gray-200 */
+      --button-bg-green: #34d399; /* green-400 */
+      --button-hover-green: #10b981; /* green-500 */
+      --button-bg-dark: #e2e8f0; /* gray-200 */
+      --button-hover-dark: #cbd5e0; /* gray-300 */
+      --input-border-color: #4a5568; /* gray-700 */
+      --input-focus-ring: #f6e05e; /* yellow-300 */
+    }
+
+    /* Xanh Lục Tĩnh Lặng */
     body.theme-green {
-      background-color: #e0f2f7; /* Light Cyan */
-      color: #2f4f4f; /* Dark Slate Gray */
+      --main-border-color: #48bb78; /* green-500 */
+      --glowing-shadow-color: rgba(76, 209, 140, 0.3); /* green-400 with alpha */
+      --content-bg-color: #d4f0f0;
+      --content-text-color: #2f4f4f;
+      --header-bg-color: #a7d9d9;
+      --header-text-color: #2f4f4f;
+      --toc-bg-color: #c0e0e0;
+      --button-bg-blue: #6495ed;
+      --button-hover-blue: #4169e1;
+      --button-bg-pink: #ffb6c1;
+      --button-hover-pink: #ff8c9a;
+      --button-bg-gray: #80ced6;
+      --button-hover-gray: #66b2b2;
+      --button-text-gray: #2f4f4f;
+      --button-bg-green: #3cb371;
+      --button-hover-green: #2e8b57;
+      --button-bg-dark: #5f9ea0;
+      --button-hover-dark: #4682b4;
+      --input-border-color: #80ced6;
+      --input-focus-ring: #48bb78;
     }
-    body.theme-green .bg-yellow-200 {
-      background-color: #a7d9d9; /* Lighter Teal */
-    }
-    body.theme-green .text-yellow-900 {
-      color: #2f4f4f;
-    }
-    body.theme-green .bg-gray-50 {
-      background-color: #c0e0e0; /* Light Teal */
-    }
-    body.theme-green .bg-gray-200 {
-      background-color: #80ced6; /* Medium Teal */
-    }
-    body.theme-green .text-gray-800 {
-      color: #2f4f4f;
-    }
-    body.theme-green .bg-gray-700 {
-      background-color: #5f9ea0; /* Cadet Blue */
-    }
-    body.theme-green .bg-pink-500 {
-      background-color: #ffb6c1; /* Light Pink for contrast */
-    }
-    body.theme-green .bg-blue-600 {
-      background-color: #6495ed; /* Cornflower Blue for contrast */
-    }
-    body.theme-green #shareModal > div {
-      background-color: #e0f2f7;
-    }
-    body.theme-green #content {
-      background-color: #d4f0f0; /* Slightly darker light cyan for content */
+    body.theme-green.dark { /* Dark mode for green theme */
+      --main-border-color: #68d391; /* green-400 */
+      --glowing-shadow-color: rgba(76, 209, 140, 0.2);
+      --content-bg-color: #2d483a; /* Darker green shade */
+      --content-text-color: #e0f2e0;
+      --header-bg-color: #3a5f4a;
+      --header-text-color: #90ee90;
+      --toc-bg-color: #2a3a2d;
+      --button-bg-blue: #4682b4;
+      --button-hover-blue: #366792;
+      --button-bg-pink: #ff69b4;
+      --button-hover-pink: #ff1493;
+      --button-bg-gray: #3a5f4a;
+      --button-hover-gray: #4a705a;
+      --button-text-gray: #e0f2e0;
+      --button-bg-green: #2e8b57;
+      --button-hover-green: #1e6b3f;
+      --button-bg-dark: #e0f2e0;
+      --button-hover-dark: #c0e0c0;
+      --input-border-color: #3a5f4a;
+      --input-focus-ring: #68d391;
     }
 
-    /* Tím Thiền Định (Meditative Purple) */
+
+    /* Tím Thiền Định */
     body.theme-purple {
-      background-color: #f0e6fa; /* Lavender Blush */
-      color: #4b0082; /* Indigo */
+      --main-border-color: #9f7aea; /* purple-500 */
+      --glowing-shadow-color: rgba(164, 116, 252, 0.3); /* purple-400 with alpha */
+      --content-bg-color: #e8d0f2;
+      --content-text-color: #4b0082;
+      --header-bg-color: #d8bfd8;
+      --header-text-color: #4b0082;
+      --toc-bg-color: #e6cce6;
+      --button-bg-blue: #8a2be2;
+      --button-hover-blue: #6a0dad;
+      --button-bg-pink: #ff69b4;
+      --button-hover-pink: #ff1493;
+      --button-bg-gray: #b0e0e6;
+      --button-hover-gray: #92c9d2;
+      --button-text-gray: #4b0082;
+      --button-bg-green: #8a2be2; /* Using purple for green contrast */
+      --button-hover-green: #6a0dad;
+      --button-bg-dark: #9370db;
+      --button-hover-dark: #7b68ee;
+      --input-border-color: #b0e0e6;
+      --input-focus-ring: #9f7aea;
     }
-    body.theme-purple .bg-yellow-200 {
-      background-color: #d8bfd8; /* Thistle */
-    }
-    body.theme-purple .text-yellow-900 {
-      color: #4b0082;
-    }
-    body.theme-purple .bg-gray-50 {
-      background-color: #e6cce6; /* Plum */
-    }
-    body.theme-purple .bg-gray-200 {
-      background-color: #b0e0e6; /* Powder Blue (for contrast) */
-    }
-    body.theme-purple .text-gray-800 {
-      color: #4b0082;
-    }
-    body.theme-purple .bg-gray-700 {
-      background-color: #9370db; /* Medium Purple */
-    }
-    body.theme-purple .bg-pink-500 {
-      background-color: #ff69b4; /* Hot Pink for contrast */
-    }
-    body.theme-purple .bg-blue-600 {
-      background-color: #8a2be2; /* Blue Violet for contrast */
-    }
-    body.theme-purple #shareModal > div {
-      background-color: #f0e6fa;
-    }
-    body.theme-purple #content {
-      background-color: #e8d0f2; /* Slightly darker lavender for content */
+    body.theme-purple.dark { /* Dark mode for purple theme */
+      --main-border-color: #b794f4; /* purple-400 */
+      --glowing-shadow-color: rgba(164, 116, 252, 0.2);
+      --content-bg-color: #4a3068; /* Darker purple shade */
+      --content-text-color: #f0e6ff;
+      --header-bg-color: #3a2048;
+      --header-text-color: #d8bfd8;
+      --toc-bg-color: #2a183a;
+      --button-bg-blue: #6a0dad;
+      --button-hover-blue: #480082;
+      --button-bg-pink: #ff1493;
+      --button-hover-pink: #c71585;
+      --button-bg-gray: #3a2048;
+      --button-hover-gray: #4a285a;
+      --button-text-gray: #f0e6ff;
+      --button-bg-green: #6a0dad;
+      --button-hover-green: #480082;
+      --button-bg-dark: #f0e6ff;
+      --button-hover-dark: #d8cce6;
+      --input-border-color: #3a2048;
+      --input-focus-ring: #b794f4;
     }
 
-    /* Vàng Nhẹ Thoát Tục (Subtle Yellow/Gold) */
+    /* Vàng Nhẹ Thoát Tục */
     body.theme-gold {
-      background-color: #fffaf0; /* Floral White */
-      color: #5a4a3a; /* Darker Brown */
+      --main-border-color: #d69e2e; /* yellow-700 */
+      --glowing-shadow-color: rgba(253, 230, 138, 0.4); /* yellow-200 with alpha */
+      --content-bg-color: #fff5e0;
+      --content-text-color: #5a4a3a;
+      --header-bg-color: #ffe4b5;
+      --header-text-color: #5a4a3a;
+      --toc-bg-color: #fffacd;
+      --button-bg-blue: #add8e6;
+      --button-hover-blue: #87ceeb;
+      --button-bg-pink: #ffc0cb;
+      --button-hover-pink: #ff8c9a;
+      --button-bg-gray: #f0e68c;
+      --button-hover-gray: #e6e6a8;
+      --button-text-gray: #5a4a3a;
+      --button-bg-green: #b8860b;
+      --button-hover-green: #a0522d;
+      --button-bg-dark: #daa520;
+      --button-hover-dark: #b8860b;
+      --input-border-color: #f0e68c;
+      --input-focus-ring: #d69e2e;
     }
-    body.theme-gold .bg-yellow-200 {
-      background-color: #ffe4b5; /* Moccasin */
+    body.theme-gold.dark { /* Dark mode for gold theme */
+      --main-border-color: #f6e05e; /* yellow-300 */
+      --glowing-shadow-color: rgba(253, 230, 138, 0.2);
+      --content-bg-color: #4a3a2d; /* Darker gold/brown shade */
+      --content-text-color: #fffaf0;
+      --header-bg-color: #3a2d20;
+      --header-text-color: #ffe4b5;
+      --toc-bg-color: #2a2018;
+      --button-bg-blue: #5f9ea0;
+      --button-hover-blue: #4682b4;
+      --button-bg-pink: #ff8c9a;
+      --button-hover-pink: #ff1493;
+      --button-bg-gray: #3a2d20;
+      --button-hover-gray: #4a3a2d;
+      --button-text-gray: #fffaf0;
+      --button-bg-green: #a0522d;
+      --button-hover-green: #8b4513;
+      --button-bg-dark: #fffaf0;
+      --button-hover-dark: #ffe4b5;
+      --input-border-color: #3a2d20;
+      --input-focus-ring: #f6e05e;
     }
-    body.theme-gold .text-yellow-900 {
-      color: #5a4a3a;
+
+    /* Apply styles to content */
+    #content {
+      border: 2px solid var(--main-border-color);
+      border-radius: 1.5rem; /* 24px */
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3), /* Inner light border */
+        0 10px 15px -3px rgba(0, 0, 0, 0.1), /* Near blur shadow */
+        0 4px 6px -2px rgba(0, 0, 0, 0.05), /* Near blur shadow */
+        0 0 20px 5px var(--glowing-shadow-color); /* Far glowing shadow */
+      backdrop-filter: blur(15px); /* Glassmorphism effect */
+      background-color: var(--content-bg-color); /* Use variable for background */
+      color: var(--content-text-color); /* Use variable for text color */
+      transition: all 0.5s ease-in-out; /* Smooth transition for theme changes */
     }
-    body.theme-gold .bg-gray-50 {
-      background-color: #fffacd; /* Lemon Chiffon */
+
+    /* Adjust prose styles for better compatibility with themes */
+    #content.prose h1, #content.prose h2, #content.prose strong {
+        color: inherit; /* Inherit text color from body/theme */
     }
-    body.theme-gold .bg-gray-200 {
-      background-color: #f0e68c; /* Khaki */
+
+    /* General button styling for consistency */
+    button {
+        background-color: var(--button-bg-blue); /* Default button color */
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease-in-out, transform 0.1s ease-out;
     }
-    body.theme-gold .text-gray-800 {
-      color: #5a4a3a;
+    button:hover {
+        transform: translateY(-1px);
     }
-    body.theme-gold .bg-gray-700 {
-      background-color: #daa520; /* Goldenrod */
+    button:active {
+        transform: translateY(0);
     }
-    body.theme-gold .bg-pink-500 {
-      background-color: #ffc0cb; /* Pink for contrast */
+
+    /* Specific button overrides */
+    #readBtn { background-color: var(--button-bg-blue); }
+    #readBtn:hover { background-color: var(--button-hover-blue); }
+    #likeBtn { background-color: var(--button-bg-pink); }
+    #likeBtn:hover { background-color: var(--button-hover-pink); }
+    #shareBtn {
+        background-color: var(--button-bg-gray);
+        color: var(--button-text-gray);
     }
-    body.theme-gold .bg-blue-600 {
-      background-color: #add8e6; /* Light Blue for contrast */
+    #shareBtn:hover { background-color: var(--button-hover-gray); }
+    #searchBtn { background-color: var(--button-bg-green); }
+    #searchBtn:hover { background-color: var(--button-hover-green); }
+    #darkModeToggle { background-color: var(--button-bg-dark); }
+    #darkModeToggle:hover { background-color: var(--button-hover-dark); }
+    #scrollTopBtn, #scrollBottomBtn {
+        background-color: var(--main-border-color); /* Use main theme color for scroll buttons */
     }
-    body.theme-gold #shareModal > div {
-      background-color: #fffaf0;
+    #scrollTopBtn:hover, #scrollBottomBtn:hover {
+        background-color: var(--glowing-shadow-color); /* Use glowing color for hover */
     }
-    body.theme-gold #content {
-      background-color: #fff5e0; /* Slightly darker floral white for content */
+
+    /* Input and Select styling */
+    input[type="text"], select {
+        border-color: var(--input-border-color);
+        background-color: var(--content-bg-color);
+        color: var(--content-text-color);
     }
+    input[type="text"]:focus, select:focus {
+        border-color: var(--input-focus-ring);
+        box-shadow: 0 0 0 2px var(--input-focus-ring);
+    }
+
   </style>
 </head>
 
@@ -225,10 +374,12 @@
   <div id="scrollProgress" class="fixed top-0 left-0 h-1 bg-yellow-400 z-[9999]" style="width: 0%;"></div>
 
   <!-- Navigation Header -->
-  <header class="bg-yellow-200 shadow sticky top-0 z-50 rounded-b-lg">
+  <header class="bg-yellow-200 shadow sticky top-0 z-50 rounded-b-lg" style="background-color: var(--header-bg-color);">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <!-- Logo and Site Title -->
-      <a href="#" class="flex items-center space-x-2 text-xl font-bold text-yellow-900" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
+      <a href="#" class="flex items-center space-x-2 text-xl font-bold text-yellow-900" 
+         onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;"
+         style="color: var(--header-text-color);">
         <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Giáo Lý MSTQ" class="h-8 w-auto rounded-full">
         <span>Giáo Lý MSTQ</span>
       </a>
@@ -240,7 +391,7 @@
         <a href="https://facebook.com" target="_blank" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Facebook</a>
         <a href="https://youtube.com" target="_blank" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">YouTube</a>
       </nav>
-      <button id="menuToggle" class="md:hidden text-yellow-900 p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">
+      <button id="menuToggle" class="md:hidden text-yellow-900 p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200" style="color: var(--header-text-color);">
         <i class="fas fa-bars text-2xl"></i>
       </button>
     </div>
@@ -248,7 +399,7 @@
 
   <!-- Mobile Menu -->
   <div id="mobileMenu" class="fixed inset-0 bg-white z-[999] p-6 hidden flex-col space-y-4 rounded-lg shadow-lg">
-    <button id="closeMenu" class="self-end text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200"><i class="fas fa-times text-2xl"></i></button>
+    <button id="closeMenu" class="self-end text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200" style="color: var(--header-text-color);"><i class="fas fa-times text-2xl"></i></button>
     <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Trang chủ</a>
     <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Play Nhạc</a>
     <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Kho Thơ</a>
@@ -258,8 +409,8 @@
   </div>
 
   <!-- Table of Contents (TOC) -->
-  <aside class="hidden lg:block fixed left-4 top-24 w-56 text-sm bg-gray-50 p-4 rounded-lg shadow-md" id="toc">
-    <h3 class="font-bold text-lg mb-2 text-yellow-800">Mục Lục</h3>
+  <aside class="hidden lg:block fixed left-4 top-24 w-56 text-sm bg-gray-50 p-4 rounded-lg shadow-md" id="toc" style="background-color: var(--toc-bg-color);">
+    <h3 class="font-bold text-lg mb-2 text-yellow-800" style="color: var(--header-text-color);">Mục Lục</h3>
     <!-- TOC links will be dynamically inserted here -->
   </aside>
 

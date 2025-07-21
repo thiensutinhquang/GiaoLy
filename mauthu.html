@@ -227,7 +227,11 @@
   <!-- Navigation Header -->
   <header class="bg-yellow-200 shadow sticky top-0 z-50 rounded-b-lg">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="text-xl font-bold text-yellow-900">🌞 Minh Sư Tịnh Quang</div>
+      <!-- Logo and Site Title -->
+      <a href="#" class="flex items-center space-x-2 text-xl font-bold text-yellow-900" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
+        <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Giáo Lý MSTQ" class="h-8 w-auto rounded-full">
+        <span>Giáo Lý MSTQ</span>
+      </a>
       <nav class="hidden md:flex space-x-4 text-sm">
         <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Trang chủ</a>
         <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Play Nhạc</a>
@@ -331,6 +335,16 @@
     Đã sao chép vào clipboard!
   </div>
 
+  <!-- Floating Scroll Buttons -->
+  <div class="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-40">
+    <button id="scrollTopBtn" class="p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-200">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <button id="scrollBottomBtn" class="p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-200">
+      <i class="fas fa-arrow-down"></i>
+    </button>
+  </div>
+
   <script type="module">
     // Firebase imports (using modular SDK)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -423,56 +437,55 @@
     const initSpeechSynthesis = () => {
       speechSynthesizer = window.speechSynthesis;
       const readBtn = document.getElementById('readBtn');
-      if (speechSynthesizer && readBtn) {
-        // Ensure voices are loaded before marking as ready
-        speechSynthesizer.onvoiceschanged = () => {
-          console.log("SpeechSynthesis voices changed. Voices available:", speechSynthesis.getVoices().length);
-          if (speechSynthesis.getVoices().length > 0) {
-            isSpeechReady = true;
-            console.log("SpeechSynthesis is ready.");
-            readBtn.disabled = false; // Enable button once ready
-            showMessageBox("Hệ thống đọc bài đã sẵn sàng.");
-          } else {
-            console.warn("No voices found after onvoiceschanged event.");
-            showMessageBox("Không tìm thấy giọng đọc. Vui lòng kiểm tra cài đặt trình duyệt.");
-          }
-        };
-
-        // Fallback/initial check if voices are already loaded
-        if (speechSynthesizer.getVoices().length > 0) {
-          isSpeechReady = true;
-          console.log("SpeechSynthesis voices already loaded (initial check).");
-          readBtn.disabled = false;
-        } else {
-          console.log("No voices initially available. Waiting for onvoiceschanged or polling.");
-          readBtn.disabled = true; // Disable until ready
-          // Polling mechanism to check for voices if onvoiceschanged doesn't fire
-          let voiceCheckInterval = setInterval(() => {
-            if (speechSynthesis.getVoices().length > 0) {
-              clearInterval(voiceCheckInterval);
-              isSpeechReady = true;
-              console.log("SpeechSynthesis voices loaded via polling. Ready.");
-              readBtn.disabled = false;
-              showMessageBox("Hệ thống đọc bài đã sẵn sàng.");
-            } else {
-              console.log("Polling for voices... Still not ready.");
-            }
-          }, 500); // Check every 500ms
-          // Set a timeout to stop polling after some time if voices don't load
-          setTimeout(() => {
-            if (!isSpeechReady) {
-              clearInterval(voiceCheckInterval);
-              console.warn("SpeechSynthesis voices not loaded after timeout.");
-              showMessageBox("Không thể tải giọng đọc. Vui lòng thử lại hoặc kiểm tra cài đặt trình duyệt.");
-            }
-          }, 10000); // Stop polling after 10 seconds
-        }
-
-      } else if (readBtn) {
+      if (!speechSynthesizer) {
         console.warn("SpeechSynthesis not supported in this browser.");
         showMessageBox("Trình duyệt của bạn không hỗ trợ đọc văn bản.");
-        readBtn.disabled = true;
+        if (readBtn) readBtn.disabled = true;
+        return;
       }
+
+      const checkVoices = () => {
+        const voices = speechSynthesis.getVoices();
+        console.log("Checking voices. Found:", voices.length, "voices.");
+        if (voices.length > 0) {
+          isSpeechReady = true;
+          console.log("SpeechSynthesis is ready.");
+          if (readBtn) readBtn.disabled = false;
+          showMessageBox("Hệ thống đọc bài đã sẵn sàng.");
+          return true;
+        }
+        return false;
+      };
+
+      // Initial check
+      if (checkVoices()) {
+        return;
+      }
+
+      // Listen for voices to be loaded
+      speechSynthesizer.onvoiceschanged = () => {
+        console.log("SpeechSynthesis voices changed event fired.");
+        checkVoices(); // Re-check voices when they change
+      };
+
+      // Polling mechanism as a fallback if onvoiceschanged doesn't fire or voices are slow to load
+      let voiceCheckInterval = setInterval(() => {
+        if (checkVoices()) {
+          clearInterval(voiceCheckInterval);
+        } else {
+          console.log("Polling for voices... Still not ready.");
+        }
+      }, 500);
+
+      // Set a timeout to stop polling after some time if voices don't load
+      setTimeout(() => {
+        if (!isSpeechReady) {
+          clearInterval(voiceCheckInterval);
+          console.warn("SpeechSynthesis voices not loaded after timeout.");
+          showMessageBox("Không thể tải giọng đọc. Vui lòng thử lại hoặc kiểm tra cài đặt giọng nói của trình duyệt/hệ điều hành.");
+          if (readBtn) readBtn.disabled = true;
+        }
+      }, 15000); // Increased timeout to 15 seconds
     };
 
     function clearAllHighlightsForSpeech() { // Renamed to avoid conflict with search highlight clear
@@ -494,6 +507,13 @@
       const readBtn = document.getElementById('readBtn');
       clearAllHighlightsForSpeech();
 
+      if (!isSpeechReady || !speechSynthesizer) {
+        showMessageBox("Hệ thống đọc bài chưa sẵn sàng. Vui lòng thử lại sau.");
+        console.error("Attempted to start reading when SpeechSynthesis was not ready.");
+        if (readBtn) readBtn.disabled = true; // Ensure button is disabled if not ready
+        return;
+      }
+
       if (currentParagraphIndex >= paragraphElements.length) {
         console.log("End of article reached. Stopping reading.");
         stopReading();
@@ -513,7 +533,17 @@
         currentUtterance.voice = vietnameseVoice;
         console.log("Using Vietnamese voice.");
       } else {
-        console.warn("Vietnamese voice not found. Using default voice.");
+        console.warn("Vietnamese voice not found. Using default voice or first available voice.");
+        // Fallback to first available voice if Vietnamese is not found
+        if (voices.length > 0) {
+            currentUtterance.voice = voices[0];
+            console.log("Using first available voice:", voices[0].name);
+        } else {
+            console.error("No voices available at all, cannot speak.");
+            showMessageBox("Không có giọng đọc nào khả dụng. Vui lòng kiểm tra cài đặt giọng nói của trình duyệt/hệ điều hành.");
+            stopReading();
+            return;
+        }
       }
 
       currentUtterance.onend = () => {
@@ -524,9 +554,10 @@
       };
 
       currentUtterance.onerror = (event) => {
-        console.error('SpeechSynthesisUtterance.onerror', event);
+        console.error('SpeechSynthesisUtterance.onerror triggered:', event);
+        console.error('Error details:', event.error); // More specific error detail
         stopReading();
-        showMessageBox("Lỗi khi đọc bài viết.");
+        showMessageBox("Lỗi khi đọc bài viết. Vui lòng thử lại hoặc kiểm tra cài đặt giọng nói của trình duyệt.");
       };
 
       speechSynthesizer.speak(currentUtterance);
@@ -639,6 +670,8 @@
     const searchBtn = document.getElementById('searchBtn');
     const darkModeToggle = document.getElementById('darkModeToggle');
     const themeSelector = document.getElementById('themeSelector');
+    const scrollTopBtn = document.getElementById('scrollTopBtn'); // Nút cuộn lên
+    const scrollBottomBtn = document.getElementById('scrollBottomBtn'); // Nút cuộn xuống
 
 
     // --- Event Listeners ---
@@ -852,6 +885,19 @@
         speechSynthesizer.cancel();
       }
     });
+
+    // --- Floating Scroll Buttons Logic ---
+    if (scrollTopBtn) {
+      scrollTopBtn.onclick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    }
+
+    if (scrollBottomBtn) {
+      scrollBottomBtn.onclick = () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      };
+    }
 
   </script>
 </body>

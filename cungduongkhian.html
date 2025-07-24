@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang Tu Tập Nâng Cấp</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Google Fonts - Inter for a modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Custom selection style */
+    ::selection {
+      background: gold;
+      color: black;
+    }
+
+    /* Active state for Table of Contents links */
+    .toc-active {
+      font-weight: bold;
+      color: #f59e0b; /* Tailwind yellow-500 */
+    }
+
+    /* Rain heart animation for like button */
+    .rain-heart {
+      position: absolute;
+      animation: fall 1s ease-out forwards;
+      pointer-events: none; /* Allow clicks to pass through */
+      z-index: 10000; /* Ensure hearts are on top */
+    }
+
+    @keyframes fall {
+      0% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.5);
+      }
+    }
+
+    /* Highlight for search functionality */
+    .highlight {
+      background-color: yellow;
+      padding: 2px 0;
+    }
+
+    /* Highlight for current reading paragraph */
+    .highlight-paragraph {
+      background-color: #fffacd; /* Light yellow for highlighting */
+      transition: background-color 0.3s ease;
+      padding: 0.25em 0.5em; /* Add some padding for better visual */
+      border-radius: 0.25em; /* Rounded corners for highlight */
+      display: block; /* Ensure it takes full width */
+    }
+
+    /* Dark mode adjustment for highlight */
+    body.dark .highlight-paragraph {
+      background-color: #3a3f4a; /* Darker shade for contrast in dark mode */
+    }
+
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Apply Inter font globally */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Dark mode styles (applied on top of themes) */
+    body.dark {
+      background-color: #1a202c; /* Tailwind gray-900 */
+      color: #e2e8f0; /* Tailwind gray-200 */
+    }
+
+    body.dark .bg-white {
+      background-color: #2d3748; /* Tailwind gray-800 */
+    }
+
+    body.dark .text-gray-900 {
+      color: #e2e8f0;
+    }
+
+    body.dark .bg-yellow-200 {
+      background-color: #4a5568; /* Tailwind gray-700 */
+    }
+    body.dark .text-yellow-900 {
+      color: #f6e05e; /* Tailwind yellow-300 */
+    }
+    
+    body.dark .bg-gray-50 { /* Adjust for dark mode TOC */
+      background-color: #2d3748;
+    }
+
+    body.dark .bg-gray-200 {
+      background-color: #4a5568;
+      color: #e2e8f0;
+    }
+
+    body.dark .bg-gray-300 {
+      background-color: #6a7382;
+    }
+
+    body.dark #shareModal > div {
+      background-color: #2d3748;
+    }
+
+    /* --- Define CSS Variables for Dynamic Theming --- */
+    :root {
+      /* Existing variables */
+      --main-border-color: #f59e0b; /* Default: yellow-500 */
+      --glowing-shadow-color: rgba(252, 211, 77, 0.4); /* Default: yellow-300 with alpha */
+      --content-bg-color: #ffffff; /* Default: white */
+      --content-text-color: #1f2937; /* Default: gray-900 */
+      --header-bg-color: #fef08a; /* Default: yellow-200 */
+      --header-text-color: #92400e; /* Default: yellow-900 */
+      --toc-bg-color: #f9fafb; /* Default: gray-50 */
+      --button-bg-blue: #2563eb; /* Default: blue-600 */
+      --button-hover-blue: #1d4ed8; /* Default: blue-700 */
+      --button-bg-pink: #ec4899; /* Default: pink-500 */
+      --button-hover-pink: #db2777; /* Default: pink-600 */
+      --button-bg-gray: #e5e7eb; /* Default: gray-200 */
+      --button-hover-gray: #d1d5db; /* Default: gray-300 */
+      --button-text-gray: #1f2937; /* Default: gray-800 */
+      --button-bg-green: #22c55e; /* Default: green-500 */
+      --button-hover-green: #16a34a; /* Default: green-600 */
+      --button-bg-dark: #374151; /* Default: gray-700 */
+      --button-hover-dark: #1f2937; /* Default: gray-800 */
+      --input-border-color: #d1d5db; /* Default: gray-300 */
+      --input-focus-ring: #f59e0b; /* Default: yellow-500 */
+
+      /* New variables for sophisticated styling */
+      --divider-color: #cbd5e0; /* gray-300 */
+      --divider-icon-color: #f59e0b; /* yellow-500 */
+
+      --summary-bg-color: #fffbeb; /* yellow-50 */
+      --summary-border-color: #fcd34d; /* yellow-300 */
+      --summary-text-color: #4b5563; /* gray-700 */
+      --summary-shadow-color: rgba(251, 191, 36, 0.2); /* yellow-500 with alpha */
+
+      --blockquote-bg-color: #f9fafb; /* gray-50 */
+      --blockquote-border-color: #f59e0b; /* yellow-500 */
+      --blockquote-text-color: #374151; /* gray-700 */
+      --blockquote-icon-color: #f59e0b; /* yellow-500 */
+
+      --list-bullet-color: #f59e0b; /* yellow-500 */
+
+      /* New variables for teaching emphasis */
+      --content-heading-color: #8b5cf6; /* purple-500 */
+      --strong-emphasis-color: #ef4444; /* red-500 */
+      --note-text-color: #10b981; /* green-600 */
+      --note-bg-color: #ecfdf5; /* green-50 */
+      --farewell-text-color: #dc2626; /* red-600 */
+
+      /* New variables for note and quote boxes */
+      --note-box-bg: #fef2f2; /* red-50 */
+      --note-box-border-left: #ef4444; /* red-500 */
+      --note-box-text-color: #7f1d1d; /* red-900 */
+      --note-box-heading-color: #b91c1c; /* red-700 */
+
+      --quote-box-bg: #fffbeb; /* yellow-50 */
+      --quote-box-border-left: #f59e0b; /* yellow-500 */
+      --quote-box-text-color: #4b5563; /* gray-700 */
+      --quote-box-heading-color: #d97706; /* amber-700 */
+
+      /* New variable for main title color */
+      --main-title-color: #a0522d; /* Sienna - default for main title */
+    }
+
+    /* Dark mode variables */
+    body.dark {
+      /* Existing variables */
+      --main-border-color: #fcd34d;
+      --glowing-shadow-color: rgba(251, 191, 36, 0.3);
+      --content-bg-color: #2d3748;
+      --content-text-color: #e2e8f0;
+      --header-bg-color: #4a5568;
+      --header-text-color: #f6e05e;
+      --toc-bg-color: #2d3748;
+      --button-bg-blue: #3b82f6;
+      --button-hover-blue: #2563eb;
+      --button-bg-pink: #fb7185;
+      --button-hover-pink: #f43f5e;
+      --button-bg-gray: #4a5568;
+      --button-hover-gray: #6a7382;
+      --button-text-gray: #e2e8f0;
+      --button-bg-green: #34d399;
+      --button-hover-green: #10b981;
+      --button-bg-dark: #e2e8f0;
+      --button-hover-dark: #cbd5e0;
+      --input-border-color: #4a5568;
+      --input-focus-ring: #f6e05e;
+
+      /* New variables for dark mode */
+      --divider-color: #4a5568; /* gray-700 */
+      --divider-icon-color: #f6e05e; /* yellow-300 */
+
+      --summary-bg-color: #1f2937; /* gray-900 */
+      --summary-border-color: #f6e05e; /* yellow-300 */
+      --summary-text-color: #e2e8f0; /* gray-200 */
+      --summary-shadow-color: rgba(251, 191, 36, 0.1); /* yellow-500 with alpha */
+
+      --blockquote-bg-color: #1a202c; /* gray-900 */
+      --blockquote-border-color: #f6e05e; /* yellow-300 */
+      --blockquote-text-color: #e2e8f0; /* gray-200 */
+      --blockquote-icon-color: #f6e05e; /* yellow-300 */
+
+      --list-bullet-color: #f6e05e; /* yellow-300 */
+
+      /* New variables for teaching emphasis in dark mode */
+      --content-heading-color: #c4b5fd; /* purple-300 */
+      --strong-emphasis-color: #f87171; /* red-400 */
+      --note-text-color: #6ee7b7; /* green-300 */
+      --note-bg-color: #064e3b; /* green-900 */
+      --farewell-text-color: #ef4444; /* red-500 */
+
+      /* New variables for note and quote boxes in dark mode */
+      --note-box-bg: #450a0a; /* red-950 */
+      --note-box-border-left: #dc2626; /* red-600 */
+      --note-box-text-color: #fca5a5; /* red-300 */
+      --note-box-heading-color: #ef4444; /* red-500 */
+
+      --quote-box-bg: #2d3748; /* gray-800 */
+      --quote-box-border-left: #fcd34d; /* yellow-300 */
+      --quote-box-text-color: #e2e8f0; /* gray-200 */
+      --quote-box-heading-color: #fcd34d; /* yellow-300 */
+
+      /* New variable for main title color in dark mode */
+      --main-title-color: #fcd34d; /* yellow-300 - dark mode main title */
+    }
+
+    /* Xanh Lục Tĩnh Lặng */
+    body.theme-green {
+      /* Existing variables */
+      --main-border-color: #48bb78;
+      --glowing-shadow-color: rgba(76, 209, 140, 0.3);
+      --content-bg-color: #d4f0f0;
+      --content-text-color: #2f4f4f;
+      --header-bg-color: #a7d9d9;
+      --header-text-color: #2f4f4f;
+      --toc-bg-color: #c0e0e0;
+      --button-bg-blue: #6495ed;
+      --button-hover-blue: #4169e1;
+      --button-bg-pink: #ffb6c1;
+      --button-hover-pink: #ff8c9a;
+      --button-bg-gray: #80ced6;
+      --button-hover-gray: #66b2b2;
+      --button-text-gray: #2f4f4f;
+      --button-bg-green: #3cb371;
+      --button-hover-green: #2e8b57;
+      --button-bg-dark: #5f9ea0;
+      --button-hover-dark: #4682b4;
+      --input-border-color: #80ced6;
+      --input-focus-ring: #48bb78;
+
+      /* New variables for green theme */
+      --divider-color: #80ced6;
+      --divider-icon-color: #48bb78;
+
+      --summary-bg-color: #e0f8f8;
+      --summary-border-color: #66b2b2;
+      --summary-text-color: #2f4f4f;
+      --summary-shadow-color: rgba(72, 187, 120, 0.2);
+
+      --blockquote-bg-color: #e6f7f7;
+      --blockquote-border-color: #48bb78;
+      --blockquote-text-color: #2f4f4f;
+      --blockquote-icon-color: #48bb78;
+
+      --list-bullet-color: #48bb78;
+
+      /* New variables for teaching emphasis in green theme */
+      --content-heading-color: #2e8b57; /* SeaGreen */
+      --strong-emphasis-color: #b22222; /* FireBrick */
+      --note-text-color: #006400; /* DarkGreen */
+      --note-bg-color: #d4edda; /* Light green */
+      --farewell-text-color: #8b0000; /* DarkRed */
+
+      /* New variables for note and quote boxes in green theme */
+      --note-box-bg: #ffebee; /* red-50 equivalent for green theme */
+      --note-box-border-left: #ef5350; /* red-400 equivalent for green theme */
+      --note-box-text-color: #c62828; /* red-700 equivalent for green theme */
+      --note-box-heading-color: #b71c1c; /* red-800 equivalent for green theme */
+
+      --quote-box-bg: #e8f5e9; /* green-50 */
+      --quote-box-border-left: #4caf50; /* green-500 */
+      --quote-box-text-color: #1b5e20; /* green-900 */
+      --quote-box-heading-color: #388e3c; /* green-700 */
+
+      /* New variable for main title color in green theme */
+      --main-title-color: #1b5e20; /* green-900 - green theme main title */
+    }
+    body.theme-green.dark { /* Dark mode for green theme */
+      /* Existing variables */
+      --main-border-color: #68d391;
+      --glowing-shadow-color: rgba(76, 209, 140, 0.2);
+      --content-bg-color: #2d483a;
+      --content-text-color: #e0f2e0;
+      --header-bg-color: #3a5f4a;
+      --header-text-color: #90ee90;
+      --toc-bg-color: #2a3a2d;
+      --button-bg-blue: #4682b4;
+      --button-hover-blue: #366792;
+      --button-bg-pink: #ff69b4;
+      --button-hover-pink: #ff1493;
+      --button-bg-gray: #3a5f4a;
+      --button-hover-gray: #4a705a;
+      --button-text-gray: #e0f2e0;
+      --button-bg-green: #2e8b57;
+      --button-hover-green: #1e6b3f;
+      --button-bg-dark: #e0f2e0;
+      --button-hover-dark: #c0e0c0;
+      --input-border-color: #3a5f4a;
+      --input-focus-ring: #68d391;
+
+      /* New variables for green theme dark mode */
+      --divider-color: #3a5f4a;
+      --divider-icon-color: #90ee90;
+
+      --summary-bg-color: #1e3028;
+      --summary-border-color: #90ee90;
+      --summary-text-color: #e0f2e0;
+      --summary-shadow-color: rgba(144, 238, 144, 0.1);
+
+      --blockquote-bg-color: #1a2c20;
+      --blockquote-border-color: #90ee90;
+      --blockquote-text-color: #e0f2e0;
+      --blockquote-icon-color: #90ee90;
+
+      --list-bullet-color: #90ee90;
+
+      /* New variables for teaching emphasis in green theme dark mode */
+      --content-heading-color: #90ee90; /* LightGreen */
+      --strong-emphasis-color: #ff6347; /* Tomato */
+      --note-text-color: #3cb371; /* MediumSeaGreen */
+      --note-bg-color: #1a2c20; /* Darker green */
+      --farewell-text-color: #ff4500; /* OrangeRed */
+
+      /* New variables for note and quote boxes in green theme dark mode */
+      --note-box-bg: #2a0000; /* Darker red */
+      --note-box-border-left: #ef5350; /* Red-400 */
+      --note-box-text-color: #ffcdd2; /* Red-100 */
+      --note-box-heading-color: #ef9a9a; /* Red-200 */
+
+      --quote-box-bg: #1a2c20; /* Darker green */
+      --quote-box-border-left: #68d391; /* Green-400 */
+      --quote-box-text-color: #e0f2e0; /* Light green */
+      --quote-box-heading-color: #90ee90; /* Light green */
+
+      /* New variable for main title color in green theme dark mode */
+      --main-title-color: #90ee90; /* LightGreen - green theme dark mode main title */
+    }
+
+
+    /* Tím Thiền Định */
+    body.theme-purple {
+      /* Existing variables */
+      --main-border-color: #9f7aea;
+      --glowing-shadow-color: rgba(164, 116, 252, 0.3);
+      --content-bg-color: #e8d0f2;
+      --content-text-color: #4b0082;
+      --header-bg-color: #d8bfd8;
+      --header-text-color: #4b0082;
+      --toc-bg-color: #e6cce6;
+      --button-bg-blue: #8a2be2;
+      --button-hover-blue: #6a0dad;
+      --button-bg-pink: #ff69b4;
+      --button-hover-pink: #ff1493;
+      --button-bg-gray: #b0e0e6;
+      --button-hover-gray: #92c9d2;
+      --button-text-gray: #4b0082;
+      --button-bg-green: #8a2be2; /* Using purple for green contrast */
+      --button-hover-green: #6a0dad;
+      --button-bg-dark: #9370db;
+      --button-hover-dark: #7b68ee;
+      --input-border-color: #b0e0e6;
+      --input-focus-ring: #9f7aea;
+
+      /* New variables for purple theme */
+      --divider-color: #b0e0e6;
+      --divider-icon-color: #9f7aea;
+
+      --summary-bg-color: #f2e6f9;
+      --summary-border-color: #b794f4;
+      --summary-text-color: #4b0082;
+      --summary-shadow-color: rgba(159, 122, 234, 0.2);
+
+      --blockquote-bg-color: #f0e6f7;
+      --blockquote-border-color: #9f7aea;
+      --blockquote-text-color: #4b0082;
+      --blockquote-icon-color: #9f7aea;
+
+      --list-bullet-color: #9f7aea;
+
+      /* New variables for teaching emphasis in purple theme */
+      --content-heading-color: #800080; /* Purple */
+      --strong-emphasis-color: #c71585; /* MediumVioletRed */
+      --note-text-color: #4b0082; /* Indigo */
+      --note-bg-color: #e0b0ff; /* Plum */
+      --farewell-text-color: #8b0000; /* DarkRed */
+
+      /* New variables for note and quote boxes in purple theme */
+      --note-box-bg: #fce4ec; /* pink-50 equivalent for purple theme */
+      --note-box-border-left: #e91e63; /* pink-600 equivalent for purple theme */
+      --note-box-text-color: #880e4f; /* pink-900 equivalent for purple theme */
+      --note-box-heading-color: #c2185b; /* pink-700 equivalent for purple theme */
+
+      --quote-box-bg: #ede7f6; /* deep purple-50 */
+      --quote-box-border-left: #673ab7; /* deep purple-500 */
+      --quote-box-text-color: #311b92; /* deep purple-900 */
+      --quote-box-heading-color: #512da8; /* deep purple-700 */
+
+      /* New variable for main title color in purple theme */
+      --main-title-color: #4b0082; /* Indigo - purple theme main title */
+    }
+    body.theme-purple.dark { /* Dark mode for purple theme */
+      /* Existing variables */
+      --main-border-color: #b794f4;
+      --glowing-shadow-color: rgba(164, 116, 252, 0.2);
+      --content-bg-color: #4a3068;
+      --content-text-color: #f0e6ff;
+      --header-bg-color: #3a2048;
+      --header-text-color: #d8bfd8;
+      --toc-bg-color: #2a183a;
+      --button-bg-blue: #6a0dad;
+      --button-hover-blue: #480082;
+      --button-bg-pink: #ff1493;
+      --button-hover-pink: #c71585;
+      --button-bg-gray: #3a2048;
+      --button-hover-gray: #4a285a;
+      --button-text-gray: #f0e6ff;
+      --button-bg-green: #6a0dad;
+      --button-hover-green: #480082;
+      --button-bg-dark: #f0e6ff;
+      --button-hover-dark: #d8cce6;
+      --input-border-color: #3a2048;
+      --input-focus-ring: #b794f4;
+
+      /* New variables for purple theme dark mode */
+      --divider-color: #3a2048;
+      --divider-icon-color: #d8bfd8;
+
+      --summary-bg-color: #2e183a;
+      --summary-border-color: #d8bfd8;
+      --summary-text-color: #f0e6ff;
+      --summary-shadow-color: rgba(216, 191, 216, 0.1);
+
+      --blockquote-bg-color: #20102a;
+      --blockquote-border-color: #d8bfd8;
+      --blockquote-text-color: #f0e6ff;
+      --blockquote-icon-color: #d8bfd8;
+
+      --list-bullet-color: #d8bfd8;
+
+      /* New variables for teaching emphasis in purple theme dark mode */
+      --content-heading-color: #d8bfd8; /* Thistle */
+      --strong-emphasis-color: #ff69b4; /* HotPink */
+      --note-text-color: #b794f4; /* Light purple */
+      --note-bg-color: #20102a; /* Darker purple */
+      --farewell-text-color: #ff4500; /* OrangeRed */
+
+      /* New variables for note and quote boxes in purple theme dark mode */
+      --note-box-bg: #2a0000; /* Dark red for contrast */
+      --note-box-border-left: #ff4081; /* Pink A200 */
+      --note-box-text-color: #ff80ab; /* Pink A100 */
+      --note-box-heading-color: #f50057; /* Pink A400 */
+
+      --quote-box-bg: #20102a; /* Darker purple */
+      --quote-box-border-left: #b794f4; /* Purple-400 */
+      --quote-box-text-color: #f0e6ff; /* Light purple */
+      --quote-box-heading-color: #d8bfd8; /* Thistle */
+
+      /* New variable for main title color in purple theme dark mode */
+      --main-title-color: #d8bfd8; /* Thistle - purple theme dark mode main title */
+    }
+
+    /* Vàng Nhẹ Thoát Tục */
+    body.theme-gold {
+      /* Existing variables */
+      --main-border-color: #d69e2e;
+      --glowing-shadow-color: rgba(253, 230, 138, 0.4);
+      --content-bg-color: #fff5e0;
+      --content-text-color: #5a4a3a;
+      --header-bg-color: #ffe4b5;
+      --header-text-color: #5a4a3a;
+      --toc-bg-color: #fffacd;
+      --button-bg-blue: #add8e6;
+      --button-hover-blue: #87ceeb;
+      --button-bg-pink: #ffc0cb;
+      --button-hover-pink: #ff8c9a;
+      --button-bg-gray: #f0e68c;
+      --button-hover-gray: #e6e6a8;
+      --button-text-gray: #5a4a3a;
+      --button-bg-green: #b8860b;
+      --button-hover-green: #a0522d;
+      --button-bg-dark: #daa520;
+      --button-hover-dark: #b8860b;
+      --input-border-color: #f0e68c;
+      --input-focus-ring: #d69e2e;
+
+      /* New variables for gold theme */
+      --divider-color: #f0e68c;
+      --divider-icon-color: #d69e2e;
+
+      --summary-bg-color: #fffaf0;
+      --summary-border-color: #fcd34d;
+      --summary-text-color: #5a4a3a;
+      --summary-shadow-color: rgba(214, 158, 46, 0.2);
+
+      --blockquote-bg-color: #fffceb;
+      --blockquote-border-color: #d69e2e;
+      --blockquote-text-color: #5a4a3a;
+      --blockquote-icon-color: #d69e2e;
+
+      --list-bullet-color: #d69e2e;
+
+      /* New variables for teaching emphasis in gold theme */
+      --content-heading-color: #a0522d; /* Sienna */
+      --strong-emphasis-color: #dc143c; /* Crimson */
+      --note-text-color: #b8860b; /* DarkGoldenrod */
+      --note-bg-color: #fff8dc; /* Cornsilk */
+      --farewell-text-color: #8b0000; /* DarkRed */
+
+      /* New variables for note and quote boxes in gold theme */
+      --note-box-bg: #fff3e0; /* orange-50 equivalent for gold theme */
+      --note-box-border-left: #ff9800; /* orange-500 equivalent for gold theme */
+      --note-box-text-color: #e65100; /* orange-900 equivalent for gold theme */
+      --note-box-heading-color: #ef6c00; /* orange-800 equivalent for gold theme */
+
+      --quote-box-bg: #fffde7; /* yellow-50 */
+      --quote-box-border-left: #fbc02d; /* amber-500 */
+      --quote-box-text-color: #ff6f00; /* amber-900 */
+      --quote-box-heading-color: #ffa000; /* amber-700 */
+
+      /* New variable for main title color in gold theme */
+      --main-title-color: #e65100; /* orange-900 - gold theme main title */
+    }
+    body.theme-gold.dark { /* Dark mode for gold theme */
+      /* Existing variables */
+      --main-border-color: #f6e05e;
+      --glowing-shadow-color: rgba(253, 230, 138, 0.2);
+      --content-bg-color: #4a3a2d;
+      --content-text-color: #fffaf0;
+      --header-bg-color: #3a2d20;
+      --header-text-color: #ffe4b5;
+      --toc-bg-color: #2a2018;
+      --button-bg-blue: #5f9ea0;
+      --button-hover-blue: #4682b4;
+      --button-bg-pink: #ff8c9a;
+      --button-hover-pink: #ff1493;
+      --button-bg-gray: #3a2d20;
+      --button-hover-gray: #4a3a2d;
+      --button-text-gray: #fffaf0;
+      --button-bg-green: #a0522d;
+      --button-hover-green: #8b4513;
+      --button-bg-dark: #fffaf0;
+      --button-hover-dark: #ffe4b5;
+      --input-border-color: #3a2d20;
+      --input-focus-ring: #f6e05e;
+
+      /* New variables for gold theme dark mode */
+      --divider-color: #3a2d20;
+      --divider-icon-color: #ffe4b5;
+
+      --summary-bg-color: #2e241c;
+      --summary-border-color: #ffe4b5;
+      --summary-text-color: #fffaf0;
+      --summary-shadow-color: rgba(255, 228, 181, 0.1);
+
+      --blockquote-bg-color: #201810;
+      --blockquote-border-color: #ffe4b5;
+      --blockquote-text-color: #fffaf0;
+      --blockquote-icon-color: #ffe4b5;
+
+      --list-bullet-color: #ffe4b5;
+
+      /* New variables for teaching emphasis in gold theme dark mode */
+      --content-heading-color: #ffe4b5; /* Moccasin */
+      --strong-emphasis-color: #ff6347; /* Tomato */
+      --note-text-color: #f6e05e; /* Yellow-300 */
+      --note-bg-color: #201810; /* Darker brown */
+      --farewell-text-color: #ff4500; /* OrangeRed */
+
+      /* New variables for note and quote boxes in gold theme dark mode */
+      --note-box-bg: #3e2723; /* brown-900 equivalent for gold theme */
+      --note-box-border-left: #ffab40; /* orange-A200 */
+      --note-box-text-color: #ffd180; /* orange-A100 */
+      --note-box-heading-color: #ff9100; /* orange-A400 */
+
+      --quote-box-bg: #201810; /* Darker brown */
+      --quote-box-border-left: #fcd34d; /* Yellow-300 */
+      --quote-box-text-color: #fffaf0; /* Floral white */
+      --quote-box-heading-color: #ffe4b5; /* Moccasin */
+
+      /* New variable for main title color in gold theme dark mode */
+      --main-title-color: #ffe4b5; /* Moccasin - gold theme dark mode main title */
+    }
+
+    /* Apply styles to content */
+    #content {
+      border: 2px solid var(--main-border-color);
+      border-radius: 1.5rem; /* 24px */
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3), /* Inner light border */
+        0 10px 15px -3px rgba(0, 0, 0, 0.1), /* Near blur shadow */
+        0 4px 6px -2px rgba(0, 0, 0, 0.05), /* Near blur shadow */
+        0 0 20px 5px var(--glowing-shadow-color); /* Far glowing shadow */
+      backdrop-filter: blur(15px); /* Glassmorphism effect */
+      background-color: var(--content-bg-color); /* Use variable for background */
+      color: var(--content-text-color); /* Use variable for text color */
+      transition: all 0.5s ease-in-out; /* Smooth transition for theme changes */
+    }
+
+    /* Adjust prose styles for better compatibility with themes */
+    #content.prose h1 {
+        color: var(--main-title-color); /* Use new variable for main heading */
+        line-height: 1.3; /* Adjust line height for better spacing */
+    }
+    #content.prose h2 {
+        color: var(--content-heading-color); /* Use new variable for subheadings */
+    }
+
+    /* General button styling for consistency */
+    button {
+        background-color: var(--button-bg-blue); /* Default button color */
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease-in-out, transform 0.1s ease-out;
+    }
+    button:hover {
+        transform: translateY(-1px);
+    }
+    button:active {
+        transform: translateY(0);
+    }
+
+    /* Specific button overrides */
+    #readBtn { background-color: var(--button-bg-blue); }
+    #readBtn:hover { background-color: var(--button-hover-blue); }
+    #likeBtn { background-color: var(--button-bg-pink); }
+    #likeBtn:hover { background-color: var(--button-hover-pink); }
+    #shareBtn {
+        background-color: var(--button-bg-gray);
+        color: var(--button-text-gray);
+    }
+    #shareBtn:hover { background-color: var(--button-hover-gray); }
+    #searchBtn { background-color: var(--button-bg-green); }
+    #searchBtn:hover { background-color: var(--button-hover-green); }
+    #darkModeToggle { background-color: var(--button-bg-dark); }
+    #darkModeToggle:hover { background-color: var(--button-hover-dark); }
+    #scrollTopBtn, #scrollBottomBtn {
+        background-color: var(--main-border-color); /* Use main theme color for scroll buttons */
+    }
+    #scrollTopBtn:hover, #scrollBottomBtn:hover {
+        background-color: var(--glowing-shadow-color); /* Use glowing color for hover */
+    }
+
+    /* Input and Select styling */
+    input[type="text"], select {
+        border-color: var(--input-border-color);
+        background-color: var(--content-bg-color);
+        color: var(--content-text-color);
+    }
+    input[type="text"]:focus, select:focus {
+        border-color: var(--input-focus-ring);
+        box-shadow: 0 0 0 2px var(--input-focus-ring);
+    }
+
+    /* Decorative Divider */
+    .decorative-divider {
+      border: none;
+      height: 2px;
+      background-color: var(--divider-color);
+      position: relative;
+      margin: 2rem auto;
+      width: 80%; /* Adjust width as needed */
+      border-radius: 1px;
+    }
+
+    .decorative-divider::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      background-color: var(--content-bg-color); /* Match content background */
+      border: 2px solid var(--divider-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      /* Star SVG icon, using currentColor */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 60%;
+      color: var(--divider-icon-color); /* Set color for the SVG */
+    }
+
+    /* Summary Box */
+    #summaryBox {
+      background-color: var(--summary-bg-color);
+      border: 2px solid var(--summary-border-color);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 20px 5px var(--summary-shadow-color);
+      color: var(--summary-text-color);
+      transition: all 0.5s ease-in-out;
+    }
+
+    /* Blockquote Styling - now nested inside .teaching-quote-box */
+    blockquote {
+      background-color: transparent; /* Remove background, parent handles it */
+      border-left: none; /* Remove border, parent handles it */
+      padding: 0; /* Remove padding, parent handles it */
+      margin: 1rem 0 0 0; /* Adjust margin */
+      border-radius: 0;
+      color: inherit; /* Inherit color from parent */
+      position: relative;
+      box-shadow: none;
+      transition: none;
+    }
+
+    blockquote::before {
+      content: '';
+      position: absolute;
+      top: 0; /* Adjust position relative to new parent */
+      left: -2rem; /* Move icon outside the text block */
+      width: 40px;
+      height: 40px;
+      /* Large quote icon SVG, using currentColor for fill */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M3 21c3 0 7-10 7-15V3H3l-4 9h4zM14 21c3 0 7-10 7-15V3h-7l-4 9h4z'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      opacity: 0.6;
+      color: var(--quote-box-heading-color); /* Use heading color for the icon */
+    }
+
+    /* List Item SVG Bullets */
+    ul {
+      list-style: none; /* Remove default bullets */
+      padding-left: 0;
+    }
+
+    ul li {
+      position: relative;
+      padding-left: 1.8rem; /* Space for the custom bullet */
+      margin-bottom: 0.5rem;
+    }
+
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em; /* Adjust vertical alignment */
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      /* Diamond SVG icon, using currentColor for fill */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2L2 12l10 10 10-10z'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      color: var(--list-bullet-color); /* Set color for the SVG */
+    }
+
+    /* New styles for teaching emphasis */
+    .strong-emphasis {
+      font-weight: bold;
+      color: var(--strong-emphasis-color);
+      transition: color 0.5s ease-in-out;
+    }
+
+    /* Important Note Box (Image 1 style) */
+    .important-note-box {
+      background-color: var(--note-box-bg);
+      border-left: 5px solid var(--note-box-border-left);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      margin: 2rem 0;
+      color: var(--note-box-text-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.5s ease-in-out;
+    }
+
+    .important-note-box h3 {
+      color: var(--note-box-heading-color);
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    /* Teaching Quote Box (Image 2 style) */
+    .teaching-quote-box {
+      background-color: var(--quote-box-bg);
+      border-left: 5px solid var(--quote-box-border-left);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      margin: 2rem 0;
+      color: var(--quote-box-text-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.5s ease-in-out;
+    }
+
+    .teaching-quote-box h3 {
+      color: var(--quote-box-heading-color);
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    .farewell-text {
+      color: var(--farewell-text-color);
+      transition: color 0.5s ease-in-out;
+    }
+
+  </style>
+</head>
+
+<body class="bg-white text-gray-900 transition-all duration-300">
+  <!-- Scroll Progress Bar -->
+  <div id="scrollProgress" class="fixed top-0 left-0 h-1 bg-yellow-400 z-[9999]" style="width: 0%;"></div>
+
+  <!-- Navigation Header -->
+  <header class="bg-yellow-200 shadow sticky top-0 z-50 rounded-b-lg" style="background-color: var(--header-bg-color);">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <!-- Logo and Site Title -->
+      <a href="#" class="flex items-center space-x-2 text-xl font-bold text-yellow-900" 
+         onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;"
+         style="color: var(--header-text-color);">
+        <img src="https://raw.githubusercontent.com/thiensutinhquang/Admin/main/icons/icon.png" alt="Logo Giáo Lý MSTQ" class="h-8 w-auto rounded-full">
+        <span>Giáo Lý MSTQ</span>
+      </a>
+      <nav class="hidden md:flex space-x-4 text-sm">
+        <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Trang chủ</a>
+        <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Play Nhạc</a>
+        <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Kho Thơ</a>
+        <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Play Video</a>
+        <a href="https://facebook.com" target="_blank" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">Facebook</a>
+        <a href="https://youtube.com" target="_blank" class="hover:underline p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200">YouTube</a>
+      </nav>
+      <button id="menuToggle" class="md:hidden text-yellow-900 p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200" style="color: var(--header-text-color);">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="fixed inset-0 bg-white z-[999] p-6 hidden flex-col space-y-4 rounded-lg shadow-lg">
+    <button id="closeMenu" class="self-end text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200" style="color: var(--header-text-color);"><i class="fas fa-times text-2xl"></i></button>
+    <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Trang chủ</a>
+    <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Play Nhạc</a>
+    <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Kho Thơ</a>
+    <a href="#" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Play Video</a>
+    <a href="https://facebook.com" target="_blank" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">Facebook</a>
+    <a href="https://youtube.com" target="_blank" class="hover:underline p-2 rounded-lg hover:bg-yellow-100 transition-colors duration-200">YouTube</a>
+  </div>
+
+  <!-- Table of Contents (TOC) -->
+  <aside class="hidden lg:block fixed left-4 top-24 w-56 text-sm bg-gray-50 p-4 rounded-lg shadow-md" id="toc" style="background-color: var(--toc-bg-color);">
+    <h3 class="font-bold text-lg mb-2 text-yellow-800" style="color: var(--header-text-color);">Mục Lục</h3>
+    <!-- TOC links will be dynamically inserted here -->
+  </aside>
+
+  <main class="container mx-auto px-4 py-8 max-w-3xl relative">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+      <div class="flex gap-2">
+        <button id="readBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md">
+          🔊 Đọc bài
+        </button>
+        <button id="likeBtn" class="relative px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors duration-200 shadow-md">
+          ❤️ <span id="likeCount">0</span>
+        </button>
+        <button id="shareBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200 shadow-md">
+          📤 Chia sẻ
+        </button>
+      </div>
+      <div class="flex gap-2 items-center">
+        <input type="text" id="searchBox" placeholder="Tìm kiếm..." class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-200 w-full sm:w-auto">
+        <button id="searchBtn" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 shadow-md">
+          🔍
+        </button>
+        <select id="themeSelector" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-200">
+          <option value="default">Mặc định</option>
+          <option value="green">Xanh Lục Tĩnh Lặng</option>
+          <option value="purple">Tím Thiền Định</option>
+          <option value="gold">Vàng Nhẹ Thoát Tục</option>
+        </select>
+        <button id="darkModeToggle" class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors duration-200 shadow-md">
+          🌙
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="content" class="prose lg:prose-lg max-w-none bg-white p-6 rounded-lg shadow-xl">
+      <h1 id="section-0" class="text-center text-4xl font-extrabold mb-6" style="color: var(--main-title-color); line-height: 1.3;">BÀI KỆ CÚNG DƯỜNG ĂN TRONG ÁNH SÁNG TÌNH THƯƠNG</h1>
+      <p class="text-center text-2xl font-semibold mb-8" style="color: var(--content-heading-color);">
+        Om Phật Tổ Tối Cao!<br>
+        Om Đức Phật Tịnh Quang!<br>
+        Om Vị Phật bên trong con!
+      </p>
+
+      <hr class="decorative-divider">
+
+      <h2 id="section-1" class="text-2xl font-bold mb-4" style="color: var(--content-heading-color);">I. Lời Cúng Dường</h2>
+      <p class="mb-4 leading-relaxed">
+        Con thành tâm xin cúng dường Các Ngài<br>
+        Tất cả đồ ăn này, con cầu xin Các Ngài<br>
+        <span class="strong-emphasis">Gia Trì Lực Lượng Ánh Sáng Tình Thương</span><br>
+        Vào tất cả đồ ăn này<br>
+        Để cho con được ăn trong <span class="strong-emphasis">Ánh Sáng</span><br>
+        Và <span class="strong-emphasis">Tình Yêu Thương</span> của Các Ngài
+      </p>
+      <p class="mb-6 leading-relaxed">
+        Con xin thành tâm cảm tạ Các Ngài<br>
+        Đã gia trì cho con<br>
+        Được ăn những đồ ăn ngon bổ này.
+      </p>
+
+      <hr class="decorative-divider">
+
+      <h2 id="section-2" class="text-2xl font-bold mb-4" style="color: var(--content-heading-color);">II. Hướng Dẫn Thực Hành</h2>
+      <div class="important-note-box">
+        <h3>Lưu ý quan trọng:</h3>
+        <p class="mb-4 leading-relaxed">
+          Khi các con ăn bất cứ đồ ăn gì thì các con hãy thành tâm chắp tay, tập trung vào đỉnh đầu và mắt Trí Huệ rồi các con cúng dường y như trên và các con phải cảm nhận được rõ rõ, ràng ràng là Các Ngài đang đổ <span class="strong-emphasis">Lực Lượng Gia Trì</span> xuống đỉnh đầu và mắt Trí Huệ của các con.
+        </p>
+        <p class="mb-0 leading-relaxed">
+          Nếu các con cúng dường mà không cảm nhận được như vậy thì chứng tỏ là các con chưa được thành tâm lắm. Còn trước đông người không biết đến tu thì các con chỉ thầm cúng dường ở trong Tâm chứ không cần chắp tay.
+        </p>
+      </div>
+
+      <hr class="decorative-divider">
+
+      <!-- Summary Box for sections III and IV -->
+      <div id="summaryBox">
+        <h2 id="section-3" class="text-2xl font-bold mb-4" style="color: var(--content-heading-color);">III. Lợi Ích Của Sự Gia Trì</h2>
+        <p class="mb-4 leading-relaxed">
+          Bài kệ này đã được Ta lồng <span class="strong-emphasis">Lực Lượng Gia Trì</span> rất là mạnh, bất cứ ai trước khi ăn mà thành tâm cúng dường y như trên thì sẽ nhận được <span class="strong-emphasis">Sức Gia Trì không thể nghĩ bàn</span>, vì thế lúc đó đồ ăn của các con lung linh <span class="strong-emphasis">Ánh Sáng Hào Quang Rực Rỡ</span>... kể cả khi đang ăn mà các con cứ tập trung vào mắt Trí Huệ và đỉnh đầu thì các con vẫn nhận được <span class="strong-emphasis">Hào Quang Ánh Sáng gia trì liên tục</span> trong cả bữa ăn các con nhé, con nào có Thiên Nhãn sẽ thấy biết rõ ràng.
+        </p>
+        <p class="mb-4 leading-relaxed">
+          Các con càng nhận được nhiều <span class="strong-emphasis">Ánh Sáng Tình Thương</span> từ Phật Trời gia trì vào đồ ăn đồ uống thì các con ăn đồ ăn ấy sẽ càng thơm ngon bổ dưỡng hơn, thân tâm của các con càng an lạc, bệnh tật được tiêu trừ, ngày càng sáng suốt, trẻ đẹp, khỏe ra và sự tu hành cũng được thăng hoa nhiều hơn.
+        </p>
+
+        <hr class="decorative-divider">
+
+        <h2 id="section-4" class="text-2xl font-bold mb-4" style="color: var(--content-heading-color);">IV. Lời Khuyên Từ Minh Sư</h2>
+        <p class="mb-4 leading-relaxed">
+          Khi các con đọc kỹ bài Pháp này và áp dụng thực hành thì từ giờ các con cúng dường đồ ăn thì đồ ăn sẽ thơm ngon hơn, thậm chí trong lúc ăn mùi hương trầm thơm ngào ngạt suốt trong bữa ăn. Khi ăn, các con hãy ăn chậm rãi, nhai thật kỹ để thưởng thức cảm nhận vị ngon của đồ ăn chứ không phải ăn cho xong bữa.
+        </p>
+        <p class="mb-4 leading-relaxed">
+          Ta nói thật bữa ăn nào của Ta đồ ăn cũng có rất rất nhiều <span class="strong-emphasis">Ánh Sáng Hào Quang</span> và những viên ngọc Lưu Ly ở trong đồ ăn, đồ uống. Vậy nên, Ta ăn trong <span class="strong-emphasis">Ánh Sáng</span>, Ta ngủ trong <span class="strong-emphasis">Ánh Sáng</span>, không giây phút nào là Ta không sống trong <span class="strong-emphasis">Ánh Sáng Hào Quang của Vũ Trụ</span>.
+        </p>
+        <p class="text-center text-xl font-semibold mt-6 mb-2 farewell-text">
+          Ta chúc các con cũng được như vậy.
+        </p>
+
+        <div class="text-right mt-8 pt-4 border-t border-gray-300">
+          <p class="font-bold text-lg text-gray-800">Minh Sư Tịnh Quang</p>
+          <p class="text-sm text-gray-600">Úpice - Cộng Hòa Séc</p>
+          <p class="text-sm text-gray-600">Ngày 29.5.2022</p>
+        </div>
+      </div> <!-- End of Summary Box -->
+
+      <hr class="decorative-divider">
+
+      <div class="teaching-quote-box">
+        <h3>Lời Dạy Quan Trọng:</h3>
+        <blockquote>
+          "Ăn trong ánh sáng tình thương là sự kết nối linh thiêng giữa tâm và vật chất, giúp thanh tịnh thân tâm, tăng trưởng sức khỏe và thăng hoa tu hành."
+        </blockquote>
+      </div>
+
+      <p class="mb-4 leading-relaxed">
+        Các điểm chính cần ghi nhớ:
+      </p>
+      <ul>
+        <li>Thực hành cúng dường mỗi bữa ăn.</li>
+        <li>Tập trung vào đỉnh đầu và mắt Trí Huệ.</li>
+        <li>Cảm nhận Lực Lượng Gia Trì.</li>
+        <li>Ăn chậm rãi và thưởng thức.</li>
+        <li>Sống trong Ánh Sáng Tình Thương.</li>
+      </ul>
+
+    </div>
+  </main>
+
+  <!-- Share Modal -->
+  <div id="shareModal" class="fixed inset-0 bg-black/40 flex justify-center items-center z-[9999] hidden">
+    <div class="bg-white p-6 rounded-lg shadow-xl w-80">
+      <h2 class="text-lg font-bold mb-4 text-gray-800">Chia sẻ</h2>
+      <div class="flex flex-col gap-3 mb-4">
+        <a href="#" id="shareFacebook" target="_blank" class="flex items-center gap-2 text-blue-600 hover:underline p-2 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+        <button id="copyLinkBtn" class="flex items-center gap-2 text-green-600 hover:underline p-2 rounded-lg hover:bg-green-50 transition-colors duration-200 justify-start">
+          <i class="fas fa-link"></i> Sao chép liên kết
+        </button>
+      </div>
+      <button id="closeShare" class="block mx-auto bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-200 shadow-md">Đóng</button>
+    </div>
+  </div>
+
+  <!-- Message Box for copy confirmation -->
+  <div id="messageBox" class="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg hidden z-[10000]">
+    Đã sao chép vào clipboard!
+  </div>
+
+  <!-- Floating Scroll Buttons -->
+  <div class="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-40">
+    <button id="scrollTopBtn" class="p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-200">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <button id="scrollBottomBtn" class="p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-200">
+      <i class="fas fa-arrow-down"></i>
+    </button>
+  </div>
+
+  <script type="module">
+    // Firebase imports (using modular SDK)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Global variables for Firebase config and auth token
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+      apiKey: "AIzaSyCWv6m3Vw76HPYSRd96U847qViV_EJXZ0Q", // Fallback if __firebase_config is not defined
+      authDomain: "giaolylikes.firebaseapp.com",
+      projectId: "giaolylikes",
+      storageBucket: "giaolylikes.firebasestorage.app",
+      messagingSenderId: "580748260318",
+      appId: "1:580748260318:web:0922e75d385ccab02fa34f"
+    };
+
+    const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId; // Use __app_id if available
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; // Use __initial_auth_token if available
+
+    let app, db, auth, userId;
+    const ARTICLE_ID = 'mainArticleLikes';
+    let currentLikeCount = 0;
+
+    // Log Firebase Config and App ID for debugging
+    console.log("Firebase Config:", firebaseConfig);
+    console.log("App ID for Firestore paths:", appId);
+
+    // --- Helper Functions (Defined before they are called) ---
+
+    // Message Box Display
+    function showMessageBox(message) {
+      const messageBox = document.getElementById('messageBox');
+      if (messageBox) {
+        messageBox.textContent = message;
+        messageBox.classList.remove('hidden');
+        setTimeout(() => {
+          messageBox.classList.add('hidden');
+        }, 3000);
+      } else {
+        console.warn("Message box element not found.");
+      }
+    }
+
+    // Clear highlights for search functionality
+    let lastHighlightedRanges = [];
+
+    function clearHighlights() {
+      const content = document.getElementById('content');
+      if (content) {
+        const highlights = content.querySelectorAll('.highlight');
+        highlights.forEach(span => {
+          const parent = span.parentNode;
+          while (span.firstChild) {
+            parent.insertBefore(span.firstChild, span);
+          }
+          parent.removeChild(span);
+        });
+        content.normalize();
+        lastHighlightedRanges = [];
+      }
+    }
+
+    // Apply Theme Logic
+    const themes = ['default', 'green', 'purple', 'gold'];
+
+    const applyTheme = (themeName) => {
+      themes.forEach(theme => {
+        document.body.classList.remove(`theme-${theme}`);
+      });
+      if (themeName !== 'default') {
+        document.body.classList.add(`theme-${themeName}`);
+      }
+      localStorage.setItem('selectedTheme', themeName);
+    };
+
+    // Text-to-Speech Helper Functions
+    let speechSynthesizer = null;
+    let paragraphElements = [];
+    let currentParagraphIndex = 0;
+    let currentUtterance = null;
+    let isSpeechReady = false;
+
+    function initializeParagraphElements() {
+      const content = document.getElementById('content');
+      if (content) {
+        // Select all text-containing elements that should be read
+        paragraphElements = Array.from(content.querySelectorAll('h1, h2, p, blockquote, ul li'));
+      }
+    }
+
+    const initSpeechSynthesis = () => {
+      speechSynthesizer = window.speechSynthesis;
+      const readBtn = document.getElementById('readBtn');
+      if (!speechSynthesizer) {
+        console.warn("SpeechSynthesis not supported in this browser.");
+        showMessageBox("Trình duyệt của bạn không hỗ trợ đọc văn bản.");
+        if (readBtn) readBtn.disabled = true;
+        return;
+      }
+
+      const checkVoices = () => {
+        const voices = speechSynthesis.getVoices();
+        console.log("Checking voices. Found:", voices.length, "voices.");
+        if (voices.length > 0) {
+          isSpeechReady = true;
+          console.log("SpeechSynthesis is ready.");
+          if (readBtn) readBtn.disabled = false;
+          showMessageBox("Hệ thống đọc bài đã sẵn sàng.");
+          return true;
+        }
+        return false;
+      };
+
+      // Initial check
+      if (checkVoices()) {
+        return;
+      }
+
+      // Listen for voices to be loaded
+      speechSynthesizer.onvoiceschanged = () => {
+        console.log("SpeechSynthesis voices changed event fired.");
+        checkVoices(); // Re-check voices when they change
+      };
+
+      // Polling mechanism as a fallback if onvoiceschanged doesn't fire or voices are slow to load
+      let voiceCheckInterval = setInterval(() => {
+        if (checkVoices()) {
+          clearInterval(voiceCheckInterval);
+        } else {
+          console.log("Polling for voices... Still not ready.");
+        }
+      }, 500);
+
+      // Set a timeout to stop polling after some time if voices don't load
+      setTimeout(() => {
+        if (!isSpeechReady) {
+          clearInterval(voiceCheckInterval);
+          console.warn("SpeechSynthesis voices not loaded after timeout.");
+          showMessageBox("Không thể tải giọng đọc. Vui lòng thử lại hoặc kiểm tra cài đặt giọng nói của trình duyệt/hệ điều hành.");
+          if (readBtn) readBtn.disabled = true;
+        }
+      }, 15000); // Increased timeout to 15 seconds
+    };
+
+    function clearAllHighlightsForSpeech() { // Renamed to avoid conflict with search highlight clear
+      paragraphElements.forEach(el => el.classList.remove('highlight-paragraph'));
+    }
+
+    function stopReading() {
+      const readBtn = document.getElementById('readBtn');
+      if (speechSynthesizer && readBtn) {
+        speechSynthesizer.cancel();
+      }
+      clearAllHighlightsForSpeech();
+      currentParagraphIndex = 0;
+      if (readBtn) readBtn.textContent = '🔊 Đọc bài';
+      console.log("Reading stopped. Resetting button and highlights.");
+    }
+
+    function startReading() {
+      const readBtn = document.getElementById('readBtn');
+      clearAllHighlightsForSpeech();
+
+      if (!isSpeechReady || !speechSynthesizer) {
+        showMessageBox("Hệ thống đọc bài chưa sẵn sàng. Vui lòng thử lại sau.");
+        console.error("Attempted to start reading when SpeechSynthesis was not ready.");
+        if (readBtn) readBtn.disabled = true; // Ensure button is disabled if not ready
+        return;
+      }
+
+      if (currentParagraphIndex >= paragraphElements.length) {
+        console.log("End of article reached. Stopping reading.");
+        stopReading();
+        return;
+      }
+
+      const currentElement = paragraphElements[currentParagraphIndex];
+      currentElement.classList.add('highlight-paragraph');
+      currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      console.log(`Reading paragraph ${currentParagraphIndex}:`, currentElement.innerText.substring(0, 50) + "...");
+
+      currentUtterance = new SpeechSynthesisUtterance(currentElement.innerText);
+
+      const voices = speechSynthesizer.getVoices();
+      const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN');
+      if (vietnameseVoice) {
+        currentUtterance.voice = vietnameseVoice;
+        console.log("Using Vietnamese voice.");
+      } else {
+        console.warn("Vietnamese voice not found. Using default voice or first available voice.");
+        // Fallback to first available voice if Vietnamese is not found
+        if (voices.length > 0) {
+            currentUtterance.voice = voices[0];
+            console.log("Using first available voice:", voices[0].name);
+        } else {
+            console.error("No voices available at all, cannot speak.");
+            showMessageBox("Không có giọng đọc nào khả dụng. Vui lòng kiểm tra cài đặt giọng nói của trình duyệt/hệ điều hành.");
+            stopReading();
+            return;
+        }
+      }
+
+      currentUtterance.onend = () => {
+        console.log(`Finished paragraph ${currentParagraphIndex}.`);
+        currentElement.classList.remove('highlight-paragraph');
+        currentParagraphIndex++;
+        startReading();
+      };
+
+      currentUtterance.onerror = (event) => {
+        console.error('SpeechSynthesisUtterance.onerror triggered:', event);
+        console.error('Error details:', event.error); // More specific error detail
+        stopReading();
+        showMessageBox("Lỗi khi đọc bài viết. Vui lòng thử lại hoặc kiểm tra cài đặt giọng nói của trình duyệt.");
+      };
+
+      speechSynthesizer.speak(currentUtterance);
+      if (readBtn) readBtn.textContent = '⏸️ Tạm dừng';
+    }
+
+    const updateTocActive = () => {
+      const tocLinks = [];
+      const headers = document.getElementById('content').querySelectorAll('h1, h2');
+      headers.forEach((header, i) => {
+        const id = 'section-' + i;
+        const link = document.querySelector(`#toc a[href="#${id}"]`);
+        if (link) {
+          tocLinks.push({ id, link, element: header });
+        }
+      });
+
+      let currentActive = null;
+      for (let i = tocLinks.length - 1; i >= 0; i--) {
+        const { element, link } = tocLinks[i];
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2) {
+          currentActive = link;
+          break;
+        }
+      }
+      tocLinks.forEach(({ link }) => link.classList.remove('toc-active'));
+      if (currentActive) {
+        currentActive.classList.add('toc-active');
+      }
+    };
+
+    const setupLikesListener = () => {
+      if (!db) {
+        console.warn("Firestore not ready for likes listener.");
+        return;
+      }
+      // Use the correct path for public data
+      const articleRef = doc(db, `artifacts/${appId}/public/data/favorites`, ARTICLE_ID);
+      console.log("Firestore listener path (read):", articleRef.path);
+
+      onSnapshot(articleRef, (docSnap) => {
+        const likeCountSpan = document.getElementById('likeCount');
+        if (docSnap.exists()) {
+          currentLikeCount = docSnap.data().likes || 0;
+        } else {
+          currentLikeCount = 0;
+          // Initialize the document if it doesn't exist
+          setDoc(articleRef, { likes: 0 }, { merge: true }).catch(e => console.error("Error initializing likes document:", e));
+        }
+        if (likeCountSpan) likeCountSpan.textContent = currentLikeCount;
+        console.log("Current like count:", currentLikeCount);
+      }, (error) => {
+        console.error("Error listening to likes:", error);
+        showMessageBox("Lỗi khi tải số lượt thích. Vui lòng kiểm tra kết nối mạng.");
+      });
+    };
+
+
+    // --- Initialize Firebase and handle authentication ---
+    const initFirebase = async () => {
+      try {
+        app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+
+        // Sign in with custom token if available, otherwise anonymously
+        if (initialAuthToken) {
+          await signInWithCustomToken(auth, initialAuthToken);
+          console.log("Signed in with custom token.");
+        } else {
+          await signInAnonymously(auth);
+          console.log("Signed in anonymously.");
+        }
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            userId = user.uid;
+            console.log("User ID:", userId);
+            setupLikesListener(); // Setup listener after auth state is known
+          } else {
+            console.log("No user is signed in.");
+            userId = null;
+            setupLikesListener(); // Still setup listener, but userId will be null for path
+          }
+        });
+      } catch (error) {
+        console.error("Error initializing Firebase or signing in:", error);
+        showMessageBox("Lỗi khởi tạo Firebase. Vui lòng kiểm tra cấu hình API Key và các thông số khác.");
+      }
+    };
+
+    initFirebase();
+
+
+    // --- DOM Elements ---
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const toc = document.getElementById('toc');
+    const content = document.getElementById('content');
+    const scrollProgress = document.getElementById('scrollProgress');
+    const readBtn = document.getElementById('readBtn');
+    const likeBtn = document.getElementById('likeBtn');
+    const likeCountSpan = document.getElementById('likeCount');
+    const shareBtn = document.getElementById('shareBtn');
+    const shareModal = document.getElementById('shareModal');
+    const closeShare = document.getElementById('closeShare');
+    const shareFacebook = document.getElementById('shareFacebook');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    const messageBox = document.getElementById('messageBox');
+    const searchBox = document.getElementById('searchBox');
+    const searchBtn = document.getElementById('searchBtn');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const themeSelector = document.getElementById('themeSelector');
+    const scrollTopBtn = document.getElementById('scrollTopBtn'); // Nút cuộn lên
+    const scrollBottomBtn = document.getElementById('scrollBottomBtn'); // Nút cuộn xuống
+
+
+    // --- Event Listeners ---
+
+    if (menuToggle) menuToggle.onclick = () => mobileMenu.classList.remove('hidden');
+    if (closeMenu) closeMenu.onclick = () => mobileMenu.classList.add('hidden');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeParagraphElements();
+      initSpeechSynthesis(); // Call initSpeechSynthesis on DOMContentLoaded
+      const headers = content.querySelectorAll('h1, h2');
+      const tocLinksArray = [];
+      headers.forEach((header, i) => {
+        const id = 'section-' + i;
+        header.id = id;
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.textContent = header.textContent;
+        link.className = 'block py-1 px-2 rounded-md hover:bg-yellow-100 transition-colors duration-200';
+        if (toc) toc.appendChild(link);
+        tocLinksArray.push({ id, link, element: header });
+
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          header.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => updateTocActive(), 600);
+        });
+      });
+    });
+
+    window.onscroll = () => {
+      if (scrollProgress) {
+        const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        scrollProgress.style.width = scrolled + '%';
+      }
+      updateTocActive();
+    };
+
+    if (readBtn) {
+      readBtn.onclick = () => {
+        if (!isSpeechReady) {
+          showMessageBox("Đang tải giọng đọc, vui lòng thử lại sau giây lát.");
+          return;
+        }
+        if (speechSynthesizer.speaking && !speechSynthesizer.paused) {
+          console.log("Pausing speech.");
+          speechSynthesizer.pause();
+          readBtn.textContent = '▶️ Tiếp tục';
+          return;
+        }
+        if (speechSynthesizer.paused) {
+          console.log("Resuming speech.");
+          speechSynthesizer.resume();
+          readBtn.textContent = '⏸️ Tạm dừng';
+          return;
+        }
+        console.log("Starting speech.");
+        startReading();
+      };
+    }
+
+    if (likeBtn) {
+      likeBtn.onclick = async (e) => {
+        if (!db) {
+          console.error("Firestore not initialized. Cannot update likes.");
+          showMessageBox("Lỗi: Không thể kết nối đến máy chủ. Vui lòng kiểm tra cấu hình Firebase.");
+          return;
+        }
+        // Use the correct path for public data
+        const articleRef = doc(db, `artifacts/${appId}/public/data/favorites`, ARTICLE_ID);
+        console.log("Firestore article likes path (write):", articleRef.path);
+
+        try {
+          await setDoc(articleRef, { likes: increment(1) }, { merge: true });
+          console.log("Like count updated in Firestore.");
+          const heart = document.createElement('div');
+          heart.textContent = '❤️';
+          heart.className = 'rain-heart';
+          const rect = likeBtn.getBoundingClientRect();
+          heart.style.left = (e.clientX - rect.left + likeBtn.offsetWidth / 2 - 10) + 'px';
+          heart.style.top = (e.clientY - rect.top + likeBtn.offsetHeight / 2 - 10) + 'px';
+          likeBtn.appendChild(heart);
+          setTimeout(() => heart.remove(), 1000);
+        } catch (error) {
+          console.error("Error updating like count:", error);
+          showMessageBox("Lỗi khi thích bài viết. Vui lòng kiểm tra quy tắc bảo mật Firestore và kết nối.");
+        }
+      };
+    }
+
+    if (shareBtn) {
+      shareBtn.onclick = () => {
+        if (shareModal) shareModal.classList.remove('hidden');
+        const currentUrl = window.location.href;
+        if (shareFacebook) shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+      };
+    }
+    if (closeShare) closeShare.onclick = () => shareModal.classList.add('hidden');
+    if (shareModal) {
+      shareModal.addEventListener('click', (e) => {
+        if (e.target === shareModal) {
+          shareModal.classList.add('hidden');
+        }
+      });
+    }
+
+    if (copyLinkBtn) {
+      copyLinkBtn.onclick = () => {
+        const currentUrl = window.location.href;
+        try {
+          const tempInput = document.createElement('textarea');
+          tempInput.value = currentUrl;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempInput);
+          showMessageBox('Đã sao chép vào clipboard!');
+          if (shareModal) shareModal.classList.add('hidden');
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+          showMessageBox('Sao chép thất bại. Vui lòng sao chép thủ công.');
+        }
+      };
+    }
+
+    if (searchBtn) {
+      searchBtn.onclick = () => {
+        const searchTerm = searchBox.value.trim();
+        if (searchTerm === '') {
+          clearHighlights();
+          return;
+        }
+        clearHighlights();
+        const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        let foundCount = 0;
+        const rangesToHighlight = [];
+        while ((node = walker.nextNode())) {
+          const text = node.nodeValue;
+          let startIndex = 0;
+          while ((startIndex = text.toLowerCase().indexOf(searchTerm.toLowerCase(), startIndex)) !== -1) {
+            const range = document.createRange();
+            range.setStart(node, startIndex);
+            range.setEnd(node, startIndex + searchTerm.length);
+            rangesToHighlight.push(range);
+            startIndex += searchTerm.length;
+            foundCount++;
+          }
+        }
+        if (foundCount > 0) {
+          rangesToHighlight.forEach(range => {
+            const span = document.createElement('span');
+            span.classList.add('highlight');
+            range.surroundContents(span);
+          });
+          lastHighlightedRanges = rangesToHighlight;
+          showMessageBox(`Tìm thấy ${foundCount} kết quả.`);
+        } else {
+          showMessageBox('Không tìm thấy kết quả nào.');
+        }
+      };
+    }
+
+    if (searchBox) {
+      searchBox.addEventListener('input', () => {
+        if (searchBox.value.trim() === '') {
+          clearHighlights();
+        }
+      });
+    }
+
+    if (darkModeToggle) {
+      darkModeToggle.onclick = () => {
+        document.body.classList.toggle('dark');
+        if (document.body.classList.contains('dark')) {
+          localStorage.setItem('theme', 'dark');
+          darkModeToggle.innerHTML = '☀️';
+        } else {
+          localStorage.setItem('theme', 'light');
+          darkModeToggle.innerHTML = '🌙';
+        }
+      };
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('selectedTheme');
+      if (savedTheme) {
+        applyTheme(savedTheme);
+        if (themeSelector) themeSelector.value = savedTheme;
+      } else {
+        applyTheme('default');
+        if (themeSelector) themeSelector.value = 'default';
+      }
+
+      const savedDarkMode = localStorage.getItem('theme');
+      if (savedDarkMode === 'dark') {
+        document.body.classList.add('dark');
+        if (darkModeToggle) darkModeToggle.innerHTML = '☀️';
+      } else {
+        if (darkModeToggle) darkModeToggle.innerHTML = '🌙';
+      }
+    });
+
+    if (themeSelector) {
+      themeSelector.onchange = (event) => {
+        applyTheme(event.target.value);
+      };
+    }
+
+    window.addEventListener('beforeunload', () => {
+      if (speechSynthesizer && speechSynthesizer.speaking) {
+        speechSynthesizer.cancel();
+      }
+    });
+
+    // --- Floating Scroll Buttons Logic ---
+    if (scrollTopBtn) {
+      scrollTopBtn.onclick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    }
+
+    if (scrollBottomBtn) {
+      scrollBottomBtn.onclick = () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      };
+    }
+
+  </script>
+</body>
+
+</html>

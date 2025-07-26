@@ -1199,6 +1199,10 @@
     sheet.insertRule(`.bounce-animation { animation: bounce-animation 0.3s ease-in-out; }`, sheet.cssRules.length);
     sheet.insertRule(`@keyframes bounce-category-btn { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }`, sheet.cssRules.length);
     sheet.insertRule(`.bounce-category-btn { animation: bounce-category-btn 0.3s ease-out; }`, sheet.cssRules.length);
+    // New animation for attention cue
+    sheet.insertRule(`@keyframes attention-bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }`, sheet.cssRules.length);
+    sheet.insertRule(`.attention-bounce { animation: attention-bounce 0.8s ease-in-out 3; }`, sheet.cssRules.length);
+
 
     document.addEventListener('DOMContentLoaded', async () => {
         // ==============================================
@@ -1643,18 +1647,27 @@
                 const allTracksData = await allTracksResponse.json();
                 
                 if (allTracksData && Array.isArray(allTracksData.data)) {
-                    state.originalSongData = allTracksData.data.map(track => ({
-                        id: track.id,
-                        title: track.title,
-                        artist: track.user ? track.user.name : 'Nghệ sĩ không xác định',
-                        // Replaced artwork URL with a simple text-based placeholder
-                        artwork: track.title.charAt(0) || '?', // Use first letter of title as placeholder
-                        duration: track.duration,
-                        description: track.description || 'Không có lời bài hát cho bài này.',
-                        isFavorite: state.favoriteSongIds.includes(track.id),
-                        genre: track.genre || 'Không xác định',
-                        permalink: track.permalink
-                    }));
+                    state.originalSongData = allTracksData.data.map(track => {
+                        let permalink = track.permalink;
+                        // Ensure permalink starts with audius.co domain
+                        if (permalink && !permalink.startsWith('https://audius.co')) {
+                            // This is a heuristic. If it's a relative path like /username/track-title, prepend the domain.
+                            // Assuming the base domain for permalinks is audius.co
+                            permalink = `https://audius.co${permalink.startsWith('/') ? '' : '/'}${permalink}`;
+                        }
+                        return {
+                            id: track.id,
+                            title: track.title,
+                            artist: track.user ? track.user.name : 'Nghệ sĩ không xác định',
+                            // Replaced artwork URL with a simple text-based placeholder
+                            artwork: track.title.charAt(0) || '?', // Use first letter of title as placeholder
+                            duration: track.duration,
+                            description: track.description || 'Không có lời bài hát cho bài này.',
+                            isFavorite: state.favoriteSongIds.includes(track.id),
+                            genre: track.genre || 'Không xác định',
+                            permalink: permalink // Use the potentially corrected permalink
+                        };
+                    });
                 } else {
                     console.warn("Audius API did not return expected data structure for tracks. Setting originalSongData to empty array.");
                     state.originalSongData = [];
@@ -2143,17 +2156,18 @@
         // NEW FEATURES: SHARE & DOWNLOAD
         // ==============================================
         async function shareSong() {
-            const song = state.currentFilteredSongs[state.currentSongIndex]; // Use currentFilteredSongs
+            const song = state.currentFilteredSongs[state.currentSongIndex];
             if (!song || !song.permalink) {
-                showMessage("Không thể chia sẻ bài hát này.");
+                showMessage("Không thể chia sẻ bài hát này vì không có liên kết Audius.", "Lỗi Chia Sẻ");
                 return;
             }
 
-            const shareUrl = `${window.location.origin}${window.location.pathname}?play=${song.id}`; // Create smart link
+            // Use the permalink directly from the song object, which is now ensured to be a full URL
+            const shareUrl = song.permalink;
             
             const shareData = {
                 title: `Nghe "${song.title}" - ${song.artist}`,
-                text: `Nghe bài hát "${song.title}" của ${song.artist} trên Play Nhạc MSTQ.`,
+                text: `Nghe bài hát "${song.title}" của ${song.artist} trên Audius.`,
                 url: shareUrl
             };
 
@@ -2168,23 +2182,22 @@
                 textArea.select();
                 try {
                     document.execCommand('copy');
-                    showMessage("Đã sao chép liên kết vào bộ nhớ tạm!", "Thông báo", true, 2500); // Changed duration to 2.5 seconds
+                    showMessage("Đã sao chép liên kết vào bộ nhớ tạm!", "Thông báo", true, 2500);
                 } catch (err) {
                     showMessage("Không thể sao chép liên kết.", "Lỗi");
                 }
                 document.body.removeChild(textArea);
             };
 
-            if (navigator.share && window.top === window.self) { // Check for navigator.share and if not in iframe
+            if (navigator.share && window.top === window.self) {
                 try {
                     await navigator.share(shareData);
                 } catch (err) {
                     console.error('Lỗi khi chia sẻ:', err);
-                    // If error is not due to user aborting, then fallback to copy
                     if (err.name !== 'AbortError') {
                             copyToClipboard();
                     } else {
-                        showMessage("Đã hủy chia sẻ.", "Thông báo", true, 2500); // Changed duration to 2.5 seconds
+                        showMessage("Đã hủy chia sẻ.", "Thông báo", true, 2500);
                     }
                 }
             } else {
@@ -2536,6 +2549,7 @@
             // Player controls
             dom.playerBar.playPauseBtn.addEventListener('click', () => {
                 triggerHapticFeedback(50);
+                dom.playerBar.playPauseBtn.classList.remove('attention-bounce'); // Remove animation on click
                 if (state.currentSongIndex === -1 && state.currentFilteredSongs.length > 0) playSong(0); // Play first song from filtered list
                 else if (dom.audioPlayer.paused) dom.audioPlayer.play();
                 else dom.audioPlayer.pause();
@@ -2902,6 +2916,11 @@
                         playSong(displayIndex); // Play the song using its index in the filtered list
                         // Inform the user that they might need to click play due to browser policies
                         showMessage(`Đã tải bài hát "${state.currentFilteredSongs[displayIndex].title}". Vui lòng nhấn nút Play để bắt đầu nghe.`, "Sẵn sàng phát nhạc", true, 5000);
+                        // Add visual cue to play button
+                        dom.playerBar.playPauseBtn.classList.add('attention-bounce');
+                        setTimeout(() => {
+                            dom.playerBar.playPauseBtn.classList.remove('attention-bounce');
+                        }, 2400); // Remove after 3 bounces (0.8s * 3)
                     } else {
                         // Fallback if song is not found in filtered list
                         loadCustomCategory('all');

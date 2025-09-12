@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sơ đồ học hợp nhất – trực quan, hiện đại</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+
+  <!-- React 18 UMD + ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel for JSX in-browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    :root {
+      --glow-color-red: rgba(255, 31, 113, 0.8);
+      --glow-color-blue: rgba(0, 191, 255, 0.7);
+    }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+      transition: background-color .3s, color .3s;
+    }
+    main { padding-bottom: 96px; }
+
+    /* Themes */
+    body.theme-light { background: #f0f2f5; color:#1f2937; }
+    body.theme-dark  { background: #0b0f19; color:#e5e7eb; }
+    body.theme-sepia { background: #fbf3e4; color:#44403c; }
+
+    /* Interaction micro-feedback */
+    .interactive-feedback { transition: transform .08s ease-out, opacity .12s ease-out; }
+    .interactive-feedback:active { transform: scale(.96); opacity:.9; }
+
+    /* Desktop-only arrow visibility */
+    .desktop-arrow { display:none; }
+    @media (min-width: 768px) { .desktop-arrow { display:block; } }
+
+    /* Bottom nav styles (from your design) */
+    .bottom-menu-wrapper { font-family: 'Be Vietnam Pro', sans-serif; text-transform: uppercase; }
+    .bottom-menu-bar { display:flex; gap:10px; align-items:center; z-index:3; padding:0 15px; width:100%; }
+    .nav-button-base {
+      background:#000; color:#fff; font-weight:700; height:44px; padding:0 18px; border-radius:10px;
+      transition:all .2s ease-in-out; display:flex; justify-content:center; align-items:center; flex-shrink:0;
+      cursor:pointer; position:relative; text-decoration:none;
+    }
+    .nav-button-base::before { content:""; position:absolute; top:50%; left:50%; width:85%; height:65%; border-radius:8px; z-index:-1; transform:translate(-50%,-50%); pointer-events:none; }
+    .main-action-button { border:2px solid rgba(255,255,255,.15); box-shadow:0 0 25px 8px rgba(172,92,232,.5), inset 0 0 12px rgba(0,0,0,.8); animation:pulse-main 1.5s infinite ease-in-out; }
+    .main-action-button::before { background: radial-gradient(circle, var(--glow-color-red) 0%, #4a0e69 80%); box-shadow:0 0 18px 8px rgba(255,31,113,.7); }
+    .footer-action-button { border:1px solid rgba(255,255,255,.2); box-shadow:0 0 20px 7px rgba(172,92,232,.4), inset 0 0 10px rgba(0,0,0,.7); animation:pulse-sub 1.8s infinite ease-in-out; }
+    .footer-action-button::before { background: radial-gradient(circle, var(--glow-color-blue) 0%, #004d66 80%); box-shadow:0 0 15px 7px rgba(0,191,255,.6); }
+    @keyframes pulse-main { 0%{transform:scale(1)} 60%{transform:scale(1.03)} 100%{transform:scale(1)} }
+    @keyframes pulse-sub  { 0%{transform:scale(1)} 60%{transform:scale(1.02)} 100%{transform:scale(1)} }
+    .button-text-wrapper { font-size:11px; z-index:1; pointer-events:none; }
+
+    /* Skeleton shimmer */
+    @keyframes shimmer { 0%{background-position:-1000px 0} 100%{background-position:1000px 0} }
+    .shimmer { position:relative; overflow:hidden; background:#e5e7eb; }
+    .shimmer::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); animation:shimmer 1.5s infinite; }
+
+    /* Sticky header shadow layer */
+    .sticky-blur { background: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,.6)); }
+    .dark .sticky-blur { background: linear-gradient(to bottom, rgba(17,24,39,.7), rgba(17,24,39,.5)); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const {useState, useEffect, useMemo, useRef, useContext, createContext, useCallback} = React;
+
+    /* -------------------- Settings Context -------------------- */
+    const SettingsContext = createContext();
+    const SettingsProvider = ({children}) => {
+      const [settings, setSettings] = useState(() => ({
+        theme: localStorage.getItem('readingTheme') || 'light',
+        isFocusMode: false,
+      }));
+      useEffect(() => {
+        document.body.className = `${settings.theme === 'dark' ? 'dark' : ''} theme-${settings.theme}`;
+        localStorage.setItem('readingTheme', settings.theme);
+      }, [settings.theme]);
+      return <SettingsContext.Provider value={{settings, setSettings}}>{children}</SettingsContext.Provider>;
+    };
+
+    /* -------------------- Data: merged from both pages -------------------- */
+    const cardData = {
+      coreTeaching: {
+        id: 'core-teaching',
+        title: 'Tất Cả Từ Một – Nhất Nguyên (Thượng Đế)',
+        items: [
+          'Thượng Đế là Nguồn Gốc Duy Nhất của vạn vật, không có gì khác ngoài Ngài.',
+          'Ngài tự phân chia thành vô số hình tướng để trải nghiệm và thấu hiểu chính mình.',
+          'Bản chất của Thượng Đế là sáng suốt, vô hạn, vượt không gian & thời gian.',
+          'Mục đích sống: nhận ra Bản Thể bên trong để trở về Nhất Nguyên.',
+        ],
+      },
+      sections: {
+        // ===== From Page 2 (reframed) =====
+        '1': {
+          title: 'Nâng Cao Tinh Thần & Sức Khỏe',
+          cards: [
+            { id:'suc-manh-tho-ca', title:'Sức Mạnh Thơ Ca & Âm nhạc', subItems:['Đọc, Hát, Nghe Thơ Ca Tích Cực'] },
+            { id:'song-co-muc-dich', title:'Sống Có Mục Đích', subItems:['Lập Kế Hoạch, Theo Đuổi Đam Mê','Tránh Mất Phương Hướng, Tiêu Cực'] },
+          ],
+        },
+        '2': {
+          title: 'Bảo Vệ Tâm Trí & Trí Tuệ',
+          cards: [
+            { id:'giu-tri-tue-sang-suot', title:'Giữ Trí Tuệ Sáng Suốt', subItems:[
+              'Cảnh Giác Với Lòng Tham','Phân Tích, Nhận Diện Cạm Bẫy','Chiến Thắng Tâm Xấu Ác','Nhận Diện Phật Tính Bên Trong','Từ Chối Xúi Giục Tiêu Cực','Chuyển Hóa Suy Nghĩ Tiêu Cực'
+            ]},
+            { id:'de-phong-tam', title:'Đề Phòng Tâm & Thượng Đế Bên Trong', subItems:[
+              'Tỉnh Giác Với Suy Nghĩ Tiêu Cực','Chọn Lọc Suy Nghĩ Tích Cực','Hóa Giải “Ma Quỷ” Ảo Ảnh','Nhận Ra Ảo Ảnh Do Thượng Đế','Không Sợ Hãi, Ứng Xử Tích Cực','Niệm Chú & Tập Thể Dục Hóa Giải'
+            ]},
+            { id:'than-trong-loi-noi', title:'Thận Trọng Trong Lời Nói', subItems:['Hiểu Rõ Trước Khi Nói/Viết','Thận Trọng Bí Mật Riêng Tư','Sống Tỉnh Thức'] },
+          ],
+        },
+        '3': {
+          title: 'Hiểu Biết Vũ Trụ & Bản Chất',
+          cards: [
+            { id:'nguon-goc-su-song', title:'Nguồn Gốc Sự Sống', subItems:['Sự Sống Khắp Vũ Trụ','Ý Thức, Bệnh Tật Do Từ Trường','Thiền Định Để Thấu Hiểu'] },
+            { id:'an-nhien-truoc-thi-phi', title:'An Nhiên Trước Thị Phi', subItems:['Không Bận Tâm Lời Vụ Không','Thấu Hiểu Người Khác'] },
+            { id:'nguon-goc-virus', title:'Nguồn Gốc Virus, Vi Khuẩn', subItems:['Do Thượng Đế Tạo Ra & Điều Khiển','Bệnh Do Từ Trường Ác Trược','Ngộ Ra Để Được Hóa Giải'] },
+            { id:'nguyen-nhan-su-co-may-moc', title:'Nguyên Nhân Sự Cố Máy Móc', subItems:['Có Thể Do Từ Trường Thượng Đế','Tất Nguồn Hóa Giải','Cùng Dưỡng Để Bền Hơn'] },
+            { id:'benh-tat-do-tu-truong', title:'Bệnh Tật Do Từ Trường', subItems:['Mọi Bệnh Tật Do Từ Trường','Giữ Quyền Làm Chủ','Tin Tưởng & Thực Hành'] },
+          ],
+        },
+        '4': {
+          title: 'Bản Chất Thượng Đế & Cơ Chế Vận Hành',
+          cards: [
+            { id:'ban-chat-thuong-de', title:'Bản Chất Thượng Đế', subItems:[
+              'Thượng Đế là Nguồn Gốc Duy Nhất','Không Có Phân Chia Thực Sự (Thiện/Ác, Phật/Ma là vai diễn)','Vừa Bên Trong Vừa Bên Ngoài Con Người','Tự Chia Mình Thành Các Vai Diễn'
+            ]},
+            { id:'muc-dich-tao-dung', title:'Mục Đích Tạo Dựng', subItems:[
+              '“Khảo” nghiệm & thử thách chính mình (qua các hình tướng)','Giúp con người nhận ra Chân Lý & Giác Ngộ','Tiến hóa & sàng lọc','Một “trò chơi” – trải nghiệm'
+            ]},
+            { id:'co-che-van-hanh', title:'Cơ Chế Vận Hành', subItems:[
+              '“Từ Trường”: công cụ “đẩy” suy nghĩ, cảm xúc, thử thách','Không có “Ma Vương” riêng biệt','Luật Nhân Quả vẫn vận hành (nhưng có thể chuyển hóa)','“Đại Từ Bi” thể hiện qua cả “thiện” & “ác” (dùng ác diệt ác)','“Lừa Bịp”: tạo tình huống để kiểm tra sự sáng suốt'
+            ]},
+          ],
+        },
+
+        // ===== From Page 1 (merged afterwards) =====
+        '5': {
+          title: 'Con Người & Thượng Đế',
+          cards: [
+            { id:'s1-c1', title:'Thượng Đế Bên Trong', subItems:[
+              'Mỗi người mang trong mình một phần Thượng Đế (Tánh Biết).','Bản chất thật không bị chi phối bởi suy nghĩ/cảm xúc/thân xác.','Sống thuận theo phần Thượng Đế bên trong.'
+            ]},
+            { id:'s1-c2', title:'Thượng Đế Bên Ngoài', subItems:[
+              'Ngài là Nguồn Cội & “Đại Từ Trường” bao trùm vạn vật.','Mọi hiện tượng là biểu hiện của Ngài.'
+            ]},
+            { id:'s1-c3', title:'Bản Ngã', subItems:[
+              'Bị đồng hóa với tham–sân–si tạo ảo ảnh tách biệt & khổ đau.'
+            ]},
+          ],
+        },
+        '6': {
+          title: 'Đường Tu Tập (Theo Minh Sư)',
+          cards: [
+            { id:'s2-c1', title:'Nhận Thức Nhất Nguyên', subItems:['Thấy mọi sự đều là biểu hiện của Thượng Đế.'] },
+            { id:'s2-c2', title:'Sống Với Tánh Biết', subItems:['Quan sát suy nghĩ/cảm xúc mà không bị cuốn theo.'] },
+          ],
+        },
+        '7': {
+          title: 'Ứng Dụng Thực Tế',
+          cards: [ { id:'s3-c1', title:'Đối Diện Khó Khăn', subItems:['Xem khó khăn là cơ hội học & trưởng thành.'] } ],
+        },
+      },
+    };
+
+    const allCards = [cardData.coreTeaching, ...Object.values(cardData.sections).flatMap(s => s.cards)];
+
+    /* -------------------- Helpers -------------------- */
+    const useMediaQuery = (query) => {
+      const [matches, setMatches] = useState(() => typeof window !== 'undefined' ? window.matchMedia(query).matches : false);
+      useEffect(() => {
+        const media = window.matchMedia(query);
+        const listener = () => setMatches(media.matches);
+        try {
+          media.addEventListener('change', listener);
+          return () => media.removeEventListener('change', listener);
+        } catch {
+          // Safari fallback
+          window.addEventListener('resize', listener);
+          return () => window.removeEventListener('resize', listener);
+        }
+      }, [query]);
+      return matches;
+    };
+
+    const useDebounce = (fn, ms) => {
+      const t = useRef(null);
+      return useCallback((...args) => {
+        if (t.current) clearTimeout(t.current);
+        t.current = setTimeout(() => fn(...args), ms);
+      }, [fn, ms]);
+    };
+
+    /* -------------------- UI Atoms -------------------- */
+    const ProgressTopBar = ({progress}) => (
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-300 dark:bg-gray-700 z-50">
+        <div className="h-full bg-blue-600" style={{width: `${progress}%`}} />
+      </div>
+    );
+
+    const CompletionCheckbox = ({id, checked, onToggle}) => (
+      <button
+        onClick={(e)=>{ e.stopPropagation(); onToggle(id); }}
+        className={`w-7 h-7 rounded-md border-2 flex items-center justify-center transition-colors ${checked? 'bg-emerald-500 border-emerald-500 text-white':'border-white/80 text-transparent'}`}
+        aria-pressed={checked}
+        title={checked? 'Đánh dấu: đã xong' : 'Đánh dấu hoàn thành'}
+      >
+        {checked && (
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+        )}
+      </button>
+    );
+
+    const Card = ({card, tint='bg-blue-600', doneMap, onToggle}) => (
+      <div className={`${tint} text-white rounded-xl shadow-lg overflow-hidden`}>
+        <header className="p-4 flex items-center gap-3 min-h-[72px] cursor-pointer select-none interactive-feedback" onClick={()=>{ /* no-op for header click (content below) */ }}>
+          <CompletionCheckbox id={card.id} checked={!!doneMap[card.id]} onToggle={onToggle} />
+          <h4 className="text-lg font-semibold flex-1">{card.title}</h4>
+        </header>
+        {(card.items || card.subItems) && (
+          <div className="px-4 pb-4">
+            {card.items && (
+              <ul className="list-disc list-inside space-y-2 text-white/90">{card.items.map((it,i)=>(<li key={i}>{it}</li>))}</ul>
+            )}
+            {card.subItems && (
+              <div className="space-y-2">{card.subItems.map((it,i)=>(<div key={i} className="bg-black/20 p-3 rounded-lg text-white/90">{it}</div>))}</div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+
+    const Accordion = ({open, children}) => {
+      const ref = useRef(null);
+      return (
+        <div className="overflow-hidden transition-[max-height] duration-500 ease-in-out" style={{maxHeight: open ? (ref.current? ref.current.scrollHeight : 0) : 0}}>
+          <div ref={ref}>{children}</div>
+        </div>
+      );
+    };
+
+    const Section = ({index, data, doneMap, onToggle, open, setOpen, isMobile, openInSheet}) => {
+      const onHeaderClick = () => {
+        if (isMobile) openInSheet(data);
+        else setOpen(v => !v);
+      };
+      return (
+        <section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl mb-6 overflow-hidden">
+          <header className="p-4 flex justify-between items-center cursor-pointer min-h-[72px] interactive-feedback" onClick={onHeaderClick}>
+            <div className="flex items-center gap-4">
+              <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">{index}.</span>
+              <h2 className="text-blue-800 dark:text-gray-200 text-xl font-semibold">{data.title}</h2>
+            </div>
+            <div className={`desktop-arrow w-6 h-6 text-gray-500 transition-transform ${open? 'rotate-180':''}`}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+          </header>
+          {!isMobile && (
+            <Accordion open={open}>
+              <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.cards.map(c => (
+                  <Card key={c.id} card={c} tint="bg-blue-600" doneMap={doneMap} onToggle={onToggle} />
+                ))}
+              </div>
+            </Accordion>
+          )}
+        </section>
+      );
+    };
+
+    const BottomSheet = ({open, onClose, title, children}) => {
+      const {settings} = useContext(SettingsContext);
+      const theme = settings.theme;
+      const themeCls = theme==='dark' ? 'bg-gray-900 text-gray-100' : (theme==='sepia' ? 'bg-yellow-100 text-red-800' : 'bg-white text-gray-800');
+      useEffect(() => {
+        const onEsc = (e)=>{ if (e.key==='Escape') onClose(); };
+        document.addEventListener('keydown', onEsc);
+        return ()=>document.removeEventListener('keydown', onEsc);
+      }, [onClose]);
+      return (
+        <div className={`fixed inset-0 z-40 ${open? 'opacity-100':'opacity-0 pointer-events-none'} transition-opacity`}>
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+          <div className={`fixed bottom-0 left-0 right-0 w-full ${themeCls} rounded-t-2xl shadow-2xl z-50 flex flex-col transition-all duration-500 ease-out ${open? 'translate-y-0':'translate-y-full'} h-[85vh]`}>
+            <header className="p-3 border-b border-white/10 flex items-center justify-between">
+              <h3 className="text-base font-semibold truncate pr-2">{title}</h3>
+              <button onClick={onClose} className="p-2 rounded-full hover:bg-white/10" aria-label="Đóng">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </header>
+            <div className="flex-1 overflow-y-auto p-4">{children}</div>
+          </div>
+        </div>
+      );
+    };
+
+    const Skeleton = () => (
+      <div className="max-w-6xl mx-auto mt-24 space-y-6 p-4">
+        <div className="shimmer rounded-xl h-28"></div>
+        <div className="shimmer rounded-xl h-20"></div>
+        <div className="shimmer rounded-xl h-20"></div>
+        <div className="shimmer rounded-xl h-20"></div>
+      </div>
+    );
+
+    const BottomNav = () => {
+      const [open, setOpen] = useState(false);
+      const ref = useRef(null);
+      useEffect(()=>{
+        const click = (e)=>{ if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+        document.addEventListener('mousedown', click);
+        return ()=>document.removeEventListener('mousedown', click);
+      }, []);
+      return (
+        <div className="fixed bottom-0 left-0 right-0 z-30 p-2 flex justify-center bottom-menu-wrapper">
+          <div className="bottom-menu-bar">
+            <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener noreferrer" className="nav-button-base footer-action-button"><span className="button-text-wrapper">TRANG CHỦ</span></a>
+            <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener noreferrer" className="nav-button-base main-action-button"><span className="button-text-wrapper">Play Nhạc</span></a>
+            <div className={`relative ${open? '':'overflow-visible'}`} ref={ref}>
+              <button className="nav-button-base footer-action-button" onClick={()=>setOpen(o=>!o)}><span className="button-text-wrapper">NỀN TẢNG</span></button>
+              <div className={`absolute left-1/2 -translate-x-1/2 bottom-[52px] flex gap-2 bg-black/80 border border-white/30 rounded-xl p-2 backdrop-blur-md ${open? 'opacity-100':'opacity-0 pointer-events-none'} transition-opacity`}>
+                <a href="https://www.youtube.com/@ThiensuTinhQuang" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md grid place-items-center hover:bg-white/10"><img className="w-7 h-7" alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/ff0000/ffffff?text=YT'}}/></a>
+                <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md grid place-items-center hover:bg-white/10"><img className="w-7 h-7" alt="TikTok" src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" onError={(e)=>{e.target.src='https://placehold.co/28x28/ffffff/000?text=TT'}}/></a>
+                <a href="https://www.facebook.com/groups/minhsutinhquang" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md grid place-items-center hover:bg-white/10"><img className="w-7 h-7" alt="Facebook" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/1877f2/fff?text=FB'}}/></a>
+                <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md grid place-items-center hover:bg-white/10"><img className="w-7 h-7" alt="Telegram" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/229ed9/fff?text=TG'}}/></a>
+                <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md grid place-items-center hover:bg-white/10"><img className="w-7 h-7" alt="Zalo" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/0068ff/fff?text=ZL'}}/></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    /* -------------------- App -------------------- */
+    function App(){
+      const isMobile = useMediaQuery('(max-width: 767px)');
+      const {settings, setSettings} = useContext(SettingsContext);
+      const [loading, setLoading] = useState(true);
+      const [done, setDone] = useState({});
+      const [sheet, setSheet] = useState({open:false, title:'', content:null});
+      const [openMap, setOpenMap] = useState({ core:true, sections:{} });
+
+      useEffect(()=>{
+        try {
+          const saved = JSON.parse(localStorage.getItem('completedItems')||'{}');
+          setDone(saved);
+        } catch {}
+        // open all sections by default on desktop
+        const init = Object.fromEntries(Object.keys(cardData.sections).map(k=>[k, true]));
+        setOpenMap(s=>({...s, core:true, sections:init}));
+        const t = setTimeout(()=>setLoading(false), 450);
+        return ()=>clearTimeout(t);
+      }, []);
+
+      const saveDone = useDebounce((state)=>{
+        try { localStorage.setItem('completedItems', JSON.stringify(state)); } catch {}
+      }, 400);
+
+      const toggleDone = useCallback((id)=>{
+        setDone(prev=>{
+          const next = {...prev, [id]: !prev[id]};
+          saveDone(next); return next;
+        });
+      }, [saveDone]);
+
+      const progress = useMemo(()=>{
+        const count = Object.values(done).filter(Boolean).length;
+        return allCards.length? (count / allCards.length) * 100 : 0;
+      }, [done]);
+
+      const openSectionInSheet = (section) => {
+        const content = (
+          <div className="grid grid-cols-1 gap-4">
+            {section.cards.map(c => (
+              <Card key={c.id} card={c} tint="bg-blue-600" doneMap={done} onToggle={toggleDone} />
+            ))}
+          </div>
+        );
+        setSheet({open:true, title: section.title, content});
+      };
+
+      const handleExpandAll = () => {
+        if (isMobile) {
+          // Show all sections & cards in one scrollable sheet for mobile
+          const content = (
+            <div className="space-y-6">
+              {Object.entries(cardData.sections).map(([id, sec])=> (
+                <div key={id}>
+                  <h4 className="font-semibold text-lg mb-3">{id}. {sec.title}</h4>
+                  <div className="grid grid-cols-1 gap-4">
+                    {sec.cards.map(c=> (<Card key={c.id} card={c} tint="bg-blue-600" doneMap={done} onToggle={toggleDone} />))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+          setSheet({open:true, title:'Mở rộng tất cả', content});
+        } else {
+          setOpenMap(s=>({ ...s, core:true, sections: Object.fromEntries(Object.keys(cardData.sections).map(k=>[k,true])) }));
+        }
+      };
+
+      const handleCollapseAll = () => {
+        if (isMobile) setSheet({open:false, title:'', content:null});
+        else setOpenMap(s=>({ ...s, core:false, sections: Object.fromEntries(Object.keys(cardData.sections).map(k=>[k,false])) }));
+      };
+
+      const toggleFocus = ()=> setSettings(v=>({...v, isFocusMode: !v.isFocusMode}));
+      const cycleTheme = ()=>{
+        const arr=['light','dark','sepia'];
+        const idx = arr.indexOf(settings.theme);
+        setSettings(v=>({...v, theme: arr[(idx+1)%arr.length]}));
+      };
+
+      if (loading) return <Skeleton/>;
+
+      return (
+        <div className={`min-h-screen ${settings.isFocusMode && isMobile? 'overflow-hidden':''}`}>
+          {/* Top progress bar */}
+          <ProgressTopBar progress={progress} />
+
+          {/* Sticky header */}
+          <header className="fixed top-1 left-0 right-0 z-40">
+            <div className="mx-auto max-w-6xl px-3 sm:px-4">
+              <div className="sticky-blur rounded-xl shadow-sm border border-black/5 dark:border-white/10 px-3 py-2 flex items-center gap-2">
+                <h1 className="text-sm sm:text-base font-bold text-blue-800 dark:text-gray-100 truncate">Sơ đồ học hợp nhất</h1>
+                <span className="ml-auto text-xs px-2 py-1 rounded-full bg-blue-600 text-white">{Math.round(progress)}%</span>
+                <button title="Mục lục" onClick={()=>setSheet({open:true, title:'Mục lục', content:(
+                  <div className="space-y-2">
+                    {Object.entries(cardData.sections).map(([id, sec])=> (
+                      <button key={id} className="w-full text-left p-3 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={()=>openSectionInSheet(sec)}>
+                        <strong className="text-blue-700 dark:text-blue-300">{id}. {sec.title}</strong>
+                      </button>
+                    ))}
+                  </div>
+                )})} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10" aria-label="Mục lục">
+                  <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clipRule="evenodd"/></svg>
+                </button>
+                <button title="Tiến độ" onClick={()=>setSheet({open:true, title:'Tiến độ học tập', content:(
+                  <div className="text-center p-2">
+                    <p className="text-lg">Bạn đã hoàn thành</p>
+                    <p className="text-5xl font-bold my-4">{Object.values(done).filter(Boolean).length} / {allCards.length}</p>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-8 mt-3">
+                      <div className="bg-green-500 h-8 rounded-full text-white flex items-center justify-center font-bold" style={{width:`${Math.round(progress)}%`}}>{Math.round(progress)}%</div>
+                    </div>
+                  </div>
+                )})} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10" aria-label="Tiến độ">
+                  <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd"/></svg>
+                </button>
+                <button title="Mở rộng tất cả" onClick={handleExpandAll} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10" aria-label="Mở rộng tất cả">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <button title="Thu gọn tất cả" onClick={handleCollapseAll} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10" aria-label="Thu gọn tất cả">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4"/></svg>
+                </button>
+                <button title="Chế độ đọc" onClick={toggleFocus} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10" aria-label="Chế độ đọc">
+                  <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd"/></svg>
+                </button>
+                <button title="Đổi chủ đề" onClick={cycleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10" aria-label="Đổi chủ đề">
+                  <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zM10 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 15zM10 7a3 3 0 100 6 3 3 0 000-6z"/><path fillRule="evenodd" d="M1.61 7.97a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 01-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM17.45 7.97a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zM7.97 1.61a.75.75 0 011.06 0l1.06 1.06a.75.75 0 01-1.06 1.06L7.97 2.67a.75.75 0 010-1.06zM7.97 17.45a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06z" clipRule="evenodd"/></svg>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* Main */}
+          <main className={`max-w-6xl mx-auto pt-20 px-4 ${settings.isFocusMode && isMobile? 'opacity-0 pointer-events-none':''} transition-opacity`}>
+            {/* Core teaching */}
+            <article className="bg-purple-600 text-white rounded-xl shadow-lg overflow-hidden mb-6">
+              <header className="p-4 flex justify-between items-center min-h-[72px]">
+                <h3 className="text-xl font-semibold mr-2">{cardData.coreTeaching.title}</h3>
+                <CompletionCheckbox id={cardData.coreTeaching.id} checked={!!done[cardData.coreTeaching.id]} onToggle={toggleDone} />
+              </header>
+              {!isMobile && (
+                <div className="px-4 pb-4">
+                  <ul className="list-disc list-inside space-y-2 text-white/90">
+                    {cardData.coreTeaching.items.map((it,i)=>(<li key={i}>{it}</li>))}
+                  </ul>
+                </div>
+              )}
+            </article>
+
+            {/* Sections */}
+            {Object.entries(cardData.sections).map(([id, sec])=> (
+              <Section
+                key={id}
+                index={id}
+                data={sec}
+                doneMap={done}
+                onToggle={toggleDone}
+                open={!!openMap.sections[id]}
+                setOpen={(fn)=> setOpenMap(s=>({ ...s, sections:{...s.sections, [id]: fn(s.sections[id])} }))}
+                isMobile={isMobile}
+                openInSheet={openSectionInSheet}
+              />
+            ))}
+
+            {/* Guide */}
+            <aside className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 my-8">
+              <h2 className="text-2xl font-semibold mb-4">Hướng dẫn sử dụng</h2>
+              <ul className="list-disc list-inside space-y-3">
+                <li><strong>Mọi thiết bị:</strong> Dùng các nút trên thanh cố định để mở Mục lục, xem Tiến độ, Mở rộng/Thu gọn tất cả, bật Chế độ đọc và đổi Chủ đề.</li>
+                <li><strong>Di động:</strong> Nhấn tiêu đề mục để xem nội dung trong bảng trượt; nút “Mở rộng tất cả” gom toàn bộ nội dung vào một bảng trượt.</li>
+                <li><strong>Máy tính:</strong> Nhấn tiêu đề để mở/tắt từng mục; dùng “Mở rộng/Thu gọn tất cả” để điều khiển đồng loạt.</li>
+                <li>Đánh dấu hoàn thành ngay trên mỗi thẻ; tiến độ được lưu cục bộ (localStorage).</li>
+              </ul>
+            </aside>
+          </main>
+
+          {/* Bottom nav */}
+          <div className={`${settings.isFocusMode && isMobile? 'opacity-0 pointer-events-none':''} transition-opacity`}>
+            <BottomNav />
+          </div>
+
+          {/* Bottom sheet */}
+          <BottomSheet open={sheet.open} onClose={()=>setSheet({open:false, title:'', content:null})} title={sheet.title}>
+            {sheet.content}
+          </BottomSheet>
+        </div>
+      );
+    }
+
+    const Root = ()=> (
+      <SettingsProvider>
+        <App />
+      </SettingsProvider>
+    );
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Root/>);
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sơ đồ học hợp nhất – Chuyên gia đứng đầu 🌐</title>
+  <meta name="description" content="Hệ thống sơ đồ học hợp nhất – trực quan, siêu mượt, thân thiện di động, theo dõi tiến độ, tìm kiếm tức thời, in/ghi chú, một file duy nhất." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0b0f19" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', 'sans-serif'],
+            display: ['Be Vietnam Pro','Inter','system-ui']
+          },
+          colors: {
+            brand: {
+              50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81'
+            }
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(99,102,241,.2), 0 10px 30px -10px rgba(99,102,241,.6)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --glow-red: rgba(255, 31, 113, 0.7); --glow-blue: rgba(0,191,255,.7); }
+    html, body { height: 100%; }
+    body { font-family: var(--tw-font-sans, 'Inter', system-ui); }
+    main { padding-bottom: 96px; }
+    .reduce-motion * { transition: none !important; animation: none !important; }
+    @media (prefers-reduced-motion: reduce){ body {scroll-behavior:auto;} }
+    .kbd { @apply inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-white/20 px-1.5 text-[11px] h-5 leading-none; }
+    .scrollbar-thin { scrollbar-width: thin; }
+    .scrollbar-thin::-webkit-scrollbar{height:8px;width:8px}
+    .scrollbar-thin::-webkit-scrollbar-thumb{background:rgba(100,116,139,.5);border-radius:8px}
+    .shimmer{position:relative;overflow:hidden;background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 37%,#e5e7eb 63%);background-size:400% 100%;animation:shimmer 1.6s infinite}
+    @keyframes shimmer {0%{background-position:100% 0}100%{background-position:0 0}}
+    /* Print */
+    @media print{
+      header, .cmdbar, .bottom-nav, .sheet-root, .toast { display:none !important }
+      .print-break{ break-inside: avoid; page-break-inside: avoid }
+      body { background:#fff; color:#111 }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 selection:bg-brand-500/30">
+  <div id="root"></div>
+
+  <!-- React 18 UMD (production) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel for inline JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const {useState,useEffect,useMemo,useRef,useCallback,createContext,useContext} = React;
+
+    /* ========================= Data (domain model) ========================= */
+    const DATA = {
+      core: {
+        id:'core-teaching',
+        title:'Tất Cả Từ Một – Nhất Nguyên (Thượng Đế)',
+        items:[
+          'Thượng Đế là Nguồn Gốc Duy Nhất của vạn vật, không có gì khác ngoài Ngài.',
+          'Ngài tự phân chia thành vô số hình tướng để trải nghiệm và thấu hiểu chính mình.',
+          'Bản chất của Thượng Đế là sáng suốt, vô hạn, vượt không gian & thời gian.',
+          'Mục đích sống: nhận ra Bản Thể bên trong để trở về Nhất Nguyên.'
+        ],
+        tags:['căn-bản','nhất-nguyên']
+      },
+      sections: {
+        '1':{ title:'Nâng Cao Tinh Thần & Sức Khỏe', tags:['ứng-dụng','năng-lượng'], cards:[
+          {id:'suc-manh-tho-ca',title:'Sức Mạnh Thơ Ca & Âm Nhạc',subItems:['Đọc, Hát, Nghe Thơ Ca Tích Cực'],tags:['âm-nhạc','tích-cực']},
+          {id:'song-co-muc-dich',title:'Sống Có Mục Đích',subItems:['Lập Kế Hoạch, Theo Đuổi Đam Mê','Tránh Mất Phương Hướng, Tiêu Cực'],tags:['mục-tiêu']}
+        ]},
+        '2':{ title:'Bảo Vệ Tâm Trí & Trí Tuệ', tags:['trí-tuệ'], cards:[
+          {id:'giu-tri-tue-sang-suot',title:'Giữ Trí Tuệ Sáng Suốt',subItems:[
+            'Cảnh Giác Với Lòng Tham','Phân Tích, Nhận Diện Cạm Bẫy','Chiến Thắng Tâm Xấu Ác','Nhận Diện Phật Tính Bên Trong','Từ Chối Xúi Giục Tiêu Cực','Chuyển Hóa Suy Nghĩ Tiêu Cực'],tags:['nhận-diện','tỉnh-thức']},
+          {id:'de-phong-tam',title:'Đề Phòng Tâm & Thượng Đế Bên Trong',subItems:[
+            'Tỉnh Giác Với Suy Nghĩ Tiêu Cực','Chọn Lọc Suy Nghĩ Tích Cực','Hóa Giải “Ma Quỷ” Ảo Ảnh','Nhận Ra Ảo Ảnh Do Thượng Đế','Không Sợ Hãi, Ứng Xử Tích Cực','Niệm Chú & Tập Thể Dục Hóa Giải'],tags:['tỉnh-giác']},
+          {id:'than-trong-loi-noi',title:'Thận Trọng Trong Lời Nói',subItems:['Hiểu Rõ Trước Khi Nói/Viết','Thận Trọng Bí Mật Riêng Tư','Sống Tỉnh Thức'],tags:['giao-tiếp']}
+        ]},
+        '3':{ title:'Hiểu Biết Vũ Trụ & Bản Chất', tags:['triết-học'], cards:[
+          {id:'nguon-goc-su-song',title:'Nguồn Gốc Sự Sống',subItems:['Sự Sống Khắp Vũ Trụ','Ý Thức, Bệnh Tật Do Từ Trường','Thiền Định Để Thấu Hiểu'],tags:['vũ-trụ']},
+          {id:'an-nhien-truoc-thi-phi',title:'An Nhiên Trước Thị Phi',subItems:['Không Bận Tâm Lời Vụ Không','Thấu Hiểu Người Khác'],tags:['an-nhiên']},
+          {id:'nguon-goc-virus',title:'Nguồn Gốc Virus, Vi Khuẩn',subItems:['Do Thượng Đế Tạo Ra & Điều Khiển','Bệnh Do Từ Trường Ác Trược','Ngộ Ra Để Được Hóa Giải'],tags:['sức-khỏe']},
+          {id:'nguyen-nhan-su-co-may-moc',title:'Nguyên Nhân Sự Cố Máy Móc',subItems:['Có Thể Do Từ Trường Thượng Đế','Tất Nguồn Hóa Giải','Cùng Dưỡng Để Bền Hơn'],tags:['hệ-thống']},
+          {id:'benh-tat-do-tu-truong',title:'Bệnh Tật Do Từ Trường',subItems:['Mọi Bệnh Tật Do Từ Trường','Giữ Quyền Làm Chủ','Tin Tưởng & Thực Hành'],tags:['sức-khỏe']}
+        ]},
+        '4':{ title:'Bản Chất Thượng Đế & Cơ Chế Vận Hành', tags:['căn-bản','cơ-chế'], cards:[
+          {id:'ban-chat-thuong-de',title:'Bản Chất Thượng Đế',subItems:[
+            'Thượng Đế là Nguồn Gốc Duy Nhất','Không Có Phân Chia Thực Sự (Thiện/Ác, Phật/Ma là vai diễn)','Vừa Bên Trong Vừa Bên Ngoài Con Người','Tự Chia Mình Thành Các Vai Diễn'],tags:['nhất-nguyên']},
+          {id:'muc-dich-tao-dung',title:'Mục Đích Tạo Dựng',subItems:[
+            '“Khảo” nghiệm & thử thách chính mình (qua các hình tướng)','Giúp con người nhận ra Chân Lý & Giác Ngộ','Tiến hóa & sàng lọc','Một “trò chơi” – trải nghiệm'],tags:['mục-đích']},
+          {id:'co-che-van-hanh',title:'Cơ Chế Vận Hành',subItems:[
+            '“Từ Trường”: công cụ “đẩy” suy nghĩ, cảm xúc, thử thách','Không có “Ma Vương” riêng biệt','Luật Nhân Quả vẫn vận hành (nhưng có thể chuyển hóa)','“Đại Từ Bi” thể hiện qua cả “thiện” & “ác” (dùng ác diệt ác)','“Lừa Bịp”: tạo tình huống để kiểm tra sự sáng suốt'],tags:['cơ-chế']}
+        ]},
+        '5':{ title:'Con Người & Thượng Đế', tags:['bản-ngã'], cards:[
+          {id:'s1-c1',title:'Thượng Đế Bên Trong',subItems:['Mỗi người mang trong mình một phần Thượng Đế (Tánh Biết).','Bản chất thật không bị chi phối bởi suy nghĩ/cảm xúc/thân xác.','Sống thuận theo phần Thượng Đế bên trong.'],tags:['tánh-biết']},
+          {id:'s1-c2',title:'Thượng Đế Bên Ngoài',subItems:['Ngài là Nguồn Cội & “Đại Từ Trường” bao trùm vạn vật.','Mọi hiện tượng là biểu hiện của Ngài.'],tags:['đại-từ-trường']},
+          {id:'s1-c3',title:'Bản Ngã',subItems:['Bị đồng hóa với tham–sân–si tạo ảo ảnh tách biệt & khổ đau.'],tags:['bản-ngã']}
+        ]},
+        '6':{ title:'Đường Tu Tập (Theo Minh Sư)', tags:['thực-hành'], cards:[
+          {id:'s2-c1',title:'Nhận Thức Nhất Nguyên',subItems:['Thấy mọi sự đều là biểu hiện của Thượng Đế.'],tags:['nhất-nguyên']},
+          {id:'s2-c2',title:'Sống Với Tánh Biết',subItems:['Quan sát suy nghĩ/cảm xúc mà không bị cuốn theo.'],tags:['tánh-biết']}
+        ]},
+        '7':{ title:'Ứng Dụng Thực Tế', tags:['ứng-dụng'], cards:[
+          {id:'s3-c1',title:'Đối Diện Khó Khăn',subItems:['Xem khó khăn là cơ hội học & trưởng thành.'],tags:['resilience']}
+        ]}
+      }
+    }
+
+    /* ========================= Utilities ========================= */
+    const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
+    const kv = (obj)=>Object.entries(obj);
+
+    /* ========================= Contexts ========================= */
+    const Ctx = createContext(null);
+
+    function Provider({children}){
+      const [theme, setTheme] = useState(()=>localStorage.getItem('theme')|| (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+      const [focus, setFocus] = useState(false);
+      const [done, setDone] = useState(()=>{ try{ return JSON.parse(localStorage.getItem('done-map')||'{}')}catch{return{}} });
+      const [notes, setNotes] = useState(()=>{ try{ return JSON.parse(localStorage.getItem('notes-map')||'{}')}catch{return{}} });
+      const [q, setQ] = useState('');
+      const [tag, setTag] = useState('');
+
+      useEffect(()=>{ document.documentElement.setAttribute('data-theme', theme==='dark'?'dark':'light'); localStorage.setItem('theme', theme); },[theme]);
+      useEffect(()=>{ try{localStorage.setItem('done-map', JSON.stringify(done))}catch{} },[done]);
+      useEffect(()=>{ try{localStorage.setItem('notes-map', JSON.stringify(notes))}catch{} },[notes]);
+
+      const value = useMemo(()=>({ theme,setTheme, focus,setFocus, done,setDone, notes,setNotes, q,setQ, tag,setTag }),[theme,focus,done,notes,q,tag]);
+      return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+    }
+
+    /* ========================= Hooks ========================= */
+    function useDebounce(fn, ms){ const t=useRef(); return useCallback((...args)=>{ clearTimeout(t.current); t.current=setTimeout(()=>fn(...args),ms); },[fn,ms]) }
+    function useMedia(q){ const [m,setM]=useState(()=>matchMedia(q).matches); useEffect(()=>{const mq=matchMedia(q);const h=()=>setM(mq.matches); mq.addEventListener?.('change',h)||window.addEventListener('resize',h); return ()=>{mq.removeEventListener?.('change',h)||window.removeEventListener('resize',h)}},[q]); return m }
+
+    /* ========================= Primitives ========================= */
+    const Icon = ({path, className=''})=> <svg viewBox="0 0 24 24" aria-hidden="true" className={className}><path d={path} fill="currentColor"/></svg>;
+    const CheckIcon = (p)=> <Icon {...p} path="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20.3 7.7l-1.4-1.4z"/>;
+    const ChevronIcon = (p)=> <Icon {...p} path="M8.12 9.29L12 13.17l3.88-3.88L17.3 10.7 12 16l-5.3-5.3z"/>;
+    const SearchIcon = (p)=> <Icon {...p} path="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"/>;
+    const NoteIcon = (p)=> <Icon {...p} path="M3 3h12a2 2 0 012 2v4h4v10a2 2 0 01-2 2H5a2 2 0 01-2-2V3zm14 6V5H5v14h14V9h-2z"/>;
+
+    function Kbd({keys}){ return <span className="kbd">{keys}</span> }
+
+    function ProgressBar(){
+      const {done} = useContext(Ctx);
+      const total = useMemo(()=> 1 + Object.values(DATA.sections).reduce((s,sec)=>s+sec.cards.length,0),[]);
+      const count = Object.values(done).filter(Boolean).length;
+      const pct = Math.round((count/total)*100);
+      return (
+        <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-slate-200 dark:bg-slate-700" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct}>
+          <div className="h-full bg-brand-500" style={{width:`${pct}%`}} />
+        </div>
+      );
+    }
+
+    function Toast({text}){
+      return (
+        <div className="toast fixed top-3 left-1/2 -translate-x-1/2 z-[60] px-4 py-2 rounded-xl bg-slate-900 text-white/95 shadow-glow">
+          {text}
+        </div>
+      )
+    }
+
+    /* ========================= Widgets ========================= */
+    function Checkbox({checked,onToggle,label,id}){
+      return (
+        <button onClick={()=>onToggle?.(id)} aria-pressed={!!checked} className={`w-7 h-7 rounded-md border-2 flex items-center justify-center transition-colors ${checked? 'bg-emerald-500 border-emerald-500 text-white':'border-slate-400 dark:border-white/50 text-transparent'}`} title={checked? 'Đã hoàn thành':'Đánh dấu hoàn thành'}>
+          {checked && <CheckIcon className="w-4 h-4"/>}
+          <span className="sr-only">{label||'Đánh dấu'}</span>
+        </button>
+      )
+    }
+
+    function Card({card}){
+      const {done,setDone, notes,setNotes} = useContext(Ctx);
+      const [open, setOpen] = useState(false);
+      const toggle = ()=> setDone(m=>({...m,[card.id]:!m[card.id]}));
+      const note = notes[card.id]||'';
+      const save = useDebounce((v)=> setNotes(m=>({...m,[card.id]:v})), 300);
+      return (
+        <article id={card.id} className="print-break rounded-xl overflow-hidden shadow-md bg-gradient-to-br from-brand-600 to-brand-700 text-white" tabIndex={0}>
+          <header className="p-4 flex items-center gap-3 cursor-pointer" onClick={()=>setOpen(o=>!o)}>
+            <Checkbox checked={!!done[card.id]} onToggle={toggle} id={card.id}/>
+            <h4 className="text-lg font-semibold flex-1">{card.title}</h4>
+            <ChevronIcon className={`w-6 h-6 transition-transform ${open?'rotate-180':''}`}/>
+          </header>
+          <div className={`grid transition-[grid-template-rows] duration-300 ${open?'grid-rows-[1fr]':'grid-rows-[0fr]'} bg-white/10`}> 
+            <div className="overflow-hidden">
+              {card.subItems && (
+                <div className="px-4 pb-4 space-y-2">
+                  {card.subItems.map((it,i)=>(<div key={i} className="bg-black/20 p-3 rounded-lg text-white/90">{it}</div>))}
+                </div>
+              )}
+              <div className="px-4 pb-4">
+                <label className="text-sm opacity-90 flex items-center gap-2 mb-1"><NoteIcon className="w-4 h-4"/>Ghi chú của bạn</label>
+                <textarea defaultValue={note} onChange={(e)=>save(e.target.value)} placeholder="Ý tưởng, bài tập, mốc hành động…" className="w-full min-h-[80px] rounded-lg p-3 text-slate-900" />
+              </div>
+            </div>
+          </div>
+        </article>
+      )
+    }
+
+    function Section({idx, sec}){
+      const isDesktop = useMedia('(min-width: 768px)');
+      const [open, setOpen] = useState(true);
+      const {q, tag} = useContext(Ctx);
+
+      const filteredCards = useMemo(()=>{
+        const text = q.trim().toLowerCase();
+        return sec.cards.filter(c=>{
+          const inText = !text || (c.title+ ' ' + (c.subItems||[]).join(' ')).toLowerCase().includes(text);
+          const inTag = !tag || (c.tags||[]).includes(tag);
+          return inText && inTag;
+        })
+      },[q,tag,sec.cards]);
+
+      return (
+        <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl mb-6 overflow-hidden" aria-labelledby={`sec-${idx}`}> 
+          <header className="p-4 flex justify-between items-center cursor-pointer select-none" onClick={()=> isDesktop && setOpen(o=>!o)}>
+            <div className="flex items-center gap-4">
+              <span className="font-display text-brand-600 text-lg">{idx}.</span>
+              <h2 id={`sec-${idx}`} className="text-xl font-semibold">{sec.title}</h2>
+            </div>
+            <ChevronIcon className={`w-6 h-6 hidden md:block text-slate-500 transition-transform ${open?'rotate-180':''}`}/>
+          </header>
+          <div className={`${isDesktop? (open? 'block':'hidden') : 'block'}`}>
+            <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredCards.length? filteredCards.map(c=> <Card key={c.id} card={c}/>) : (
+                <p className="col-span-full text-sm opacity-70">Không có thẻ phù hợp điều kiện lọc.</p>
+              )}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    function CoreBlock(){
+      const {done,setDone} = useContext(Ctx);
+      return (
+        <article className="rounded-xl shadow-md overflow-hidden bg-gradient-to-br from-fuchsia-600 to-purple-700 text-white">
+          <header className="p-4 flex items-center gap-3">
+            <Checkbox checked={!!done[DATA.core.id]} onToggle={()=>setDone(m=>({...m,[DATA.core.id]:!m[DATA.core.id]}))} id={DATA.core.id}/>
+            <h3 className="text-xl font-semibold">{DATA.core.title}</h3>
+          </header>
+          <div className="px-4 pb-4">
+            <ul className="list-disc list-inside space-y-2 text-white/90">
+              {DATA.core.items.map((it,i)=>(<li key={i}>{it}</li>))}
+            </ul>
+          </div>
+        </article>
+      )
+    }
+
+    /* ========================= Command Bar & Sheets ========================= */
+    function CommandBar(){
+      const {theme,setTheme, focus,setFocus, q,setQ, tag,setTag, done} = useContext(Ctx);
+      const [show, setShow] = useState(false);
+      
+      useEffect(()=>{
+        const onKey = (e)=>{
+          if (e.key==='k' && (e.ctrlKey||e.metaKey)) { e.preventDefault(); setShow(s=>!s); }
+          if (e.key==='/' && !e.metaKey && !e.ctrlKey){ e.preventDefault(); setShow(true); }
+          if (e.key==='p' && (e.ctrlKey||e.metaKey)){ window.print(); }
+        };
+        addEventListener('keydown', onKey);
+        return ()=>removeEventListener('keydown', onKey);
+      },[]);
+      
+      const tags = useMemo(()=>{
+        const s = new Set();
+        s.add(''); // All
+        kv(DATA.sections).forEach(([k,sec])=> sec.cards.forEach(c=> (c.tags||[]).forEach(t=>s.add(t))));
+        return [...s];
+      },[]);
+
+      return (
+        <div className="cmdbar fixed top-2 left-0 right-0 z-40">
+          <div className="mx-auto max-w-6xl px-3">
+            <div className="backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-900/60 bg-white/80 dark:bg-slate-900/70 rounded-xl shadow border border-black/5 dark:border-white/10 px-2 py-1.5 flex items-center gap-1">
+              {/* Search */}
+              <div className="flex-1 flex items-center gap-2">
+                <SearchIcon className="w-5 h-5 text-slate-500"/>
+                <input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Tìm nhanh (tiêu đề, nội dung)…" className="w-full bg-transparent outline-none text-sm" aria-label="Tìm kiếm"/>
+              </div>
+              {/* Tag filter */}
+              <select value={tag} onChange={(e)=>setTag(e.target.value)} className="text-sm rounded-lg bg-slate-100 dark:bg-slate-800 px-2 py-1 border border-slate-200 dark:border-slate-700">
+                {tags.map(t=> <option key={t} value={t}>{t?`#${t}`:'Tất cả thẻ'}</option>)}
+              </select>
+              {/* Progress */}
+              <span className="ml-1 text-[11px] px-1.5 py-0.5 rounded-full bg-brand-600 text-white">{Math.round((Object.values(done).filter(Boolean).length / (1+kv(DATA.sections).reduce((s,[,sec])=>s+sec.cards.length,0)) )*100)}%</span>
+              {/* Theme */}
+              <button className="px-2 py-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" title="Đổi chủ đề" onClick={()=> setTheme(t=> t==='light'?'dark':(t==='dark'?'sepia':'light'))}>Chủ đề</button>
+              {/* Focus */}
+              <button className="px-2 py-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" title="Chế độ tập trung" onClick={()=>setFocus(f=>!f)}>{"Tập trung"}</button>
+              {/* More... */}
+              <div className="relative">
+                <button className="px-2 py-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" onClick={()=>setShow(s=>!s)} aria-expanded={show}>⋯</button>
+                <div className={`absolute right-0 mt-1 min-w-[200px] rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow ${show? 'opacity-100':'opacity-0 pointer-events-none'} transition-opacity`}>
+                  <button className="w-full text-left px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700" onClick={()=>{window.print(); setShow(false);}}>In / PDF</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    function BottomNav(){
+      const [open, setOpen] = useState(false);
+      const ref = useRef(null);
+      useEffect(()=>{
+        const click = (e)=>{ if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+        document.addEventListener('mousedown', click);
+        return ()=>document.removeEventListener('mousedown', click);
+      }, []);
+      return (
+        <nav className="bottom-nav fixed bottom-0 left-0 right-0 z-30 p-2 flex justify-center font-display uppercase">
+          <div className="flex gap-2">
+            <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener" className="px-4 h-11 rounded-xl bg-black text-white inline-flex items-center shadow-glow">Trang chủ</a>
+            <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener" className="px-4 h-11 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white inline-flex items-center shadow-glow">Play Nhạc</a>
+            <div className={`group relative ${open ? 'overflow-visible' : ''}`} ref={ref}>
+              <button className="px-4 h-11 rounded-xl bg-black/90 text-white inline-flex items-center shadow-glow" onClick={()=>setOpen(o=>!o)}>Nền tảng</button>
+              <div className={`absolute left-1/2 -translate-x-1/2 bottom-[52px] flex gap-2 bg-black/80 border border-white/30 rounded-xl p-2 backdrop-blur-md ${open? 'opacity-100':'opacity-0 pointer-events-none'} transition-opacity`}>
+                <a href="https://www.youtube.com/@ThiensuTinhQuang" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/ff0000/ffffff?text=YT'}}/></a>
+                <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="TikTok" src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" onError={(e)=>{e.target.src='https://placehold.co/28x28/ffffff/000?text=TT'}}/></a>
+                <a href="https://www.facebook.com/groups/minhsutinhquang" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="Facebook" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/1877f2/fff?text=FB'}}/></a>
+                <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="Telegram" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/229ed9/fff?text=TG'}}/></a>
+                <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="Zalo" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/0068ff/fff?text=ZL'}}/></a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      )
+    }
+    
+    /* ========================= App ========================= */
+    function App(){
+      const {focus} = useContext(Ctx);
+      const [loading, setLoading] = useState(true);
+      useEffect(()=>{ const t=setTimeout(()=>setLoading(false), 300); return ()=>clearTimeout(t) },[]);
+      if (loading) return (
+        <div className="max-w-6xl mx-auto mt-24 space-y-6 p-4" aria-busy>
+          <div className="shimmer rounded-xl h-28"></div>
+          <div className="shimmer rounded-xl h-20"></div>
+          <div className="shimmer rounded-xl h-20"></div>
+          <div className="shimmer rounded-xl h-20"></div>
+        </div>
+      );
+      return (
+        <div className={focus? 'reduce-motion':''}>
+          <ProgressBar/>
+          <CommandBar/>
+
+          <main className={`max-w-6xl mx-auto pt-16 px-4 ${focus? 'opacity-95':''}`}>
+            <CoreBlock/>
+            {kv(DATA.sections).map(([id, sec])=> <Section key={id} idx={id} sec={sec}/>) }
+
+            <aside className="bg-white dark:bg-slate-800 rounded-xl shadow p-6 my-8">
+              <h2 className="text-2xl font-semibold mb-3">Hướng dẫn nhanh</h2>
+              <ul className="list-disc list-inside space-y-2 text-sm">
+                <li>Tìm kiếm tức thời <Kbd keys="Ctrl/⌘ + /"/> hoặc gõ thanh tìm kiếm.</li>
+                <li>Mở hộp lệnh <Kbd keys="Ctrl/⌘ + K"/> để thao tác nhanh; In/PDF <Kbd keys="Ctrl/⌘ + P"/>.</li>
+                <li>Đổi chủ đề (Light/Dark/Sepia), bật <em>Tập trung</em> để giảm nhiễu, lưu tiến độ tự động.</li>
+                <li>Ghi chú riêng trên từng thẻ được lưu tự động vào thiết bị của bạn.</li>
+              </ul>
+            </aside>
+          </main>
+
+          <BottomNav/>
+        </div>
+      )
+    }
+
+    const Root = () => (
+      <Provider>
+        <App/>
+      </Provider>
+    );
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Root/>);
+  </script>
+</body>
+</html>
+```
+
+File contents for `index.html`:
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sơ đồ học hợp nhất – Chuyên gia đứng đầu 🌐</title>
+  <meta name="description" content="Hệ thống sơ đồ học hợp nhất – trực quan, siêu mượt, thân thiện di động, theo dõi tiến độ, tìm kiếm tức thời, in/ghi chú, một file duy nhất." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0b0f19" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', 'sans-serif'],
+            display: ['Be Vietnam Pro','Inter','system-ui']
+          },
+          colors: {
+            brand: {
+              50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81'
+            }
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(99,102,241,.2), 0 10px 30px -10px rgba(99,102,241,.6)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --glow-red: rgba(255, 31, 113, 0.7); --glow-blue: rgba(0,191,255,.7); }
+    html, body { height: 100%; }
+    body { font-family: var(--tw-font-sans, 'Inter', system-ui); }
+    main { padding-bottom: 96px; }
+    .reduce-motion * { transition: none !important; animation: none !important; }
+    @media (prefers-reduced-motion: reduce){ body {scroll-behavior:auto;} }
+    .kbd { @apply inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-white/20 px-1.5 text-[11px] h-5 leading-none; }
+    .scrollbar-thin { scrollbar-width: thin; }
+    .scrollbar-thin::-webkit-scrollbar{height:8px;width:8px}
+    .scrollbar-thin::-webkit-scrollbar-thumb{background:rgba(100,116,139,.5);border-radius:8px}
+    .shimmer{position:relative;overflow:hidden;background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 37%,#e5e7eb 63%);background-size:400% 100%;animation:shimmer 1.6s infinite}
+    @keyframes shimmer {0%{background-position:100% 0}100%{background-position:0 0}}
+    /* Print */
+    @media print{
+      header, .cmdbar, .bottom-nav, .sheet-root, .toast { display:none !important }
+      .print-break{ break-inside: avoid; page-break-inside: avoid }
+      body { background:#fff; color:#111 }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 selection:bg-brand-500/30">
+  <div id="root"></div>
+
+  <!-- React 18 UMD (production) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel for inline JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const {useState,useEffect,useMemo,useRef,useCallback,createContext,useContext} = React;
+
+    /* ========================= Data (domain model) ========================= */
+    const DATA = {
+      core: {
+        id:'core-teaching',
+        title:'Tất Cả Từ Một – Nhất Nguyên (Thượng Đế)',
+        items:[
+          'Thượng Đế là Nguồn Gốc Duy Nhất của vạn vật, không có gì khác ngoài Ngài.',
+          'Ngài tự phân chia thành vô số hình tướng để trải nghiệm và thấu hiểu chính mình.',
+          'Bản chất của Thượng Đế là sáng suốt, vô hạn, vượt không gian & thời gian.',
+          'Mục đích sống: nhận ra Bản Thể bên trong để trở về Nhất Nguyên.'
+        ],
+        tags:['căn-bản','nhất-nguyên']
+      },
+      sections: {
+        '1':{ title:'Nâng Cao Tinh Thần & Sức Khỏe', tags:['ứng-dụng','năng-lượng'], cards:[
+          {id:'suc-manh-tho-ca',title:'Sức Mạnh Thơ Ca & Âm Nhạc',subItems:['Đọc, Hát, Nghe Thơ Ca Tích Cực'],tags:['âm-nhạc','tích-cực']},
+          {id:'song-co-muc-dich',title:'Sống Có Mục Đích',subItems:['Lập Kế Hoạch, Theo Đuổi Đam Mê','Tránh Mất Phương Hướng, Tiêu Cực'],tags:['mục-tiêu']}
+        ]},
+        '2':{ title:'Bảo Vệ Tâm Trí & Trí Tuệ', tags:['trí-tuệ'], cards:[
+          {id:'giu-tri-tue-sang-suot',title:'Giữ Trí Tuệ Sáng Suốt',subItems:[
+            'Cảnh Giác Với Lòng Tham','Phân Tích, Nhận Diện Cạm Bẫy','Chiến Thắng Tâm Xấu Ác','Nhận Diện Phật Tính Bên Trong','Từ Chối Xúi Giục Tiêu Cực','Chuyển Hóa Suy Nghĩ Tiêu Cực'],tags:['nhận-diện','tỉnh-thức']},
+          {id:'de-phong-tam',title:'Đề Phòng Tâm & Thượng Đế Bên Trong',subItems:[
+            'Tỉnh Giác Với Suy Nghĩ Tiêu Cực','Chọn Lọc Suy Nghĩ Tích Cực','Hóa Giải “Ma Quỷ” Ảo Ảnh','Nhận Ra Ảo Ảnh Do Thượng Đế','Không Sợ Hãi, Ứng Xử Tích Cực','Niệm Chú & Tập Thể Dục Hóa Giải'],tags:['tỉnh-giác']},
+          {id:'than-trong-loi-noi',title:'Thận Trọng Trong Lời Nói',subItems:['Hiểu Rõ Trước Khi Nói/Viết','Thận Trọng Bí Mật Riêng Tư','Sống Tỉnh Thức'],tags:['giao-tiếp']}
+        ]},
+        '3':{ title:'Hiểu Biết Vũ Trụ & Bản Chất', tags:['triết-học'], cards:[
+          {id:'nguon-goc-su-song',title:'Nguồn Gốc Sự Sống',subItems:['Sự Sống Khắp Vũ Trụ','Ý Thức, Bệnh Tật Do Từ Trường','Thiền Định Để Thấu Hiểu'],tags:['vũ-trụ']},
+          {id:'an-nhien-truoc-thi-phi',title:'An Nhiên Trước Thị Phi',subItems:['Không Bận Tâm Lời Vụ Không','Thấu Hiểu Người Khác'],tags:['an-nhiên']},
+          {id:'nguon-goc-virus',title:'Nguồn Gốc Virus, Vi Khuẩn',subItems:['Do Thượng Đế Tạo Ra & Điều Khiển','Bệnh Do Từ Trường Ác Trược','Ngộ Ra Để Được Hóa Giải'],tags:['sức-khỏe']},
+          {id:'nguyen-nhan-su-co-may-moc',title:'Nguyên Nhân Sự Cố Máy Móc',subItems:['Có Thể Do Từ Trường Thượng Đế','Tất Nguồn Hóa Giải','Cùng Dưỡng Để Bền Hơn'],tags:['hệ-thống']},
+          {id:'benh-tat-do-tu-truong',title:'Bệnh Tật Do Từ Trường',subItems:['Mọi Bệnh Tật Do Từ Trường','Giữ Quyền Làm Chủ','Tin Tưởng & Thực Hành'],tags:['sức-khỏe']}
+        ]},
+        '4':{ title:'Bản Chất Thượng Đế & Cơ Chế Vận Hành', tags:['căn-bản','cơ-chế'], cards:[
+          {id:'ban-chat-thuong-de',title:'Bản Chất Thượng Đế',subItems:[
+            'Thượng Đế là Nguồn Gốc Duy Nhất','Không Có Phân Chia Thực Sự (Thiện/Ác, Phật/Ma là vai diễn)','Vừa Bên Trong Vừa Bên Ngoài Con Người','Tự Chia Mình Thành Các Vai Diễn'],tags:['nhất-nguyên']},
+          {id:'muc-dich-tao-dung',title:'Mục Đích Tạo Dựng',subItems:[
+            '“Khảo” nghiệm & thử thách chính mình (qua các hình tướng)','Giúp con người nhận ra Chân Lý & Giác Ngộ','Tiến hóa & sàng lọc','Một “trò chơi” – trải nghiệm'],tags:['mục-đích']},
+          {id:'co-che-van-hanh',title:'Cơ Chế Vận Hành',subItems:[
+            '“Từ Trường”: công cụ “đẩy” suy nghĩ, cảm xúc, thử thách','Không có “Ma Vương” riêng biệt','Luật Nhân Quả vẫn vận hành (nhưng có thể chuyển hóa)','“Đại Từ Bi” thể hiện qua cả “thiện” & “ác” (dùng ác diệt ác)','“Lừa Bịp”: tạo tình huống để kiểm tra sự sáng suốt'],tags:['cơ-chế']}
+        ]},
+        '5':{ title:'Con Người & Thượng Đế', tags:['bản-ngã'], cards:[
+          {id:'s1-c1',title:'Thượng Đế Bên Trong',subItems:['Mỗi người mang trong mình một phần Thượng Đế (Tánh Biết).','Bản chất thật không bị chi phối bởi suy nghĩ/cảm xúc/thân xác.','Sống thuận theo phần Thượng Đế bên trong.'],tags:['tánh-biết']},
+          {id:'s1-c2',title:'Thượng Đế Bên Ngoài',subItems:['Ngài là Nguồn Cội & “Đại Từ Trường” bao trùm vạn vật.','Mọi hiện tượng là biểu hiện của Ngài.'],tags:['đại-từ-trường']},
+          {id:'s1-c3',title:'Bản Ngã',subItems:['Bị đồng hóa với tham–sân–si tạo ảo ảnh tách biệt & khổ đau.'],tags:['bản-ngã']}
+        ]},
+        '6':{ title:'Đường Tu Tập (Theo Minh Sư)', tags:['thực-hành'], cards:[
+          {id:'s2-c1',title:'Nhận Thức Nhất Nguyên',subItems:['Thấy mọi sự đều là biểu hiện của Thượng Đế.'],tags:['nhất-nguyên']},
+          {id:'s2-c2',title:'Sống Với Tánh Biết',subItems:['Quan sát suy nghĩ/cảm xúc mà không bị cuốn theo.'],tags:['tánh-biết']}
+        ]},
+        '7':{ title:'Ứng Dụng Thực Tế', tags:['ứng-dụng'], cards:[
+          {id:'s3-c1',title:'Đối Diện Khó Khăn',subItems:['Xem khó khăn là cơ hội học & trưởng thành.'],tags:['resilience']}
+        ]}
+      }
+    }
+
+    /* ========================= Utilities ========================= */
+    const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
+    const kv = (obj)=>Object.entries(obj);
+
+    /* ========================= Contexts ========================= */
+    const Ctx = createContext(null);
+
+    function Provider({children}){
+      const [theme, setTheme] = useState(()=>localStorage.getItem('theme')|| (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+      const [focus, setFocus] = useState(false);
+      const [done, setDone] = useState(()=>{ try{ return JSON.parse(localStorage.getItem('done-map')||'{}')}catch{return{}} });
+      const [notes, setNotes] = useState(()=>{ try{ return JSON.parse(localStorage.getItem('notes-map')||'{}')}catch{return{}} });
+      const [q, setQ] = useState('');
+      const [tag, setTag] = useState('');
+
+      useEffect(()=>{ document.documentElement.setAttribute('data-theme', theme==='dark'?'dark':'light'); localStorage.setItem('theme', theme); },[theme]);
+      useEffect(()=>{ try{localStorage.setItem('done-map', JSON.stringify(done))}catch{} },[done]);
+      useEffect(()=>{ try{localStorage.setItem('notes-map', JSON.stringify(notes))}catch{} },[notes]);
+
+      const value = useMemo(()=>({ theme,setTheme, focus,setFocus, done,setDone, notes,setNotes, q,setQ, tag,setTag }),[theme,focus,done,notes,q,tag]);
+      return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+    }
+
+    /* ========================= Hooks ========================= */
+    function useDebounce(fn, ms){ const t=useRef(); return useCallback((...args)=>{ clearTimeout(t.current); t.current=setTimeout(()=>fn(...args),ms); },[fn,ms]) }
+    function useMedia(q){ const [m,setM]=useState(()=>matchMedia(q).matches); useEffect(()=>{const mq=matchMedia(q);const h=()=>setM(mq.matches); mq.addEventListener?.('change',h)||window.addEventListener('resize',h); return ()=>{mq.removeEventListener?.('change',h)||window.removeEventListener('resize',h)}},[q]); return m }
+
+    /* ========================= Primitives ========================= */
+    const Icon = ({path, className=''})=> <svg viewBox="0 0 24 24" aria-hidden="true" className={className}><path d={path} fill="currentColor"/></svg>;
+    const CheckIcon = (p)=> <Icon {...p} path="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20.3 7.7l-1.4-1.4z"/>;
+    const ChevronIcon = (p)=> <Icon {...p} path="M8.12 9.29L12 13.17l3.88-3.88L17.3 10.7 12 16l-5.3-5.3z"/>;
+    const SearchIcon = (p)=> <Icon {...p} path="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"/>;
+    const NoteIcon = (p)=> <Icon {...p} path="M3 3h12a2 2 0 012 2v4h4v10a2 2 0 01-2 2H5a2 2 0 01-2-2V3zm14 6V5H5v14h14V9h-2z"/>;
+
+    function Kbd({keys}){ return <span className="kbd">{keys}</span> }
+
+    function ProgressBar(){
+      const {done} = useContext(Ctx);
+      const total = useMemo(()=> 1 + Object.values(DATA.sections).reduce((s,sec)=>s+sec.cards.length,0),[]);
+      const count = Object.values(done).filter(Boolean).length;
+      const pct = Math.round((count/total)*100);
+      return (
+        <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-slate-200 dark:bg-slate-700" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct}>
+          <div className="h-full bg-brand-500" style={{width:`${pct}%`}} />
+        </div>
+      );
+    }
+
+    /* ========================= Widgets ========================= */
+    function Checkbox({checked,onToggle,label,id}){
+      return (
+        <button onClick={()=>onToggle?.(id)} aria-pressed={!!checked} className={`w-7 h-7 rounded-md border-2 flex items-center justify-center transition-colors ${checked? 'bg-emerald-500 border-emerald-500 text-white':'border-slate-400 dark:border-white/50 text-transparent'}`} title={checked? 'Đã hoàn thành':'Đánh dấu hoàn thành'}>
+          {checked && <CheckIcon className="w-4 h-4"/>}
+          <span className="sr-only">{label||'Đánh dấu'}</span>
+        </button>
+      )
+    }
+
+    function Card({card}){
+      const {done,setDone, notes,setNotes} = useContext(Ctx);
+      const [open, setOpen] = useState(false);
+      const toggle = ()=> setDone(m=>({...m,[card.id]:!m[card.id]}));
+      const note = notes[card.id]||'';
+      const save = useDebounce((v)=> setNotes(m=>({...m,[card.id]:v})), 300);
+      return (
+        <article id={card.id} className="print-break rounded-xl overflow-hidden shadow-md bg-gradient-to-br from-brand-600 to-brand-700 text-white" tabIndex={0}>
+          <header className="p-4 flex items-center gap-3 cursor-pointer" onClick={()=>setOpen(o=>!o)}>
+            <Checkbox checked={!!done[card.id]} onToggle={toggle} id={card.id}/>
+            <h4 className="text-lg font-semibold flex-1">{card.title}</h4>
+            <ChevronIcon className={`w-6 h-6 transition-transform ${open?'rotate-180':''}`}/>
+          </header>
+          <div className={`grid transition-[grid-template-rows] duration-300 ${open?'grid-rows-[1fr]':'grid-rows-[0fr]'} bg-white/10`}> 
+            <div className="overflow-hidden">
+              {card.subItems && (
+                <div className="px-4 pb-4 space-y-2">
+                  {card.subItems.map((it,i)=>(<div key={i} className="bg-black/20 p-3 rounded-lg text-white/90">{it}</div>))}
+                </div>
+              )}
+              <div className="px-4 pb-4">
+                <label className="text-sm opacity-90 flex items-center gap-2 mb-1"><NoteIcon className="w-4 h-4"/>Ghi chú của bạn</label>
+                <textarea defaultValue={note} onChange={(e)=>save(e.target.value)} placeholder="Ý tưởng, bài tập, mốc hành động…" className="w-full min-h-[80px] rounded-lg p-3 text-slate-900" />
+              </div>
+            </div>
+          </div>
+        </article>
+      )
+    }
+
+    function Section({idx, sec}){
+      const isDesktop = useMedia('(min-width: 768px)');
+      const [open, setOpen] = useState(true);
+      const {q, tag} = useContext(Ctx);
+
+      const filteredCards = useMemo(()=>{
+        const text = q.trim().toLowerCase();
+        return sec.cards.filter(c=>{
+          const inText = !text || (c.title+ ' ' + (c.subItems||[]).join(' ')).toLowerCase().includes(text);
+          const inTag = !tag || (c.tags||[]).includes(tag);
+          return inText && inTag;
+        })
+      },[q,tag,sec.cards]);
+
+      return (
+        <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl mb-6 overflow-hidden" aria-labelledby={`sec-${idx}`}> 
+          <header className="p-4 flex justify-between items-center cursor-pointer select-none" onClick={()=> isDesktop && setOpen(o=>!o)}>
+            <div className="flex items-center gap-4">
+              <span className="font-display text-brand-600 text-lg">{idx}.</span>
+              <h2 id={`sec-${idx}`} className="text-xl font-semibold">{sec.title}</h2>
+            </div>
+            <ChevronIcon className={`w-6 h-6 hidden md:block text-slate-500 transition-transform ${open?'rotate-180':''}`}/>
+          </header>
+          <div className={`${isDesktop? (open? 'block':'hidden') : 'block'}`}>
+            <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredCards.length? filteredCards.map(c=> <Card key={c.id} card={c}/>) : (
+                <p className="col-span-full text-sm opacity-70">Không có thẻ phù hợp điều kiện lọc.</p>
+              )}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    function CoreBlock(){
+      const {done,setDone} = useContext(Ctx);
+      return (
+        <article className="rounded-xl shadow-md overflow-hidden bg-gradient-to-br from-fuchsia-600 to-purple-700 text-white">
+          <header className="p-4 flex items-center gap-3">
+            <Checkbox checked={!!done[DATA.core.id]} onToggle={()=>setDone(m=>({...m,[DATA.core.id]:!m[DATA.core.id]}))} id={DATA.core.id}/>
+            <h3 className="text-xl font-semibold">{DATA.core.title}</h3>
+          </header>
+          <div className="px-4 pb-4">
+            <ul className="list-disc list-inside space-y-2 text-white/90">
+              {DATA.core.items.map((it,i)=>(<li key={i}>{it}</li>))}
+            </ul>
+          </div>
+        </article>
+      )
+    }
+
+    /* ========================= Command Bar & Sheets ========================= */
+    function CommandBar(){
+      const {theme,setTheme, focus,setFocus, q,setQ, tag,setTag, done} = useContext(Ctx);
+      const [show, setShow] = useState(false);
+
+      useEffect(()=>{
+        const onKey = (e)=>{
+          if (e.key==='k' && (e.ctrlKey||e.metaKey)) { e.preventDefault(); setShow(s=>!s); }
+          if (e.key==='/' && !e.metaKey && !e.ctrlKey){ e.preventDefault(); setShow(true); }
+          if (e.key==='p' && (e.ctrlKey||e.metaKey)){ window.print(); }
+        };
+        addEventListener('keydown', onKey);
+        return ()=>removeEventListener('keydown', onKey);
+      },[]);
+      
+      const tags = useMemo(()=>{
+        const s = new Set();
+        s.add(''); // All
+        kv(DATA.sections).forEach(([k,sec])=> sec.cards.forEach(c=> (c.tags||[]).forEach(t=>s.add(t))));
+        return [...s];
+      },[]);
+
+      return (
+        <div className="cmdbar fixed top-2 left-0 right-0 z-40">
+          <div className="mx-auto max-w-6xl px-3">
+            <div className="backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-900/60 bg-white/80 dark:bg-slate-900/70 rounded-xl shadow border border-black/5 dark:border-white/10 px-2 py-1.5 flex items-center gap-1">
+              {/* Search */}
+              <div className="flex-1 flex items-center gap-2">
+                <SearchIcon className="w-5 h-5 text-slate-500"/>
+                <input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Tìm nhanh (tiêu đề, nội dung)…" className="w-full bg-transparent outline-none text-sm" aria-label="Tìm kiếm"/>
+              </div>
+              {/* Tag filter */}
+              <select value={tag} onChange={(e)=>setTag(e.target.value)} className="text-sm rounded-lg bg-slate-100 dark:bg-slate-800 px-2 py-1 border border-slate-200 dark:border-slate-700">
+                {tags.map(t=> <option key={t} value={t}>{t?`#${t}`:'Tất cả thẻ'}</option>)}
+              </select>
+              {/* Progress */}
+              <span className="ml-1 text-[11px] px-1.5 py-0.5 rounded-full bg-brand-600 text-white">{Math.round((Object.values(done).filter(Boolean).length / (1+kv(DATA.sections).reduce((s,[,sec])=>s+sec.cards.length,0)) )*100)}%</span>
+              {/* Theme */}
+              <button className="px-2 py-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" title="Đổi chủ đề" onClick={()=> setTheme(t=> t==='light'?'dark':(t==='dark'?'sepia':'light'))}>Chủ đề</button>
+              {/* Focus */}
+              <button className="px-2 py-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" title="Chế độ tập trung" onClick={()=>setFocus(f=>!f)}>{"Tập trung"}</button>
+              {/* More... */}
+              <div className="relative">
+                <button className="px-2 py-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" onClick={()=>setShow(s=>!s)} aria-expanded={show}>⋯</button>
+                <div className={`absolute right-0 mt-1 min-w-[200px] rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow ${show? 'opacity-100':'opacity-0 pointer-events-none'} transition-opacity`}>
+                  <button className="w-full text-left px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700" onClick={()=>{window.print(); setShow(false);}}>In / PDF</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    function BottomNav(){
+      const [open, setOpen] = useState(false);
+      const ref = useRef(null);
+      useEffect(()=>{
+        const click = (e)=>{ if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+        document.addEventListener('mousedown', click);
+        return ()=>document.removeEventListener('mousedown', click);
+      }, []);
+      return (
+        <nav className="bottom-nav fixed bottom-0 left-0 right-0 z-30 p-2 flex justify-center font-display uppercase">
+          <div className="flex gap-2">
+            <a href="https://thiensutinhquang.github.io/home/" target="_blank" rel="noopener" className="px-4 h-11 rounded-xl bg-black text-white inline-flex items-center shadow-glow">Trang chủ</a>
+            <a href="https://thiensutinhquang.github.io/PlayMusic/" target="_blank" rel="noopener" className="px-4 h-11 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white inline-flex items-center shadow-glow">Play Nhạc</a>
+            <div className={`group relative ${open ? 'overflow-visible' : ''}`} ref={ref}>
+              <button className="px-4 h-11 rounded-xl bg-black/90 text-white inline-flex items-center shadow-glow" onClick={()=>setOpen(o=>!o)}>Nền tảng</button>
+              <div className={`absolute left-1/2 -translate-x-1/2 bottom-[52px] flex gap-2 bg-black/80 border border-white/30 rounded-xl p-2 backdrop-blur-md ${open? 'opacity-100':'opacity-0 pointer-events-none'} transition-opacity`}>
+                <a href="https://www.youtube.com/@ThiensuTinhQuang" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/ff0000/ffffff?text=YT'}}/></a>
+                <a href="https://www.tiktok.com/@minhsutinhquang" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="TikTok" src="https://static-00.iconduck.com/assets.00/tiktok-icon-2048x2048-15w2g25h.png" onError={(e)=>{e.target.src='https://placehold.co/28x28/ffffff/000?text=TT'}}/></a>
+                <a href="https://www.facebook.com/groups/minhsutinhquang" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="Facebook" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/1877f2/fff?text=FB'}}/></a>
+                <a href="https://t.me/Giaoly_phap_don_ngo" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="Telegram" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/229ed9/fff?text=TG'}}/></a>
+                <a href="https://zalo.me/g/dukrae245" target="_blank" rel="noopener" className="w-10 h-10 grid place-items-center rounded-md hover:bg-white/10"><img className="w-7 h-7" alt="Zalo" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" onError={(e)=>{e.target.src='https://placehold.co/28x28/0068ff/fff?text=ZL'}}/></a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      )
+    }
+    
+    /* ========================= App ========================= */
+    function App(){
+      const {focus} = useContext(Ctx);
+      const [loading, setLoading] = useState(true);
+      useEffect(()=>{ const t=setTimeout(()=>setLoading(false), 300); return ()=>clearTimeout(t) },[]);
+      if (loading) return (
+        <div className="max-w-6xl mx-auto mt-24 space-y-6 p-4" aria-busy>
+          <div className="shimmer rounded-xl h-28"></div>
+          <div className="shimmer rounded-xl h-20"></div>
+          <div className="shimmer rounded-xl h-20"></div>
+          <div className="shimmer rounded-xl h-20"></div>
+        </div>
+      );
+      return (
+        <div className={focus? 'reduce-motion':''}>
+          <ProgressBar/>
+          <CommandBar/>
+
+          <main className={`max-w-6xl mx-auto pt-16 px-4 ${focus? 'opacity-95':''}`}>
+            <CoreBlock/>
+            {kv(DATA.sections).map(([id, sec])=> <Section key={id} idx={id} sec={sec}/>) }
+
+            <aside className="bg-white dark:bg-slate-800 rounded-xl shadow p-6 my-8">
+              <h2 className="text-2xl font-semibold mb-3">Hướng dẫn nhanh</h2>
+              <ul className="list-disc list-inside space-y-2 text-sm">
+                <li>Tìm kiếm tức thời <Kbd keys="Ctrl/⌘ + /"/> hoặc gõ thanh tìm kiếm.</li>
+                <li>Mở hộp lệnh <Kbd keys="Ctrl/⌘ + K"/> để thao tác nhanh; In/PDF <Kbd keys="Ctrl/⌘ + P"/>.</li>
+                <li>Đổi chủ đề (Light/Dark/Sepia), bật <em>Tập trung</em> để giảm nhiễu, lưu tiến độ tự động.</li>
+                <li>Ghi chú riêng trên từng thẻ được lưu tự động vào thiết bị của bạn.</li>
+              </ul>
+            </aside>
+          </main>
+
+          <BottomNav/>
+        </div>
+      )
+    }
+
+    const Root = () => (
+      <Provider>
+        <App/>
+      </Provider>
+    );
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Root/>);
+  </script>
+</body>
+</html>
+
